@@ -339,7 +339,7 @@
 
   /* Minimal Card Styles */
   .minimal-card {
-    @apply w-full h-24 transition-all duration-200;
+    @apply w-full h-16 transition-all duration-200;
   }
 
   .minimal-card:hover {
