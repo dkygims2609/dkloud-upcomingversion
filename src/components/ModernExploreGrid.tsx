@@ -91,7 +91,7 @@ export function ModernExploreGrid() {
         </ScrollReveal>
 
         {/* Compact Grid Layout */}
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-2 mb-8 max-w-5xl mx-auto">
+        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 gap-3 mb-8 max-w-4xl mx-auto">
           {exploreItems.map((item, index) => (
             <ScrollReveal 
               key={item.name} 
@@ -105,7 +105,7 @@ export function ModernExploreGrid() {
                 href={item.href}
                 gradient={item.gradient}
                 icon={<item.Icon className="h-4 w-4 text-primary" />}
-                className="h-16 minimal-card"
+                className="h-14 minimal-card"
                 onClick={() => {
                   toast.success(`${item.name} activated`, { 
                     description: `Loading ${item.desc.toLowerCase()}...`,

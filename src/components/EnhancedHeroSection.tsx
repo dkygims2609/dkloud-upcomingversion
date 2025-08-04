@@ -27,7 +27,7 @@ export function EnhancedHeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/20">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/20 px-4 py-16">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 opacity-30">
         {/* Floating orbs */}
@@ -72,8 +72,8 @@ export function EnhancedHeroSection() {
 
         {/* Main Title */}
         <ScrollReveal direction="up" delay={200}>
-          <div className="mb-8">
-            <div className="text-5xl md:text-6xl lg:text-7xl font-black mb-4 tracking-tight">
+          <div className="mb-6">
+            <div className="text-3xl md:text-4xl lg:text-5xl font-black mb-3 tracking-tight leading-tight">
               <DecodingAnimation 
                 text="Decoding Knowledge" 
                 className="text-gradient-animated transform-gpu"
@@ -85,15 +85,15 @@ export function EnhancedHeroSection() {
 
         {/* Subtitle with glitch effect */}
         <ScrollReveal direction="up" delay={400}>
-          <div className="text-xl md:text-2xl lg:text-3xl font-bold mb-8 text-muted-foreground">
-            <GlitchText text="Library Of Unique Discoveries" className="text-2xl font-bold text-foreground" />
+          <div className="text-lg md:text-xl lg:text-2xl font-semibold mb-6 text-muted-foreground">
+            <GlitchText text="Library Of Unique Discoveries" className="text-lg md:text-xl font-semibold text-foreground" />
           </div>
         </ScrollReveal>
 
         {/* Audio Player with modern styling */}
         <ScrollReveal direction="scale" delay={600}>
-          <div className="mb-12 max-w-lg mx-auto">
-            <div className="glass-card p-6 rounded-2xl border border-primary/20 hover-glow transition-all duration-500">
+          <div className="mb-8 max-w-md mx-auto">
+            <div className="glass-card p-4 rounded-xl border border-primary/20 hover-glow transition-all duration-300">
               <AudioPlayer 
                 audioSrc="/dKloudaudio.wav"
                 title="Listen: What is dKloud?"
@@ -105,8 +105,8 @@ export function EnhancedHeroSection() {
 
         {/* Description */}
         <ScrollReveal direction="up" delay={800}>
-          <div className="max-w-4xl mx-auto mb-12">
-            <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
+          <div className="max-w-3xl mx-auto mb-8">
+            <p className="text-base md:text-lg text-muted-foreground leading-relaxed">
               At dKloud, we're crafting a{" "}
               <span className="text-shimmer font-semibold text-primary">universe</span>{" "}
               where{" "}
@@ -119,23 +119,23 @@ export function EnhancedHeroSection() {
 
         {/* Color Band */}
         <ScrollReveal direction="scale" delay={1000}>
-          <div className="mb-12 hover-lift">
+          <div className="mb-8 hover-lift">
             <ColorBandSection />
           </div>
         </ScrollReveal>
 
         {/* CTA Buttons */}
         <ScrollReveal direction="up" delay={1200}>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <MagneticButton className="group">
               <Button 
                 asChild 
                 size="lg" 
-                className="text-lg px-10 py-6 rounded-full bg-gradient-to-r from-primary to-secondary hover:from-primary/80 hover:to-secondary/80 transform transition-all duration-300 hover:scale-105 shadow-2xl hover:shadow-primary/25"
+                className="text-base px-8 py-3 rounded-full bg-gradient-to-r from-primary to-secondary hover:from-primary/80 hover:to-secondary/80 transform transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-primary/20"
               >
-                <Link to="/aitools" className="flex items-center gap-3">
+                <Link to="/aitools" className="flex items-center gap-2">
                   <span className="text-shimmer">Dive into dKloud Tech Universe</span>
-                  <ArrowRight className="h-6 w-6 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Link>
               </Button>
             </MagneticButton>
@@ -145,11 +145,11 @@ export function EnhancedHeroSection() {
                 asChild 
                 variant="outline" 
                 size="lg" 
-                className="text-lg px-10 py-6 rounded-full glass-strong hover-glow transition-all duration-500 hover:bg-primary/10 border-2 border-primary/30 hover:border-primary/60"
+                className="text-base px-8 py-3 rounded-full glass-strong hover-glow transition-all duration-300 hover:bg-primary/10 border border-primary/30 hover:border-primary/50"
               >
                 <Link to="/portfolio" className="flex items-center gap-2">
                   <span>View Portfolio</span>
-                  <Sparkles className="h-5 w-5 group-hover:rotate-12 transition-transform" />
+                  <Sparkles className="h-4 w-4 group-hover:rotate-12 transition-transform" />
                 </Link>
               </Button>
             </MagneticButton>

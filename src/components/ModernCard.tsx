@@ -95,7 +95,7 @@ export function ModernCard({
             <div className="flex-1 min-w-0">
               <CardTitle className={cn(
                 "font-semibold leading-tight group-hover:text-primary transition-colors duration-300",
-                className?.includes('minimal-card') ? "text-xs truncate" : "text-lg"
+                className?.includes('minimal-card') ? "text-sm truncate" : "text-lg"
               )}>
                 {title}
               </CardTitle>

@@ -339,11 +339,11 @@
 
   /* Minimal Card Styles */
   .minimal-card {
-    @apply w-full h-16 transition-all duration-200;
+    @apply w-full h-14 transition-all duration-200;
   }
 
   .minimal-card:hover {
-    @apply transform translate-y-[-1px] shadow-md;
+    @apply transform translate-y-[-1px] shadow-md scale-102;
   }
 
   .minimal-card .card-content {
