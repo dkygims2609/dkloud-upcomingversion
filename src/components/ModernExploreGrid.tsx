@@ -1,7 +1,6 @@
-import { Link } from "react-router-dom";
 import { Clapperboard, Youtube, Brain, BookOpen, Zap, Package, Briefcase } from "lucide-react";
+import { Link } from "react-router-dom";
 import { toast } from "sonner";
-import { ModernCard } from "./ModernCard";
 import { ScrollReveal, MagneticButton } from "./ModernAnimations";
 import { cn } from "@/lib/utils";
 
@@ -90,30 +89,25 @@ export function ModernExploreGrid() {
           </div>
         </ScrollReveal>
 
-        {/* Compact Grid Layout */}
-        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-7 gap-3 mb-8 max-w-4xl mx-auto">
-          {exploreItems.map((item, index) => (
-            <ScrollReveal 
-              key={item.name} 
-              direction="up"
-              delay={index * 30}
+        {/* Static Navigation Tabs */}
+        <div className="flex flex-wrap justify-center gap-2 mb-12 max-w-5xl mx-auto px-4">
+          {exploreItems.map((item) => (
+            <Link
+              key={item.name}
+              to={item.href}
+              className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-card/80 border border-border hover:border-primary/40 transition-all duration-200 hover:bg-primary/5 min-w-fit backdrop-blur-sm"
+              onClick={() => {
+                toast.success(`${item.name} activated`, { 
+                  description: `Loading ${item.desc.toLowerCase()}...`,
+                  duration: 2000 
+                });
+              }}
             >
-              <ModernCard
-                title={item.name}
-                description={item.desc}
-                category={item.category}
-                href={item.href}
-                gradient={item.gradient}
-                icon={<item.Icon className="h-4 w-4 text-primary" />}
-                className="h-14 minimal-card"
-                onClick={() => {
-                  toast.success(`${item.name} activated`, { 
-                    description: `Loading ${item.desc.toLowerCase()}...`,
-                    duration: 2000 
-                  });
-                }}
-              />
-            </ScrollReveal>
+              <item.Icon className="h-4 w-4 text-primary flex-shrink-0" />
+              <span className="text-sm font-medium text-foreground whitespace-nowrap">
+                {item.name}
+              </span>
+            </Link>
           ))}
         </div>
 
