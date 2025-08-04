@@ -343,7 +343,7 @@
   }
 
   .minimal-card:hover {
-    @apply transform translate-y-[-1px] shadow-md scale-102;
+    @apply transform translate-y-[-1px] shadow-md scale-105;
   }
 
   .minimal-card .card-content {
