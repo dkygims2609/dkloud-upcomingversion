@@ -76,7 +76,7 @@ export function EnhancedHeroSection() {
             <div className="text-3xl md:text-4xl lg:text-5xl font-black mb-3 tracking-tight leading-tight">
               <DecodingAnimation 
                 text="Decoding Knowledge" 
-                className="bg-gradient-to-r from-purple-800 via-blue-800 to-indigo-900 bg-clip-text text-transparent bg-300% animate-gradient-x transform-gpu"
+                className="text-gradient-animated transform-gpu"
                 delay={1000}
               />
             </div>
@@ -85,8 +85,8 @@ export function EnhancedHeroSection() {
 
         {/* Subtitle with glitch effect */}
         <ScrollReveal direction="up" delay={400}>
-          <div className="text-lg md:text-xl lg:text-2xl font-semibold mb-6">
-            <GlitchText text="Library Of Unique Discoveries" className="text-lg md:text-xl font-semibold text-red-900 dark:text-red-700" />
+          <div className="text-lg md:text-xl lg:text-2xl font-semibold mb-6 text-muted-foreground">
+            <GlitchText text="Library Of Unique Discoveries" className="text-lg md:text-xl font-semibold text-foreground" />
           </div>
         </ScrollReveal>
 

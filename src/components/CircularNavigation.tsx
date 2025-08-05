@@ -24,8 +24,8 @@ export function CircularNavigation() {
   const { news } = useNewsData();
   const { gadgets } = useGadgetData();
 
-  const radius = 220; // Increased from 180
-  const centerSize = 160; // Increased from 140
+  const radius = 180;
+  const centerSize = 140;
 
   const navItems = [
     { name: "Movies & TV", href: "/movies", Icon: Clapperboard, color: "from-purple-500/20 to-blue-500/20", count: "500+" },
@@ -38,7 +38,7 @@ export function CircularNavigation() {
   ];
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto h-[500px] flex items-center justify-center"> {/* Increased container size */}
+    <div className="relative w-full max-w-lg mx-auto h-96 flex items-center justify-center">
       {/* Central Hub with Audio */}
       <div 
         className={cn(
@@ -67,10 +67,10 @@ export function CircularNavigation() {
       <div 
         className={cn(
           "absolute inset-0 transition-all duration-1000 ease-in-out",
-          isHovered ? "" : "animate-spin"
+          isHovered ? "animate-spin" : ""
         )}
         style={{ 
-          animationDuration: isHovered ? "0s" : "30s", // Pause rotation on hover
+          animationDuration: isHovered ? "20s" : "0s",
           animationIterationCount: "infinite",
           animationTimingFunction: "linear"
         }}
@@ -86,13 +86,13 @@ export function CircularNavigation() {
               key={item.name}
               to={item.href}
               className={cn(
-                "absolute w-28 h-28 rounded-full border-2 border-border bg-gradient-to-br backdrop-blur-sm flex flex-col items-center justify-center transition-all duration-300 group hover:scale-140 hover:shadow-2xl",
+                "absolute w-20 h-20 rounded-full border-2 border-border bg-gradient-to-br backdrop-blur-sm flex flex-col items-center justify-center transition-all duration-300 group hover:scale-125 hover:shadow-lg",
                 item.color,
-                hoveredItem === item.name ? "border-primary shadow-2xl shadow-primary/30 scale-125 animate-pulse" : "hover:border-primary/50 hover:shadow-primary/20"
+                hoveredItem === item.name ? "border-primary shadow-lg shadow-primary/20 scale-110" : "hover:border-primary/50"
               )}
               style={{
-                left: `calc(50% + ${x}px - 56px)`, // Adjusted for larger icons (28/2 = 14, 14*4 = 56)
-                top: `calc(50% + ${y}px - 56px)`,
+                left: `calc(50% + ${x}px - 40px)`,
+                top: `calc(50% + ${y}px - 40px)`,
               }}
               onMouseEnter={() => setHoveredItem(item.name)}
               onMouseLeave={() => setHoveredItem(null)}
@@ -104,25 +104,16 @@ export function CircularNavigation() {
               }}
             >
               <div className="relative text-center">
-                <item.Icon className={cn(
-                  "h-8 w-8 text-foreground group-hover:text-primary transition-all duration-300 mx-auto mb-1",
-                  hoveredItem === item.name ? "animate-bounce scale-110" : ""
-                )} />
-                <div className="text-xs font-medium text-muted-foreground group-hover:text-primary transition-colors duration-300">{item.count}</div>
-                <div className={cn(
-                  "text-[10px] font-medium text-muted-foreground group-hover:text-primary transition-all duration-300 mt-0.5",
-                  hoveredItem === item.name ? "opacity-100" : "opacity-0"
-                )}>
-                  {item.name}
-                </div>
+                <item.Icon className="h-5 w-5 text-foreground group-hover:text-primary transition-colors mx-auto mb-1" />
+                <div className="text-xs font-medium text-muted-foreground group-hover:text-primary">{item.count}</div>
                 
-                {/* Enhanced Tooltip */}
+                {/* Tooltip */}
                 <div className={cn(
-                  "absolute bottom-full mb-3 left-1/2 transform -translate-x-1/2 px-3 py-2 bg-popover/95 backdrop-blur-sm border border-primary/30 rounded-lg text-sm font-medium whitespace-nowrap transition-all duration-300 pointer-events-none shadow-lg",
-                  hoveredItem === item.name ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-2 scale-95"
+                  "absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-popover border border-border rounded text-xs whitespace-nowrap transition-all duration-200 pointer-events-none",
+                  hoveredItem === item.name ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
                 )}>
                   {item.name}
-                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-primary/30"></div>
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-border"></div>
                 </div>
               </div>
             </Link>

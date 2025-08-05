@@ -6,11 +6,10 @@ import { Button } from "@/components/ui/button";
 import { ContentGrid } from "@/components/ContentGrid";
 import { InfographicAnimation } from "@/components/InfographicAnimation";
 import { EnhancedHeroSection } from "@/components/EnhancedHeroSection";
-import { GlassCardNavigation } from "@/components/GlassCardNavigation";
+import { ModernExploreGrid } from "@/components/ModernExploreGrid";
 import { FloatingActionButton } from "@/components/FloatingActionButton";
 import { ScrollReveal, FloatingElement } from "@/components/ModernAnimations";
 import TeamSection from "@/components/TeamSection";
-import { IoTFloatingIcons } from "@/components/IoTFloatingIcons";
 
 const Index = () => {
   const [previewData, setPreviewData] = useState({
@@ -67,14 +66,11 @@ const Index = () => {
 
   return (
     <div className="min-h-screen relative bg-background">
-      {/* IoT Floating Icons */}
-      <IoTFloatingIcons showOnHomePage={true} />
-      
       {/* Enhanced Hero Section */}
       <EnhancedHeroSection />
-      
-      {/* Glass Card Navigation */}
-      <GlassCardNavigation />
+
+      {/* Modern Explore Grid */}
+      <ModernExploreGrid />
 
       {/* About Section - Enhanced */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
