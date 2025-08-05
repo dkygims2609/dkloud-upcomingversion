@@ -14,7 +14,7 @@ export function ModernExploreGrid() {
         {/* Section Header */}
         <ScrollReveal direction="up" delay={100}>
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-black mb-6 text-gradient-animated">
+            <h2 className="text-2xl md:text-3xl font-black mb-6 text-gradient-animated">
               Explore Our Universe
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
@@ -32,7 +32,7 @@ export function ModernExploreGrid() {
 
         {/* Featured Stats */}
         <ScrollReveal direction="up" delay={800}>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-16">
             {[
               { label: "Content", value: "1000+", icon: "📚" },
               { label: "AI Tools", value: "200+", icon: "🤖" },
@@ -42,16 +42,16 @@ export function ModernExploreGrid() {
               <div 
                 key={stat.label}
                 className={cn(
-                  "text-center p-4 rounded-xl glass-card hover-glow transition-all duration-500",
+                  "text-center p-3 rounded-lg glass-card hover-glow transition-all duration-500",
                   "transform hover:scale-105"
                 )}
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="text-2xl mb-1 animate-bounce-subtle" style={{ animationDelay: `${index * 200}ms` }}>
+                <div className="text-lg mb-0.5 animate-bounce-subtle" style={{ animationDelay: `${index * 200}ms` }}>
                   {stat.icon}
                 </div>
-                <div className="text-xl font-bold text-primary mb-1">{stat.value}</div>
-                <div className="text-xs text-muted-foreground">{stat.label}</div>
+                <div className="text-lg font-bold text-primary mb-0.5">{stat.value}</div>
+                <div className="text-[10px] text-muted-foreground">{stat.label}</div>
               </div>
             ))}
           </div>

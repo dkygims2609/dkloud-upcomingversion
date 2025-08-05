@@ -10,6 +10,7 @@ import { ModernExploreGrid } from "@/components/ModernExploreGrid";
 import { FloatingActionButton } from "@/components/FloatingActionButton";
 import { ScrollReveal, FloatingElement } from "@/components/ModernAnimations";
 import TeamSection from "@/components/TeamSection";
+import { IoTFloatingIcons } from "@/components/IoTFloatingIcons";
 
 const Index = () => {
   const [previewData, setPreviewData] = useState({
@@ -66,6 +67,9 @@ const Index = () => {
 
   return (
     <div className="min-h-screen relative bg-background">
+      {/* IoT Floating Icons */}
+      <IoTFloatingIcons showOnHomePage={true} />
+      
       {/* Enhanced Hero Section */}
       <EnhancedHeroSection />
 
