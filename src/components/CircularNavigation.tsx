@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Clapperboard, Youtube, Brain, BookOpen, Zap, Package, Briefcase, ChevronRight } from "lucide-react";
+import { Clapperboard, Youtube, Brain, BookOpen, Zap, Package, Briefcase, Play, Pause } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
+import { useNewsData } from "@/hooks/useNewsData";
+import { useGadgetData } from "@/hooks/useGadgetData";
+import { AudioPlayer } from "./AudioPlayer";
 
 const navItems = [
   { name: "Movies & TV", href: "/movies", Icon: Clapperboard, color: "from-red-500/20 to-pink-500/20" },
@@ -17,13 +20,26 @@ const navItems = [
 export function CircularNavigation() {
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  
+  const { news } = useNewsData();
+  const { gadgets } = useGadgetData();
 
-  const radius = 140;
-  const centerSize = 120;
+  const radius = 180;
+  const centerSize = 140;
+
+  const navItems = [
+    { name: "Movies & TV", href: "/movies", Icon: Clapperboard, color: "from-purple-500/20 to-blue-500/20", count: "500+" },
+    { name: "AI Tools", href: "/aitools", Icon: Brain, color: "from-blue-500/20 to-cyan-500/20", count: "200+" },
+    { name: "YouTube", href: "/youtubechannels", Icon: Youtube, color: "from-red-600/20 to-red-400/20", count: "100+" },
+    { name: "Tech News", href: "/techcorner", Icon: BookOpen, color: "from-green-500/20 to-emerald-500/20", count: `${news.length}+` },
+    { name: "SmartTech", href: "/smarttech", Icon: Zap, color: "from-yellow-500/20 to-orange-500/20", count: `${gadgets.length}+` },
+    { name: "Products", href: "/digiproducts", Icon: Package, color: "from-purple-500/20 to-violet-500/20", count: "50+" },
+    { name: "Services", href: "/services", Icon: Briefcase, color: "from-indigo-500/20 to-blue-500/20", count: "10+" },
+  ];
 
   return (
-    <div className="relative w-full max-w-md mx-auto h-80 flex items-center justify-center">
-      {/* Central Hub */}
+    <div className="relative w-full max-w-lg mx-auto h-96 flex items-center justify-center">
+      {/* Central Hub with Audio */}
       <div 
         className={cn(
           "absolute rounded-full bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 border-2 border-primary/30 flex items-center justify-center transition-all duration-500 z-10 backdrop-blur-sm",
@@ -36,9 +52,14 @@ export function CircularNavigation() {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="text-center">
-          <div className="text-lg font-bold text-primary mb-1">dKloud</div>
-          <div className="text-xs text-muted-foreground">Universe</div>
+        <div className="text-center p-2">
+          <div className="text-sm font-bold text-primary mb-1">dKloud</div>
+          <div className="text-xs text-muted-foreground mb-2">Universe</div>
+          <AudioPlayer 
+            audioSrc="/dKloudaudio.wav" 
+            title=""
+            compact={true}
+          />
         </div>
       </div>
 
@@ -65,13 +86,13 @@ export function CircularNavigation() {
               key={item.name}
               to={item.href}
               className={cn(
-                "absolute w-16 h-16 rounded-full border-2 border-border bg-gradient-to-br backdrop-blur-sm flex items-center justify-center transition-all duration-300 group hover:scale-125 hover:shadow-lg",
+                "absolute w-20 h-20 rounded-full border-2 border-border bg-gradient-to-br backdrop-blur-sm flex flex-col items-center justify-center transition-all duration-300 group hover:scale-125 hover:shadow-lg",
                 item.color,
                 hoveredItem === item.name ? "border-primary shadow-lg shadow-primary/20 scale-110" : "hover:border-primary/50"
               )}
               style={{
-                left: `calc(50% + ${x}px - 32px)`,
-                top: `calc(50% + ${y}px - 32px)`,
+                left: `calc(50% + ${x}px - 40px)`,
+                top: `calc(50% + ${y}px - 40px)`,
               }}
               onMouseEnter={() => setHoveredItem(item.name)}
               onMouseLeave={() => setHoveredItem(null)}
@@ -82,8 +103,9 @@ export function CircularNavigation() {
                 });
               }}
             >
-              <div className="relative">
-                <item.Icon className="h-6 w-6 text-foreground group-hover:text-primary transition-colors" />
+              <div className="relative text-center">
+                <item.Icon className="h-5 w-5 text-foreground group-hover:text-primary transition-colors mx-auto mb-1" />
+                <div className="text-xs font-medium text-muted-foreground group-hover:text-primary">{item.count}</div>
                 
                 {/* Tooltip */}
                 <div className={cn(

@@ -7,9 +7,10 @@ interface AudioPlayerProps {
   audioSrc: string;
   title: string;
   description?: string;
+  compact?: boolean;
 }
 
-export const AudioPlayer = ({ audioSrc, title, description }: AudioPlayerProps) => {
+export const AudioPlayer = ({ audioSrc, title, description, compact = false }: AudioPlayerProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -78,6 +79,29 @@ export const AudioPlayer = ({ audioSrc, title, description }: AudioPlayerProps) 
   };
 
   const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
+
+  if (compact) {
+    return (
+      <div className="flex flex-col items-center">
+        <audio ref={audioRef} src={audioSrc} preload="metadata" />
+        <Button
+          onClick={togglePlayPause}
+          disabled={isLoading}
+          size="sm"
+          className="bg-primary/20 hover:bg-primary/30 rounded-full w-8 h-8 p-0 transition-all duration-300"
+        >
+          {isLoading ? (
+            <div className="w-3 h-3 border border-primary/50 border-t-primary rounded-full animate-spin" />
+          ) : isPlaying ? (
+            <Pause className="w-3 h-3" />
+          ) : (
+            <Play className="w-3 h-3 ml-0.5" />
+          )}
+        </Button>
+        <div className="text-xs text-muted-foreground mt-1">Listen</div>
+      </div>
+    );
+  }
 
   return (
     <div className="dkloud-card dkloud-card-interactive p-6 max-w-md mx-auto fade-in" style={{animationDelay: "0.5s"}}>

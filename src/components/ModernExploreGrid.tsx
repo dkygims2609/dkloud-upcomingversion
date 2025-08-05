@@ -14,7 +14,7 @@ export function ModernExploreGrid() {
         {/* Section Header */}
         <ScrollReveal direction="up" delay={100}>
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black mb-6 text-gradient-animated">
+            <h2 className="text-3xl md:text-4xl font-black mb-6 text-gradient-animated">
               Explore Our Universe
             </h2>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
@@ -32,26 +32,26 @@ export function ModernExploreGrid() {
 
         {/* Featured Stats */}
         <ScrollReveal direction="up" delay={800}>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16">
             {[
-              { label: "Curated Content", value: "1000+", icon: "📚" },
+              { label: "Content", value: "1000+", icon: "📚" },
               { label: "AI Tools", value: "200+", icon: "🤖" },
               { label: "Tech Resources", value: "500+", icon: "⚡" },
-              { label: "Active Updates", value: "Daily", icon: "🔄" }
+              { label: "Daily Updates", value: "24/7", icon: "🔄" }
             ].map((stat, index) => (
               <div 
                 key={stat.label}
                 className={cn(
-                  "text-center p-6 rounded-2xl glass-card hover-glow transition-all duration-500",
+                  "text-center p-4 rounded-xl glass-card hover-glow transition-all duration-500",
                   "transform hover:scale-105"
                 )}
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="text-3xl mb-2 animate-bounce-subtle" style={{ animationDelay: `${index * 200}ms` }}>
+                <div className="text-2xl mb-1 animate-bounce-subtle" style={{ animationDelay: `${index * 200}ms` }}>
                   {stat.icon}
                 </div>
-                <div className="text-2xl font-bold text-primary mb-1">{stat.value}</div>
-                <div className="text-sm text-muted-foreground">{stat.label}</div>
+                <div className="text-xl font-bold text-primary mb-1">{stat.value}</div>
+                <div className="text-xs text-muted-foreground">{stat.label}</div>
               </div>
             ))}
           </div>
