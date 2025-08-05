@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { DecodingAnimation } from "./DecodingAnimation";
 import { AudioPlayer } from "./AudioPlayer";
-import { CircularNavigation } from "./CircularNavigation";
 
 import { MagneticButton, ScrollReveal, GlitchText, FloatingElement } from "./ModernAnimations";
 import { cn } from "@/lib/utils";
@@ -91,10 +90,16 @@ export function EnhancedHeroSection() {
           </div>
         </ScrollReveal>
 
-        {/* Iron Man Style Circular Navigation */}
+        {/* Audio Player with modern styling */}
         <ScrollReveal direction="scale" delay={600}>
-          <div className="mb-12">
-            <CircularNavigation />
+          <div className="mb-8 max-w-md mx-auto">
+            <div className="glass-card p-4 rounded-xl border border-primary/20 hover-glow transition-all duration-300">
+              <AudioPlayer 
+                audioSrc="/dKloudaudio.wav"
+                title="Listen: What is dKloud?"
+                description="Hear directly from the founder about dKloud's vision"
+              />
+            </div>
           </div>
         </ScrollReveal>
 
@@ -111,6 +116,7 @@ export function EnhancedHeroSection() {
             </p>
           </div>
         </ScrollReveal>
+
 
         {/* CTA Buttons */}
         <ScrollReveal direction="up" delay={1200}>
