@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { ContentGrid } from "@/components/ContentGrid";
 import { InfographicAnimation } from "@/components/InfographicAnimation";
 import { EnhancedHeroSection } from "@/components/EnhancedHeroSection";
-import { ModernExploreGrid } from "@/components/ModernExploreGrid";
+import { GlassCardNavigation } from "@/components/GlassCardNavigation";
 import { FloatingActionButton } from "@/components/FloatingActionButton";
 import { ScrollReveal, FloatingElement } from "@/components/ModernAnimations";
 import TeamSection from "@/components/TeamSection";
@@ -72,9 +72,9 @@ const Index = () => {
       
       {/* Enhanced Hero Section */}
       <EnhancedHeroSection />
-
-      {/* Modern Explore Grid */}
-      <ModernExploreGrid />
+      
+      {/* Glass Card Navigation */}
+      <GlassCardNavigation />
 
       {/* About Section - Enhanced */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
