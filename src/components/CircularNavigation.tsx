@@ -1,18 +1,19 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Clapperboard, Youtube, Brain, BookOpen, Zap, Package, Briefcase } from "lucide-react";
+import { Film, Bot, Gem, Youtube, Newspaper, Smartphone, ShoppingBag, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { AudioPlayer } from "./AudioPlayer";
 
 const navItems = [
-  { name: "Movies & TV", href: "/movies", Icon: Clapperboard, color: "hsl(280, 80%, 65%)" },
-  { name: "AI Tools", href: "/aitools", Icon: Brain, color: "hsl(260, 85%, 70%)" },
-  { name: "YouTube", href: "/youtubechannels", Icon: Youtube, color: "hsl(240, 90%, 75%)" },
-  { name: "Tech Corner", href: "/techcorner", Icon: BookOpen, color: "hsl(220, 85%, 70%)" },
-  { name: "SmartTech", href: "/smarttech", Icon: Zap, color: "hsl(200, 80%, 65%)" },
-  { name: "Products", href: "/digiproducts", Icon: Package, color: "hsl(300, 85%, 60%)" },
-  { name: "Services", href: "/services", Icon: Briefcase, color: "hsl(320, 80%, 65%)" },
+  { name: "Movies & TV", href: "/movies", Icon: Film },
+  { name: "AI Tools", href: "/ai-tools", Icon: Bot },
+  { name: "Gem Websites", href: "#", Icon: Gem },
+  { name: "Youtube Picks", href: "/youtube-channels", Icon: Youtube },
+  { name: "Tech Corner", href: "/tech-corner", Icon: Newspaper },
+  { name: "Smart Tech", href: "/smart-tech", Icon: Smartphone },
+  { name: "dKloud Products", href: "/digi-products", Icon: ShoppingBag },
+  { name: "Services", href: "/services", Icon: Settings },
 ];
 
 // Helper function to create SVG path for pie segment
@@ -40,49 +41,86 @@ const polarToCartesian = (centerX: number, centerY: number, radius: number, angl
 // Helper function to get icon position
 const getIconPosition = (centerX: number, centerY: number, radius: number, startAngle: number, endAngle: number) => {
   const midAngle = (startAngle + endAngle) / 2;
-  const iconRadius = radius * 0.75; // Position icons at 75% of segment radius
+  const iconRadius = radius * 0.78; // Position icons at 78% of segment radius
   return polarToCartesian(centerX, centerY, iconRadius, midAngle);
 };
 
 export function CircularNavigation() {
   const [hoveredSegment, setHoveredSegment] = useState<string | null>(null);
+  const [isSpinning, setIsSpinning] = useState(true);
   
-  const centerX = 250;
-  const centerY = 250;
-  const outerRadius = 180;
-  const innerRadius = 100;
+  const centerX = 280;
+  const centerY = 280;
+  const outerRadius = 220;
+  const innerRadius = 120;
   const segmentAngle = 360 / navItems.length;
-  const gap = 3; // Gap between segments in degrees
+  const gap = 2; // Gap between segments in degrees
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto h-[500px] flex items-center justify-center">
-      {/* Tech Grid Background */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 via-blue-500/15 to-indigo-500/20"></div>
+    <div className="relative w-full max-w-3xl mx-auto h-[560px] flex items-center justify-center">
+      {/* Tech Grid Background with Iron Man aesthetics */}
+      <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-blue-purple/20 to-secondary/25 rounded-full"></div>
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            linear-gradient(90deg, hsl(280 80% 65% / 0.1) 1px, transparent 1px),
-            linear-gradient(0deg, hsl(280 80% 65% / 0.1) 1px, transparent 1px)
+            radial-gradient(circle at 20% 80%, hsl(var(--primary) / 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 20%, hsl(var(--blue-purple) / 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 40% 40%, hsl(var(--accent) / 0.05) 0%, transparent 50%)
+          `
+        }}></div>
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            linear-gradient(90deg, hsl(var(--primary) / 0.05) 1px, transparent 1px),
+            linear-gradient(0deg, hsl(var(--primary) / 0.05) 1px, transparent 1px)
           `,
-          backgroundSize: '20px 20px'
+          backgroundSize: '30px 30px'
         }}></div>
       </div>
 
-      {/* Outer glow rings */}
-      <div className="absolute inset-0 rounded-full border border-purple-400/20 animate-pulse" style={{ animationDuration: "3s" }}></div>
-      <div className="absolute inset-8 rounded-full border border-violet-400/15 animate-pulse" style={{ animationDuration: "4s", animationDelay: "1s" }}></div>
+      {/* Holographic scanning lines */}
+      <div className="absolute inset-0 overflow-hidden rounded-full">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-400/20 to-transparent animate-[slide-right_4s_ease-in-out_infinite]"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-400/15 to-transparent animate-[slide-down_6s_ease-in-out_infinite_reverse]"></div>
+      </div>
 
-      {/* Main SVG Circle */}
+      {/* Energy rings with pulsing effects */}
+      <div className="absolute inset-0 rounded-full border border-blue-400/30 animate-pulse" style={{ animationDuration: "2s" }}></div>
+      <div className="absolute inset-4 rounded-full border border-cyan-400/20 animate-pulse" style={{ animationDuration: "3s", animationDelay: "1s" }}></div>
+      <div className="absolute inset-8 rounded-full border border-primary/40 animate-pulse" style={{ animationDuration: "4s", animationDelay: "0.5s" }}></div>
+
+      {/* Main SVG Circle with continuous rotation */}
       <svg
         width={centerX * 2}
         height={centerY * 2}
-        className="absolute inset-0 transition-transform duration-700 hover:scale-105"
-        style={{ filter: "drop-shadow(0 0 20px hsl(280 80% 65% / 0.3))" }}
+        className={cn(
+          "absolute inset-0 transition-all duration-1000 hover:scale-105",
+          isSpinning && "animate-spin"
+        )}
+        style={{ 
+          filter: "drop-shadow(0 0 30px hsl(var(--primary) / 0.4)) drop-shadow(0 0 60px hsl(var(--blue-purple) / 0.2))",
+          animationDuration: isSpinning ? "40s" : "0s"
+        }}
+        onMouseEnter={() => setIsSpinning(false)}
+        onMouseLeave={() => setIsSpinning(true)}
       >
         {navItems.map((item, index) => {
           const startAngle = index * segmentAngle + gap / 2;
           const endAngle = (index + 1) * segmentAngle - gap / 2;
           const isHovered = hoveredSegment === item.name;
+          
+          // Create gradient for each segment based on index
+          const segmentColors = [
+            'hsl(var(--primary))',
+            'hsl(var(--blue-purple))',
+            'hsl(var(--accent))',
+            'hsl(var(--secondary))',
+            'hsl(280, 70%, 60%)',
+            'hsl(200, 70%, 60%)',
+            'hsl(320, 70%, 60%)',
+            'hsl(40, 70%, 60%)'
+          ];
+          
+          const baseColor = segmentColors[index % segmentColors.length];
           
           // Create outer and inner paths for the segment
           const outerPath = createSegmentPath(centerX, centerY, outerRadius, startAngle, endAngle);
@@ -90,14 +128,30 @@ export function CircularNavigation() {
           
           return (
             <g key={item.name}>
-              {/* Segment Background */}
+              {/* Segment Background with gradient */}
+              <defs>
+                <radialGradient id={`segmentGradient${index}`} cx="50%" cy="50%" r="80%">
+                  <stop offset="0%" stopColor={baseColor} stopOpacity={isHovered ? 0.9 : 0.7} />
+                  <stop offset="70%" stopColor={baseColor} stopOpacity={isHovered ? 0.8 : 0.6} />
+                  <stop offset="100%" stopColor={baseColor} stopOpacity={isHovered ? 0.6 : 0.4} />
+                </radialGradient>
+                <linearGradient id={`borderGradient${index}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity={0.8} />
+                  <stop offset="50%" stopColor="white" stopOpacity={0.6} />
+                  <stop offset="100%" stopColor="hsl(var(--accent))" stopOpacity={0.8} />
+                </linearGradient>
+              </defs>
+              
               <path
                 d={outerPath}
-                fill={item.color}
-                opacity={isHovered ? 0.9 : 0.7}
+                fill={`url(#segmentGradient${index})`}
+                stroke={`url(#borderGradient${index})`}
+                strokeWidth={isHovered ? 2 : 1}
                 className="transition-all duration-300 cursor-pointer"
                 style={{
-                  filter: isHovered ? `drop-shadow(0 0 15px ${item.color})` : "none"
+                  filter: isHovered ? 
+                    `drop-shadow(0 0 20px ${baseColor}) drop-shadow(0 0 40px ${baseColor})` : 
+                    `drop-shadow(0 0 10px ${baseColor})`
                 }}
                 onMouseEnter={() => setHoveredSegment(item.name)}
                 onMouseLeave={() => setHoveredSegment(null)}
@@ -109,24 +163,37 @@ export function CircularNavigation() {
                 fill="transparent"
               />
               
-              {/* Hover effect overlay */}
+              {/* Energy pulse effect on hover */}
               {isHovered && (
-                <path
-                  d={outerPath}
-                  fill="url(#glowGradient)"
-                  opacity={0.3}
-                  className="animate-pulse"
-                />
+                <>
+                  <path
+                    d={outerPath}
+                    fill="none"
+                    stroke="hsl(var(--primary))"
+                    strokeWidth={3}
+                    opacity={0.8}
+                    className="animate-pulse"
+                    style={{ filter: "drop-shadow(0 0 15px hsl(var(--primary)))" }}
+                  />
+                  <path
+                    d={outerPath}
+                    fill="url(#energyGlow)"
+                    opacity={0.3}
+                    className="animate-pulse"
+                    style={{ animationDuration: "1s" }}
+                  />
+                </>
               )}
             </g>
           );
         })}
         
-        {/* Gradient definitions */}
+        {/* Energy glow gradient definition */}
         <defs>
-          <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="white" stopOpacity={0.8} />
-            <stop offset="100%" stopColor="white" stopOpacity={0} />
+          <radialGradient id="energyGlow" cx="50%" cy="50%" r="60%">
+            <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity={0.6} />
+            <stop offset="50%" stopColor="hsl(var(--blue-purple))" stopOpacity={0.4} />
+            <stop offset="100%" stopColor="transparent" stopOpacity={0} />
           </radialGradient>
         </defs>
       </svg>
@@ -142,11 +209,11 @@ export function CircularNavigation() {
           <Link
             key={`icon-${item.name}`}
             to={item.href}
-            className="absolute transition-all duration-300 group"
+            className="absolute transition-all duration-500 group z-30"
             style={{
-              left: iconPos.x - 20,
-              top: iconPos.y - 20,
-              transform: isHovered ? "scale(1.2)" : "scale(1)"
+              left: iconPos.x - 24,
+              top: iconPos.y - 24,
+              transform: isHovered ? "scale(1.3) translateZ(0)" : "scale(1) translateZ(0)"
             }}
             onMouseEnter={() => setHoveredSegment(item.name)}
             onMouseLeave={() => setHoveredSegment(null)}
@@ -157,50 +224,70 @@ export function CircularNavigation() {
               });
             }}
           >
-            <div className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-sm border border-white/20 group-hover:bg-white/20 transition-all duration-300">
+            <div className={cn(
+              "w-12 h-12 flex items-center justify-center rounded-full border transition-all duration-500",
+              "bg-gradient-to-br from-background/80 via-background/60 to-background/80",
+              "border-primary/40 backdrop-blur-md shadow-lg",
+              isHovered && "border-primary bg-gradient-to-br from-primary/20 via-accent/10 to-primary/20 shadow-[0_0_25px_hsl(var(--primary)/0.6)]"
+            )}>
               <item.Icon 
                 className={cn(
-                  "h-5 w-5 transition-all duration-300",
-                  isHovered ? "text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.8)]" : "text-white/80"
+                  "h-6 w-6 transition-all duration-500",
+                  isHovered ? 
+                    "text-primary drop-shadow-[0_0_12px_hsl(var(--primary))]" : 
+                    "text-muted-foreground group-hover:text-primary"
                 )} 
               />
             </div>
             
-            {/* Tooltip */}
+            {/* Enhanced Tooltip with HUD styling */}
             <div className={cn(
-              "absolute top-12 left-1/2 transform -translate-x-1/2 px-3 py-1 bg-slate-900/90 border border-purple-400/50 rounded-md text-xs font-medium whitespace-nowrap transition-all duration-300 pointer-events-none backdrop-blur-sm text-white",
-              isHovered ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
-            )}>
-              {item.name}
-              <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-purple-400/50"></div>
+              "absolute top-14 left-1/2 transform -translate-x-1/2 px-4 py-2 rounded-lg text-sm font-medium whitespace-nowrap transition-all duration-500 pointer-events-none backdrop-blur-md z-40",
+              "bg-gradient-to-r from-background/95 via-background/90 to-background/95",
+              "border border-primary/30 shadow-lg",
+              isHovered ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-4 scale-95"
+            )}
+            style={{
+              boxShadow: isHovered ? "0 0 20px hsl(var(--primary) / 0.3)" : "none"
+            }}>
+              <span className="text-foreground font-semibold">{item.name}</span>
+              <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-b-[8px] border-transparent border-b-primary/30"></div>
             </div>
           </Link>
         );
       })}
 
-      {/* Central Hub with Audio Player */}
+      {/* Central Hub with enhanced Iron Man aesthetics */}
       <div 
-        className="absolute rounded-full bg-gradient-to-br from-slate-900/95 via-slate-800/95 to-slate-900/95 border-2 border-purple-400/50 flex items-center justify-center z-20 backdrop-blur-md shadow-2xl transition-all duration-500 hover:scale-105"
+        className="absolute rounded-full flex items-center justify-center z-20 backdrop-blur-xl transition-all duration-700 hover:scale-105"
         style={{ 
           width: innerRadius * 2, 
           height: innerRadius * 2,
+          background: `
+            radial-gradient(circle at 30% 30%, hsl(var(--primary) / 0.3) 0%, transparent 50%),
+            radial-gradient(circle at 70% 70%, hsl(var(--blue-purple) / 0.2) 0%, transparent 50%),
+            linear-gradient(135deg, hsl(var(--background) / 0.95), hsl(var(--background) / 0.85))
+          `,
+          border: "2px solid hsl(var(--primary) / 0.4)",
           boxShadow: `
-            0 0 30px hsl(280 80% 65% / 0.4),
-            inset 0 0 30px hsl(280 80% 65% / 0.1)
+            0 0 40px hsl(var(--primary) / 0.4),
+            0 0 80px hsl(var(--blue-purple) / 0.2),
+            inset 0 0 40px hsl(var(--primary) / 0.1)
           `
         }}
       >
-        {/* Inner decorative rings */}
-        <div className="absolute inset-2 rounded-full border border-purple-400/30 bg-gradient-to-br from-purple-500/10 to-blue-500/10"></div>
-        <div className="absolute inset-4 rounded-full border border-violet-400/20"></div>
+        {/* Inner decorative rings with energy effects */}
+        <div className="absolute inset-3 rounded-full border border-primary/30 bg-gradient-to-br from-primary/10 to-accent/10 animate-pulse" style={{ animationDuration: "3s" }}></div>
+        <div className="absolute inset-6 rounded-full border border-blue-purple/20 animate-pulse" style={{ animationDuration: "4s", animationDelay: "1s" }}></div>
+        <div className="absolute inset-9 rounded-full border border-accent/15 animate-pulse" style={{ animationDuration: "5s", animationDelay: "2s" }}></div>
         
-        {/* Audio Player Container */}
-        <div className="relative z-10 flex flex-col items-center justify-center p-4 w-full">
-          <div className="text-center mb-3">
-            <div className="text-sm font-bold text-purple-400 mb-1 tracking-wider">dKloud</div>
-            <div className="text-xs text-purple-300/80 font-medium">Universe</div>
+        {/* Audio Player Container with enhanced styling */}
+        <div className="relative z-10 flex flex-col items-center justify-center p-6 w-full">
+          <div className="text-center mb-4">
+            <div className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent mb-1 tracking-wider">dKloud</div>
+            <div className="text-sm text-muted-foreground font-medium">Universe</div>
           </div>
-          <div className="w-full">
+          <div className="w-full max-w-[160px]">
             <AudioPlayer 
               audioSrc="/dKloudaudio.wav" 
               title="What is dKloud?" 
@@ -208,16 +295,23 @@ export function CircularNavigation() {
             />
           </div>
         </div>
+
+        {/* Central energy core effect */}
+        <div className="absolute inset-16 rounded-full bg-gradient-to-br from-primary/20 to-accent/20 animate-pulse" style={{ animationDuration: "2s" }}>
+          <div className="absolute inset-2 rounded-full bg-gradient-to-br from-primary/10 to-transparent animate-pulse" style={{ animationDuration: "1.5s", animationDelay: "0.5s" }}></div>
+        </div>
       </div>
 
-      {/* Outer decorative border */}
+      {/* Outer holographic border */}
       <div 
-        className="absolute rounded-full border-2 border-purple-400/20 pointer-events-none"
+        className="absolute rounded-full border-2 pointer-events-none animate-pulse"
         style={{ 
-          width: (outerRadius + 20) * 2, 
-          height: (outerRadius + 20) * 2,
-          left: centerX - outerRadius - 20,
-          top: centerY - outerRadius - 20
+          width: (outerRadius + 30) * 2, 
+          height: (outerRadius + 30) * 2,
+          left: centerX - outerRadius - 30,
+          top: centerY - outerRadius - 30,
+          borderImage: "linear-gradient(45deg, hsl(var(--primary)), hsl(var(--accent)), hsl(var(--blue-purple)), hsl(var(--primary))) 1",
+          animationDuration: "3s"
         }}
       ></div>
     </div>
