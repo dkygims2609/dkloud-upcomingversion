@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Zap } from "lucide-react";
 import { ScrollReveal, MagneticButton } from "./ModernAnimations";
-import { CircularNavigation } from "./CircularNavigation";
+
 import { cn } from "@/lib/utils";
 
 export function ModernExploreGrid() {
@@ -23,12 +23,6 @@ export function ModernExploreGrid() {
           </div>
         </ScrollReveal>
 
-        {/* Circular Navigation */}
-        <ScrollReveal direction="scale" delay={400}>
-          <div className="mb-12">
-            <CircularNavigation />
-          </div>
-        </ScrollReveal>
 
         {/* Featured Stats */}
         <ScrollReveal direction="up" delay={800}>
