@@ -4,7 +4,6 @@ import { Film, Bot, Gem, Youtube, Newspaper, Smartphone, ShoppingBag, Settings }
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 
-
 const navItems = [
   { name: "Movies & TV", href: "/movies", Icon: Film },
   { name: "AI Tools", href: "/ai-tools", Icon: Bot },
@@ -36,13 +35,6 @@ const polarToCartesian = (centerX: number, centerY: number, radius: number, angl
     x: centerX + (radius * Math.cos(angleInRadians)),
     y: centerY + (radius * Math.sin(angleInRadians))
   };
-};
-
-// Helper function to get icon position
-const getIconPosition = (centerX: number, centerY: number, radius: number, startAngle: number, endAngle: number) => {
-  const midAngle = (startAngle + endAngle) / 2;
-  const iconRadius = radius * 0.78; // Position icons at 78% of segment radius
-  return polarToCartesian(centerX, centerY, iconRadius, midAngle);
 };
 
 export function CircularNavigation() {
