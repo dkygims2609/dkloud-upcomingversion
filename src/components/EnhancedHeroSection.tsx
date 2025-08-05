@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { DecodingAnimation } from "./DecodingAnimation";
 import { AudioPlayer } from "./AudioPlayer";
-import { ColorBandSection } from "./ColorBandSection";
+
 import { MagneticButton, ScrollReveal, GlitchText, FloatingElement } from "./ModernAnimations";
 import { cn } from "@/lib/utils";
 
@@ -117,12 +117,6 @@ export function EnhancedHeroSection() {
           </div>
         </ScrollReveal>
 
-        {/* Color Band */}
-        <ScrollReveal direction="scale" delay={1000}>
-          <div className="mb-8 hover-lift">
-            <ColorBandSection />
-          </div>
-        </ScrollReveal>
 
         {/* CTA Buttons */}
         <ScrollReveal direction="up" delay={1200}>

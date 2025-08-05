@@ -1,74 +1,8 @@
-import { Clapperboard, Youtube, Brain, BookOpen, Zap, Package, Briefcase } from "lucide-react";
 import { Link } from "react-router-dom";
-import { toast } from "sonner";
+import { Zap } from "lucide-react";
 import { ScrollReveal, MagneticButton } from "./ModernAnimations";
+import { CircularNavigation } from "./CircularNavigation";
 import { cn } from "@/lib/utils";
-
-const exploreItems = [
-  { 
-    name: "Movies & TV", 
-    href: "/movies-tv", 
-    Icon: Clapperboard, 
-    desc: "Curated films & series collection", 
-    color: "from-violet-500 to-purple-600",
-    category: "movies" as const,
-    gradient: "from-violet-500/20 via-purple-500/20 to-fuchsia-500/20"
-  },
-  { 
-    name: "AI Tools", 
-    href: "/aitools", 
-    Icon: Brain, 
-    desc: "Latest AI innovations & tools", 
-    color: "from-cyan-500 to-blue-600",
-    category: "aitools" as const,
-    gradient: "from-cyan-500/20 via-blue-500/20 to-indigo-500/20"
-  },
-  { 
-    name: "YouTube Picks", 
-    href: "/ytchannels", 
-    Icon: Youtube, 
-    desc: "Top channels worth following", 
-    color: "from-red-500 to-rose-600",
-    category: "youtube" as const,
-    gradient: "from-red-500/20 via-rose-500/20 to-pink-500/20"
-  },
-  { 
-    name: "Tech Corner", 
-    href: "/techcorner", 
-    Icon: BookOpen, 
-    desc: "SOPs, tips & best practices", 
-    color: "from-emerald-500 to-green-600",
-    category: "tech" as const,
-    gradient: "from-emerald-500/20 via-green-500/20 to-teal-500/20"
-  },
-  { 
-    name: "SmartTech", 
-    href: "/smarttech", 
-    Icon: Zap, 
-    desc: "Smart gadgets & IoT devices", 
-    color: "from-amber-500 to-orange-600",
-    category: "tech" as const,
-    gradient: "from-amber-500/20 via-orange-500/20 to-red-500/20"
-  },
-  { 
-    name: "Digi Products", 
-    href: "/digi-products", 
-    Icon: Package, 
-    desc: "My digital products & services", 
-    color: "from-indigo-500 to-purple-600",
-    category: "default" as const,
-    gradient: "from-indigo-500/20 via-purple-500/20 to-violet-500/20"
-  },
-  { 
-    name: "Portfolio", 
-    href: "/portfolio", 
-    Icon: Briefcase, 
-    desc: "My work & achievements", 
-    color: "from-slate-500 to-gray-600",
-    category: "default" as const,
-    gradient: "from-slate-500/20 via-gray-500/20 to-zinc-500/20"
-  },
-];
 
 export function ModernExploreGrid() {
   return (
@@ -89,27 +23,12 @@ export function ModernExploreGrid() {
           </div>
         </ScrollReveal>
 
-        {/* Static Navigation Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12 max-w-5xl mx-auto px-4">
-          {exploreItems.map((item) => (
-            <Link
-              key={item.name}
-              to={item.href}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-card/80 border border-border hover:border-primary/40 transition-all duration-200 hover:bg-primary/5 min-w-fit backdrop-blur-sm"
-              onClick={() => {
-                toast.success(`${item.name} activated`, { 
-                  description: `Loading ${item.desc.toLowerCase()}...`,
-                  duration: 2000 
-                });
-              }}
-            >
-              <item.Icon className="h-4 w-4 text-primary flex-shrink-0" />
-              <span className="text-sm font-medium text-foreground whitespace-nowrap">
-                {item.name}
-              </span>
-            </Link>
-          ))}
-        </div>
+        {/* Circular Navigation */}
+        <ScrollReveal direction="scale" delay={400}>
+          <div className="mb-12">
+            <CircularNavigation />
+          </div>
+        </ScrollReveal>
 
         {/* Featured Stats */}
         <ScrollReveal direction="up" delay={800}>
