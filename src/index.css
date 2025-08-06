@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -1428,7 +1429,7 @@
   /* Mobile optimizations */
   @media (max-width: 768px) {
     .interactive-card {
-      @apply hover:scale-102;
+      @apply hover:scale-105;
     }
     
     .magnetic-element {
