@@ -1,16 +1,8 @@
 import { useState, useEffect } from 'react';
 
 export interface TrendingMovie {
-  Name: string;
-  Genre: string;
-  Platform: string;
-  DKcloudRating: number;
-  Language: string;
-  Awards: string;
-  Achievements: string;
-  "Why to Watch": string;
-  Director: string;
-  Year: number;
+  Title: string;
+  Summary: string;
 }
 
 export function useTrendingMovies() {
@@ -23,9 +15,9 @@ export function useTrendingMovies() {
       setLoading(true);
       setError(null);
       
-      // Updated to fetch from the correct trending subtab API
+      // Updated to fetch from the correct API endpoint
       const response = await fetch(
-        'https://script.google.com/macros/s/AKfycbwiNhiUq6yWcGQ5dUwMwclRYt_pTsz_8nNXSsYsZClcmdLJGFp3kZYZdSkfqW0LtGWd7A/exec'
+        'https://script.google.com/macros/s/AKfycbyCeRakH_SOeSQO3PGFMtphknTGIe3mzcFRZcCmjQdAEkOtiK8-3m2WSL1tJ8dOXy8/exec'
       );
       
       if (!response.ok) {
@@ -51,8 +43,8 @@ export function useTrendingMovies() {
   // Get top trending movies with contextual descriptions
   const getTrendingWithDescriptions = () => {
     return movies.slice(0, 8).map(movie => ({
-      title: movie.Name,
-      description: `Watch ${movie.Name} to ${movie["Why to Watch"]?.toLowerCase() || 'experience this amazing story'}`
+      title: movie.Title,
+      description: movie.Summary || 'Discover this amazing content'
     }));
   };
 
