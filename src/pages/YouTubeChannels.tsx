@@ -34,15 +34,23 @@ const YouTubeChannels = () => {
         "https://api.sheetbest.com/sheets/c66a0da1-d347-44f8-adc7-dc02c8627799"
       );
       const data = await response.json();
-      setChannels(data);
+      // Ensure data is an array before setting channels
+      setChannels(Array.isArray(data) ? data : []);
       setLoading(false);
     } catch (error) {
       console.error("Error fetching YouTube channels:", error);
+      setChannels([]); // Set empty array on error
       setLoading(false);
     }
   };
 
   const filterChannels = () => {
+    // Ensure channels is an array before filtering
+    if (!Array.isArray(channels)) {
+      setFilteredChannels([]);
+      return;
+    }
+    
     let filtered = channels;
     
     // Filter by category
@@ -66,9 +74,11 @@ const YouTubeChannels = () => {
 
   // Get unique categories, filtering out undefined/null values
   const categories = ["All", ...Array.from(new Set(
-    channels
-      .filter(channel => channel.Category) // Filter out channels without Category
-      .map(channel => channel.Category)
+    Array.isArray(channels) 
+      ? channels
+          .filter(channel => channel.Category) // Filter out channels without Category
+          .map(channel => channel.Category)
+      : []
   ))];
 
   const getCategoryColor = (category: string) => {
@@ -126,9 +136,9 @@ const YouTubeChannels = () => {
               >
                 {category}
                 {category !== "All" && (
-                  <span className="ml-2 text-xs bg-white/20 rounded-full px-2 py-0.5">
-                    {channels.filter(c => c.Category === category).length}
-                  </span>
+                        <span className="ml-2 text-xs bg-white/20 rounded-full px-2 py-0.5">
+                          {Array.isArray(channels) ? channels.filter(c => c.Category === category).length : 0}
+                        </span>
                 )}
               </Button>
             ))}
@@ -148,7 +158,7 @@ const YouTubeChannels = () => {
           </div>
           <div className="flex justify-center mt-4">
             <p className="text-sm text-muted-foreground">
-              Showing {filteredChannels.length} of {channels.length} channels
+              Showing {filteredChannels.length} of {Array.isArray(channels) ? channels.length : 0} channels
               {selectedCategory !== "All" && ` in ${selectedCategory}`}
             </p>
           </div>
