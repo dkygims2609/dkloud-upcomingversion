@@ -31,9 +31,11 @@ import {
   ExternalLink
 } from "lucide-react";
 import { BackgroundQuestions } from "@/components/BackgroundQuestions";
+import { useYouTubeLearningResources } from "@/hooks/useYouTubeLearningResources";
 
 const TechCorner = () => {
   const [activeTab, setActiveTab] = useState('free-hacks');
+  const { resources: learningResources, loading: resourcesLoading, getYouTubeChannels, getLearningWebsites } = useYouTubeLearningResources();
 
   const courses = [
     {
@@ -217,6 +219,13 @@ const TechCorner = () => {
       icon: Video,
       count: 100,
       gradient: 'from-orange-500 to-red-500'
+    },
+    {
+      id: 'youtube-learning',
+      label: 'YouTube Channels & Websites',
+      icon: Video,
+      count: learningResources.length,
+      gradient: 'from-red-500 to-pink-500'
     }
   ];
 
@@ -412,6 +421,169 @@ const TechCorner = () => {
     </div>
   );
 
+  const renderYouTubeLearning = () => {
+    if (resourcesLoading) {
+      return (
+        <div className="text-center py-16">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-muted-foreground">Loading learning resources...</p>
+        </div>
+      );
+    }
+
+    const youtubeChannels = getYouTubeChannels();
+    const learningWebsites = getLearningWebsites();
+
+    return (
+      <div className="space-y-8">
+        {/* Header */}
+        <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl p-6 border border-primary/20 text-center">
+          <div className="flex items-center justify-center mb-3">
+            <Video className="h-6 w-6 text-primary mr-2" />
+            <h3 className="text-xl font-bold">📺 Best YouTube Channels & Learning Websites</h3>
+          </div>
+          <p className="text-muted-foreground">
+            Curated collection of the best YouTube channels and websites to accelerate your tech learning journey.
+          </p>
+        </div>
+
+        {/* YouTube Channels Section */}
+        {youtubeChannels.length > 0 && (
+          <div className="space-y-6">
+            <h4 className="text-2xl font-bold text-center mb-6">📺 YouTube Channels</h4>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {youtubeChannels.map((channel, index) => (
+                <Card 
+                  key={index} 
+                  className="group hover:shadow-xl transition-all duration-300 hover:border-primary/50 cursor-pointer"
+                >
+                  <CardHeader>
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <CardTitle className="text-lg group-hover:text-primary transition-colors">
+                          {channel.Name}
+                        </CardTitle>
+                        <CardDescription className="mt-2">
+                          {channel.Description}
+                        </CardDescription>
+                      </div>
+                      <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <Badge variant="secondary">{channel.Category}</Badge>
+                        {channel.Subscribers && (
+                          <Badge variant="outline" className="text-red-600 border-red-600">
+                            {channel.Subscribers} Subscribers
+                          </Badge>
+                        )}
+                      </div>
+                      
+                      {channel.Rating && (
+                        <div className="flex items-center gap-1">
+                          <Star className="h-4 w-4 text-yellow-500 fill-current" />
+                          <span className="text-sm font-medium">{channel.Rating}/5</span>
+                        </div>
+                      )}
+
+                      <Button 
+                        asChild 
+                        className="w-full mt-4"
+                        variant="outline"
+                      >
+                        <a 
+                          href={channel.URL} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2"
+                        >
+                          <Video className="h-4 w-4" />
+                          Watch Channel
+                        </a>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Learning Websites Section */}
+        {learningWebsites.length > 0 && (
+          <div className="space-y-6">
+            <h4 className="text-2xl font-bold text-center mb-6">🌐 Learning Websites</h4>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {learningWebsites.map((website, index) => (
+                <Card 
+                  key={index} 
+                  className="group hover:shadow-xl transition-all duration-300 hover:border-primary/50 cursor-pointer"
+                >
+                  <CardHeader>
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <CardTitle className="text-lg group-hover:text-primary transition-colors">
+                          {website.Name}
+                        </CardTitle>
+                        <CardDescription className="mt-2">
+                          {website.Description}
+                        </CardDescription>
+                      </div>
+                      <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2">
+                        <Badge variant="secondary">{website.Category}</Badge>
+                      </div>
+                      
+                      {website.Rating && (
+                        <div className="flex items-center gap-1">
+                          <Star className="h-4 w-4 text-yellow-500 fill-current" />
+                          <span className="text-sm font-medium">{website.Rating}/5</span>
+                        </div>
+                      )}
+
+                      <Button 
+                        asChild 
+                        className="w-full mt-4"
+                        variant="outline"
+                      >
+                        <a 
+                          href={website.URL} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2"
+                        >
+                          <Globe className="h-4 w-4" />
+                          Visit Website
+                        </a>
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Empty State */}
+        {youtubeChannels.length === 0 && learningWebsites.length === 0 && (
+          <div className="text-center py-12">
+            <Video className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <h3 className="text-lg font-semibold text-foreground mb-2">No learning resources found</h3>
+            <p className="text-muted-foreground">
+              Learning resources will be available soon!
+            </p>
+          </div>
+        )}
+      </div>
+    );
+  };
+
   const renderTabContent = () => {
     switch (activeTab) {
       case 'free-hacks':
@@ -420,6 +592,8 @@ const TechCorner = () => {
         return renderCourses();
       case 'tutorials':
         return renderTutorials();
+      case 'youtube-learning':
+        return renderYouTubeLearning();
       default:
         return renderFreeHacks();
     }

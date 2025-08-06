@@ -107,7 +107,7 @@ export function TeaserAdSection() {
 
           {/* Scrolling Items */}
           <div className="relative overflow-hidden">
-            <div className="flex animate-scroll-left space-x-6 whitespace-nowrap">
+            <div className="flex animate-[scroll-left_60s_linear_infinite] space-x-6 whitespace-nowrap">
               {/* Duplicate items for seamless loop */}
               {[...currentItems, ...currentItems, ...currentItems].map((item, index) => (
                 <div
