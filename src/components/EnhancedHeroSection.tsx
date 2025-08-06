@@ -10,7 +10,6 @@ import { TeaserAdSection } from "./TeaserAdSection";
 import { cn } from "@/lib/utils";
 
 export function EnhancedHeroSection() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
@@ -18,14 +17,6 @@ export function EnhancedHeroSection() {
     return () => clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/20 px-4 py-16">
@@ -51,14 +42,6 @@ export function EnhancedHeroSection() {
           />
         ))}
         
-        {/* Interactive cursor glow */}
-        <div 
-          className="absolute w-96 h-96 rounded-full bg-gradient-radial from-primary/10 via-secondary/5 to-transparent pointer-events-none transition-all duration-300 ease-out"
-          style={{
-            left: mousePosition.x - 192,
-            top: mousePosition.y - 192,
-          }}
-        />
       </div>
 
       {/* Main Content */}
@@ -91,10 +74,10 @@ export function EnhancedHeroSection() {
           </div>
         </ScrollReveal>
 
-        {/* Audio Player with modern styling - Reduced size */}
+        {/* Audio Player with modern styling - Enhanced */}
         <ScrollReveal direction="scale" delay={600}>
-          <div className="mb-6 max-w-sm mx-auto">
-            <div className="glass-card p-3 rounded-lg border border-primary/20 hover-glow transition-all duration-300">
+          <div className="mb-6 max-w-md mx-auto">
+            <div className="glass-card p-4 rounded-xl border border-primary/20 hover-glow transition-all duration-300">
               <AudioPlayer 
                 audioSrc="/dKloudaudio.wav"
                 title="Listen: What is dKloud?"
@@ -152,9 +135,9 @@ export function EnhancedHeroSection() {
           </div>
         </ScrollReveal>
 
-        {/* Teaser Ad Section - Moved closer to CTA */}
+        {/* Teaser Ad Section - Positioned optimally */}
         <ScrollReveal direction="up" delay={1300}>
-          <div className="mt-6 mb-4">
+          <div className="mt-4 mb-4">
             <TeaserAdSection />
           </div>
         </ScrollReveal>

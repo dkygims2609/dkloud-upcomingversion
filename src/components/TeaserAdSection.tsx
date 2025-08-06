@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Clapperboard, Brain, Briefcase, Star, Zap, TrendingUp } from "lucide-react";
+import { useTrendingMovies } from "@/hooks/useTrendingMovies";
 
 interface MovieItem {
   title: string;
@@ -33,11 +34,12 @@ export function TeaserAdSection() {
   const [currentCategory, setCurrentCategory] = useState(0);
   const [currentItems, setCurrentItems] = useState<(string | MovieItem)[]>([]);
   const [isVisible, setIsVisible] = useState(true);
+  const { getTrendingWithDescriptions } = useTrendingMovies();
 
   const categories = [
     {
       title: "Trending Movies & Series",
-      items: teaserContent.movies,
+      items: getTrendingWithDescriptions().length > 0 ? getTrendingWithDescriptions() : teaserContent.movies,
       icon: Clapperboard,
       color: "from-red-500/20 to-pink-500/20",
       textColor: "text-red-400"

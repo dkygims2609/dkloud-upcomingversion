@@ -15,6 +15,7 @@ export const AudioPlayer = ({ audioSrc, title, description, compact = false }: A
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [playbackRate, setPlaybackRate] = useState(1);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
@@ -72,6 +73,23 @@ export const AudioPlayer = ({ audioSrc, title, description, compact = false }: A
     setCurrentTime(newTime);
   };
 
+  const changePlaybackRate = (rate: number) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    
+    audio.playbackRate = rate;
+    setPlaybackRate(rate);
+  };
+
+  const skipTime = (seconds: number) => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    
+    const newTime = Math.max(0, Math.min(duration, currentTime + seconds));
+    audio.currentTime = newTime;
+    setCurrentTime(newTime);
+  };
+
   const formatTime = (time: number) => {
     const minutes = Math.floor(time / 60);
     const seconds = Math.floor(time % 60);
@@ -82,23 +100,90 @@ export const AudioPlayer = ({ audioSrc, title, description, compact = false }: A
 
   if (compact) {
     return (
-      <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center space-y-2">
         <audio ref={audioRef} src={audioSrc} preload="metadata" />
-        <Button
-          onClick={togglePlayPause}
-          disabled={isLoading}
-          size="sm"
-          className="bg-primary/20 hover:bg-primary/30 rounded-full w-8 h-8 p-0 transition-all duration-300"
-        >
-          {isLoading ? (
-            <div className="w-3 h-3 border border-primary/50 border-t-primary rounded-full animate-spin" />
-          ) : isPlaying ? (
-            <Pause className="w-3 h-3" />
-          ) : (
-            <Play className="w-3 h-3 ml-0.5" />
-          )}
-        </Button>
-        <div className="text-xs text-muted-foreground mt-1">Listen</div>
+        
+        {/* Title */}
+        {title && (
+          <div className="text-xs font-semibold text-foreground text-center">{title}</div>
+        )}
+        
+        {/* Controls Row */}
+        <div className="flex items-center space-x-2">
+          {/* Skip Back */}
+          <Button
+            onClick={() => skipTime(-10)}
+            disabled={isLoading}
+            size="sm"
+            variant="ghost"
+            className="w-6 h-6 p-0 text-muted-foreground hover:text-primary"
+          >
+            <span className="text-xs">-10</span>
+          </Button>
+          
+          {/* Play/Pause */}
+          <Button
+            onClick={togglePlayPause}
+            disabled={isLoading}
+            size="sm"
+            className="bg-primary/20 hover:bg-primary/30 rounded-full w-8 h-8 p-0 transition-all duration-300"
+          >
+            {isLoading ? (
+              <div className="w-3 h-3 border border-primary/50 border-t-primary rounded-full animate-spin" />
+            ) : isPlaying ? (
+              <Pause className="w-3 h-3" />
+            ) : (
+              <Play className="w-3 h-3 ml-0.5" />
+            )}
+          </Button>
+          
+          {/* Skip Forward */}
+          <Button
+            onClick={() => skipTime(10)}
+            disabled={isLoading}
+            size="sm"
+            variant="ghost"
+            className="w-6 h-6 p-0 text-muted-foreground hover:text-primary"
+          >
+            <span className="text-xs">+10</span>
+          </Button>
+        </div>
+
+        {/* Progress Bar */}
+        <div className="w-full max-w-32">
+          <div 
+            className="w-full h-1 bg-muted rounded-full cursor-pointer hover:h-1.5 transition-all duration-200 group"
+            onClick={handleProgressClick}
+          >
+            <div 
+              className="h-full bg-gradient-to-r from-primary to-secondary rounded-full transition-all duration-200"
+              style={{ width: `${progressPercentage}%` }}
+            />
+          </div>
+          <div className="flex justify-between text-xs text-muted-foreground mt-1">
+            <span>{formatTime(currentTime)}</span>
+            <span>{formatTime(duration)}</span>
+          </div>
+        </div>
+
+        {/* Speed Controls */}
+        <div className="flex items-center space-x-1">
+          {[0.75, 1, 1.25, 1.5].map((rate) => (
+            <Button
+              key={rate}
+              onClick={() => changePlaybackRate(rate)}
+              size="sm"
+              variant="ghost"
+              className={`text-xs px-2 py-1 h-6 transition-colors ${
+                playbackRate === rate 
+                  ? 'bg-primary/20 text-primary' 
+                  : 'text-muted-foreground hover:text-primary'
+              }`}
+            >
+              {rate}x
+            </Button>
+          ))}
+        </div>
       </div>
     );
   }

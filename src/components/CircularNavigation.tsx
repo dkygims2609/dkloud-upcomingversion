@@ -5,7 +5,8 @@ import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useEnhancedNewsData } from "@/hooks/useEnhancedNewsData";
 import { useLatestGadgets } from "@/hooks/useLatestGadgets";
-import { useGemWebsites } from "@/hooks/useGemWebsites";
+import { useGemWebsitesAPI } from "@/hooks/useGemWebsitesAPI";
+import { useTrendingMovies } from "@/hooks/useTrendingMovies";
 import { AudioPlayer } from "./AudioPlayer";
 
 
@@ -15,17 +16,18 @@ export function CircularNavigation() {
   
   const { news } = useEnhancedNewsData();
   const { gadgets } = useLatestGadgets();
-  const { websites } = useGemWebsites();
+  const { websites } = useGemWebsitesAPI();
+  const { movies } = useTrendingMovies();
 
-  const radius = 200; // Reduced to prevent overlapping
-  const centerSize = 120; // Reduced center size
+  const radius = 180; // Further reduced to prevent overlapping
+  const centerSize = 100; // Smaller center size
 
   const navItems = [
-    { name: "Movies & TV", href: "/movies", Icon: Clapperboard, color: "from-purple-500/20 to-blue-500/20", count: "500+" },
+    { name: "Movies & TV", href: "/movies", Icon: Clapperboard, color: "from-purple-500/20 to-blue-500/20", count: `${movies.length || 500}+` },
     { name: "AI Tools", href: "/aitools", Icon: Brain, color: "from-blue-500/20 to-cyan-500/20", count: "200+" },
-    { name: "Gem Websites", href: "/gem-websites", Icon: Globe, color: "from-emerald-500/20 to-teal-500/20", count: `${websites.length}+` },
-    { name: "Tech Corner", href: "/techcorner", Icon: BookOpen, color: "from-green-500/20 to-emerald-500/20", count: `${news.length}+` },
-    { name: "SmartTech", href: "/smarttech", Icon: Zap, color: "from-yellow-500/20 to-orange-500/20", count: `${gadgets.length}+` },
+    { name: "Gem Websites", href: "/gem-websites", Icon: Globe, color: "from-emerald-500/20 to-teal-500/20", count: `${websites.length || 0}+` },
+    { name: "Tech Corner", href: "/techcorner", Icon: BookOpen, color: "from-green-500/20 to-emerald-500/20", count: `${news.length || 0}+` },
+    { name: "SmartTech", href: "/smarttech", Icon: Zap, color: "from-yellow-500/20 to-orange-500/20", count: `${gadgets.length || 0}+` },
     { name: "Products", href: "/digiproducts", Icon: Package, color: "from-purple-500/20 to-violet-500/20", count: "50+" },
     { name: "Services", href: "/services", Icon: Briefcase, color: "from-indigo-500/20 to-blue-500/20", count: "10+" },
   ];
@@ -80,13 +82,13 @@ export function CircularNavigation() {
               key={item.name}
               to={item.href}
               className={cn(
-                "absolute w-24 h-24 rounded-full border-2 border-border bg-gradient-to-br backdrop-blur-sm flex flex-col items-center justify-center transition-all duration-300 group hover:scale-125 hover:shadow-xl hover:shadow-primary/30",
+                "absolute w-20 h-20 rounded-full border-2 border-border bg-gradient-to-br backdrop-blur-sm flex flex-col items-center justify-center transition-all duration-300 group hover:scale-125 hover:shadow-xl hover:shadow-primary/30",
                 item.color,
                 hoveredItem === item.name ? "border-primary shadow-xl shadow-primary/30 scale-115" : "hover:border-primary/50"
               )}
               style={{
-                left: `calc(50% + ${x}px - 48px)`, // Adjusted for smaller size (24px radius)
-                top: `calc(50% + ${y}px - 48px)`, // Adjusted for smaller size (24px radius)
+                left: `calc(50% + ${x}px - 40px)`, // Adjusted for smaller size (20px radius)
+                top: `calc(50% + ${y}px - 40px)`, // Adjusted for smaller size (20px radius)
               }}
               onMouseEnter={() => setHoveredItem(item.name)}
               onMouseLeave={() => setHoveredItem(null)}
@@ -104,8 +106,8 @@ export function CircularNavigation() {
                   transition: 'transform 1000ms ease-in-out'
                 }}
               >
-                <item.Icon className="h-6 w-6 text-foreground group-hover:text-primary transition-colors mx-auto mb-1" />
-                <div className="text-[10px] font-medium text-muted-foreground group-hover:text-primary px-1 py-0.5 bg-background/80 rounded-md">{item.count}</div>
+                <item.Icon className="h-5 w-5 text-foreground group-hover:text-primary transition-colors mx-auto mb-0.5" />
+                <div className="text-[9px] font-medium text-muted-foreground group-hover:text-primary px-1 py-0.5 bg-background/80 rounded-md">{item.count}</div>
                 
                 {/* Enhanced YouTube-style Tooltip */}
                 <div className={cn(
