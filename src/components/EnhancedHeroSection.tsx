@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { DecodingAnimation } from "./DecodingAnimation";
 import { AudioPlayer } from "./AudioPlayer";
+import { TeaserAdSection } from "./TeaserAdSection";
 
 import { MagneticButton, ScrollReveal, GlitchText, FloatingElement } from "./ModernAnimations";
 
@@ -17,9 +18,8 @@ export function EnhancedHeroSection() {
     return () => clearTimeout(timer);
   }, []);
 
-
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/20 px-4 py-16">
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/20 px-4 py-16">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 opacity-30">
         {/* Floating orbs */}
@@ -41,7 +41,6 @@ export function EnhancedHeroSection() {
             }}
           />
         ))}
-        
       </div>
 
       {/* Main Content */}
@@ -102,10 +101,9 @@ export function EnhancedHeroSection() {
           </div>
         </ScrollReveal>
 
-
         {/* CTA Buttons */}
         <ScrollReveal direction="up" delay={1200}>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
             <MagneticButton className="group">
               <Button 
                 asChild 
@@ -135,9 +133,15 @@ export function EnhancedHeroSection() {
           </div>
         </ScrollReveal>
 
+        {/* Teaser Ad Section - Positioned right below CTA buttons */}
+        <ScrollReveal direction="up" delay={1400}>
+          <div className="mb-12">
+            <TeaserAdSection />
+          </div>
+        </ScrollReveal>
 
         {/* Scroll indicator */}
-        <ScrollReveal direction="up" delay={1400}>
+        <ScrollReveal direction="up" delay={1600}>
           <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
             <div className="animate-bounce-subtle">
               <div className="w-6 h-10 border-2 border-primary/50 rounded-full flex justify-center">

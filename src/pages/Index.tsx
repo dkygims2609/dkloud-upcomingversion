@@ -9,7 +9,6 @@ import { ModernExploreGrid } from "@/components/ModernExploreGrid";
 import { FloatingActionButton } from "@/components/FloatingActionButton";
 import { ScrollReveal, FloatingElement } from "@/components/ModernAnimations";
 import TeamSection from "@/components/TeamSection";
-import { TeaserAdSection } from "@/components/TeaserAdSection";
 
 const Index = () => {
   const [previewData, setPreviewData] = useState({
@@ -68,11 +67,6 @@ const Index = () => {
     <div className="min-h-screen relative bg-background">
       {/* Enhanced Hero Section */}
       <EnhancedHeroSection />
-
-      {/* Teaser Ad Section - Positioned right after hero section */}
-      <section className="relative z-10 bg-background">
-        <TeaserAdSection />
-      </section>
 
       {/* Modern Explore Grid */}
       <ModernExploreGrid />
