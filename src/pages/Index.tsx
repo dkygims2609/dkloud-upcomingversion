@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Database, Zap, Sparkles } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,7 +10,6 @@ import { FloatingActionButton } from "@/components/FloatingActionButton";
 import { ScrollReveal, FloatingElement } from "@/components/ModernAnimations";
 import TeamSection from "@/components/TeamSection";
 import { TeaserAdSection } from "@/components/TeaserAdSection";
-
 
 const Index = () => {
   const [previewData, setPreviewData] = useState({
@@ -201,11 +199,10 @@ const Index = () => {
         </div>
       </section>
 
-
       {/* Team Section */}
       <TeamSection />
 
-      {/* Teaser Ad Section - Enhanced Visibility */}
+      {/* Teaser Ad Section - Moved to bottom */}
       <section className="relative z-10 bg-background">
         <TeaserAdSection />
       </section>
