@@ -19,8 +19,9 @@ export function CircularNavigation() {
   const { websites } = useGemWebsitesAPI();
   const { movies } = useTrendingMovies();
 
-  const radius = 160; // Proper radius for better alignment
+  const radius = 200; // Increased radius for better spacing
   const centerSize = 120; // Larger center for better visibility
+  const iconSize = 72; // Larger icons for better visibility
 
   const navItems = [
     { name: "Movies & TV", href: "/movies", Icon: Clapperboard, color: "from-purple-500/20 to-blue-500/20", count: `${movies.length || 500}+` },
@@ -33,16 +34,19 @@ export function CircularNavigation() {
   ];
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto h-[450px] flex items-center justify-center">
+    <div className="relative w-full max-w-3xl mx-auto h-[550px] flex items-center justify-center">
       {/* Enhanced Central Hub */}
       <div 
         className={cn(
-          "absolute rounded-full bg-gradient-to-br from-primary/30 via-secondary/30 to-accent/30 border-3 border-primary/60 flex items-center justify-center transition-all duration-500 z-10 backdrop-blur-lg shadow-2xl",
+          "absolute rounded-full bg-gradient-to-br from-primary/30 via-secondary/30 to-accent/30 border-3 border-primary/60 flex items-center justify-center transition-all duration-500 z-20 backdrop-blur-lg shadow-2xl",
           isHovered ? "scale-110 shadow-3xl shadow-primary/50 border-primary/80" : "scale-100"
         )}
         style={{ 
           width: centerSize, 
-          height: centerSize 
+          height: centerSize,
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%, -50%)'
         }}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
@@ -53,10 +57,11 @@ export function CircularNavigation() {
         </div>
       </div>
 
-      {/* Navigation Items - No Rotation */}
-      <div className="absolute inset-0">
+      {/* Navigation Items - Properly Centered */}
+      <div className="absolute inset-0 flex items-center justify-center">
         {navItems.map((item, index) => {
-          const angle = (index * 360) / navItems.length;
+          // Start from top (-90 degrees) for better visual alignment
+          const angle = -90 + (index * 360) / navItems.length;
           const radian = (angle * Math.PI) / 180;
           const x = Math.cos(radian) * radius;
           const y = Math.sin(radian) * radius;
@@ -67,13 +72,15 @@ export function CircularNavigation() {
               <Link
                 to={item.href}
                 className={cn(
-                  "absolute w-16 h-16 rounded-full border-2 border-border/50 bg-gradient-to-br backdrop-blur-md flex flex-col items-center justify-center transition-all duration-300 group shadow-lg",
+                  "absolute rounded-full border-2 border-border/50 bg-gradient-to-br backdrop-blur-md flex flex-col items-center justify-center transition-all duration-300 group shadow-lg",
                   item.color,
                   isHovering ? "scale-150 border-primary/80 shadow-2xl shadow-primary/40 z-50" : "scale-100 hover:scale-125 hover:border-primary/60 hover:shadow-xl"
                 )}
                 style={{
-                  left: `calc(50% + ${x}px - 32px)`,
-                  top: `calc(50% + ${y}px - 32px)`,
+                  width: iconSize,
+                  height: iconSize,
+                  left: `calc(50% + ${x}px - ${iconSize/2}px)`,
+                  top: `calc(50% + ${y}px - ${iconSize/2}px)`,
                   zIndex: isHovering ? 50 : 10
                 }}
                 onMouseEnter={() => setHoveredItem(item.name)}
@@ -88,10 +95,10 @@ export function CircularNavigation() {
                 <div className="relative text-center w-full h-full flex flex-col items-center justify-center">
                   <item.Icon className={cn(
                     "transition-all duration-300 mx-auto mb-1",
-                    isHovering ? "h-7 w-7 text-primary" : "h-5 w-5 text-foreground group-hover:text-primary"
+                    isHovering ? "h-8 w-8 text-primary" : "h-6 w-6 text-foreground group-hover:text-primary"
                   )} />
                   <div className={cn(
-                    "text-[9px] font-medium transition-all duration-300 px-1 py-0.5 bg-background/80 rounded-md",
+                    "text-[10px] font-medium transition-all duration-300 px-1 py-0.5 bg-background/80 rounded-md",
                     isHovering ? "text-primary font-bold" : "text-muted-foreground group-hover:text-primary"
                   )}>
                     {item.count}
@@ -101,12 +108,12 @@ export function CircularNavigation() {
               
               {/* Enhanced Tooltip */}
               <div className={cn(
-                "absolute left-1/2 transform -translate-x-1/2 px-4 py-3 bg-background/95 backdrop-blur-md border border-border/80 rounded-xl text-sm font-semibold whitespace-nowrap transition-all duration-300 pointer-events-none shadow-2xl",
+                "absolute px-4 py-3 bg-background/95 backdrop-blur-md border border-border/80 rounded-xl text-sm font-semibold whitespace-nowrap transition-all duration-300 pointer-events-none shadow-2xl",
                 isHovering ? "opacity-100 translate-y-0 scale-100 visible z-[60]" : "opacity-0 translate-y-3 scale-90 invisible"
               )}
                style={{
-                left: `calc(50% + ${x}px - 32px)`,
-                top: `calc(50% + ${y}px - 100px)`, // Position above the icon
+                left: `calc(50% + ${x}px - 60px)`,
+                top: `calc(50% + ${y}px - 120px)`,
                 zIndex: isHovering ? 60 : 0
               }}>
                 <div className="flex items-center gap-3">
@@ -125,9 +132,27 @@ export function CircularNavigation() {
         })}
       </div>
 
-      {/* Orbital Lines */}
-      <div className="absolute inset-0 rounded-full border border-dashed border-primary/20 opacity-50"></div>
-      <div className="absolute inset-4 rounded-full border border-dotted border-secondary/20 opacity-30"></div>
+      {/* Orbital Lines - Properly Centered */}
+      <div 
+        className="absolute rounded-full border border-dashed border-primary/20 opacity-50"
+        style={{
+          width: radius * 2,
+          height: radius * 2,
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%, -50%)'
+        }}
+      ></div>
+      <div 
+        className="absolute rounded-full border border-dotted border-secondary/20 opacity-30"
+        style={{
+          width: (radius - 20) * 2,
+          height: (radius - 20) * 2,
+          left: '50%',
+          top: '50%',
+          transform: 'translate(-50%, -50%)'
+        }}
+      ></div>
     </div>
   );
 }
