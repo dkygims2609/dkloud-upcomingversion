@@ -18,6 +18,7 @@ import SmartTech from "./pages/SmartTech";
 import DigiProducts from "./pages/DigiProducts";
 import Portfolio from "./pages/Portfolio";
 import Services from "./pages/Services";
+import GemWebsites from "./pages/GemWebsites";
 import NotFound from "./pages/NotFound";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
@@ -44,6 +45,7 @@ const App = () => (
             <Route path="/techcorner" element={<TechCorner />} />
             <Route path="/smarttech" element={<SmartTech />} />
             <Route path="/digi-products" element={<DigiProducts />} />
+            <Route path="/gem-websites" element={<GemWebsites />} />
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/services" element={<Services />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />

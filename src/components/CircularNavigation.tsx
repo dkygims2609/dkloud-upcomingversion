@@ -37,8 +37,8 @@ export function CircularNavigation() {
       {/* Enhanced Central Hub */}
       <div 
         className={cn(
-          "absolute rounded-full bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 border-2 border-primary/50 flex items-center justify-center transition-all duration-500 z-10 backdrop-blur-lg shadow-lg",
-          isHovered ? "scale-110 shadow-2xl shadow-primary/40" : "scale-100"
+          "absolute rounded-full bg-gradient-to-br from-primary/30 via-secondary/30 to-accent/30 border-3 border-primary/60 flex items-center justify-center transition-all duration-500 z-10 backdrop-blur-lg shadow-2xl",
+          isHovered ? "scale-110 shadow-3xl shadow-primary/50 border-primary/80" : "scale-100"
         )}
         style={{ 
           width: centerSize, 
@@ -53,75 +53,74 @@ export function CircularNavigation() {
         </div>
       </div>
 
-      {/* Rotating Container */}
-      <div 
-        className={cn(
-          "absolute inset-0 transition-all duration-1000 ease-in-out",
-          isHovered ? "animate-spin" : ""
-        )}
-        style={{ 
-          animationDuration: isHovered ? "20s" : "0s",
-          animationIterationCount: "infinite",
-          animationTimingFunction: "linear",
-          '--rotation-angle': isHovered ? '360deg' : '0deg'
-        } as React.CSSProperties}
-      >
+      {/* Navigation Items - No Rotation */}
+      <div className="absolute inset-0">
         {navItems.map((item, index) => {
           const angle = (index * 360) / navItems.length;
           const radian = (angle * Math.PI) / 180;
           const x = Math.cos(radian) * radius;
           const y = Math.sin(radian) * radius;
+          const isHovering = hoveredItem === item.name;
 
           return (
-            <Link
-              key={item.name}
-              to={item.href}
-              className={cn(
-                "absolute w-20 h-20 rounded-full border-2 border-border/50 bg-gradient-to-br backdrop-blur-md flex flex-col items-center justify-center transition-all duration-300 group hover:scale-125 hover:shadow-xl hover:shadow-primary/30 hover:border-primary/70",
-                item.color,
-                hoveredItem === item.name ? "border-primary shadow-xl shadow-primary/30 scale-115" : ""
-              )}
-              style={{
-                left: `calc(50% + ${x}px - 40px)`, // Adjusted for smaller size (20px radius)
-                top: `calc(50% + ${y}px - 40px)`, // Adjusted for smaller size (20px radius)
-              }}
-              onMouseEnter={() => setHoveredItem(item.name)}
-              onMouseLeave={() => setHoveredItem(null)}
-              onClick={() => {
-                toast.success(`${item.name} activated`, { 
-                  description: `Navigating to ${item.name.toLowerCase()}...`,
-                  duration: 2000 
-                });
-              }}
-            >
-              <div 
-                className="relative text-center w-full h-full flex flex-col items-center justify-center"
+            <div key={item.name} className="absolute">
+              <Link
+                to={item.href}
+                className={cn(
+                  "absolute w-20 h-20 rounded-full border-2 border-border/50 bg-gradient-to-br backdrop-blur-md flex flex-col items-center justify-center transition-all duration-300 group shadow-lg",
+                  item.color,
+                  isHovering ? "scale-150 border-primary/80 shadow-2xl shadow-primary/40 z-50" : "scale-100 hover:scale-125 hover:border-primary/60 hover:shadow-xl"
+                )}
                 style={{
-                  transform: isHovered ? 'rotate(calc(-1 * var(--rotation-angle, 0deg)))' : 'rotate(0deg)',
-                  transition: 'transform 1000ms ease-in-out'
+                  left: `calc(50% + ${x}px - 40px)`,
+                  top: `calc(50% + ${y}px - 40px)`,
+                  zIndex: isHovering ? 50 : 10
+                }}
+                onMouseEnter={() => setHoveredItem(item.name)}
+                onMouseLeave={() => setHoveredItem(null)}
+                onClick={() => {
+                  toast.success(`${item.name} activated`, { 
+                    description: `Navigating to ${item.name.toLowerCase()}...`,
+                    duration: 2000 
+                  });
                 }}
               >
-                <item.Icon className="h-5 w-5 text-foreground group-hover:text-primary transition-colors mx-auto mb-0.5" />
-                <div className="text-[9px] font-medium text-muted-foreground group-hover:text-primary px-1 py-0.5 bg-background/80 rounded-md">{item.count}</div>
-                
-                {/* Enhanced Tooltip */}
-                <div className={cn(
-                  "absolute bottom-full mb-6 left-1/2 transform -translate-x-1/2 px-4 py-3 bg-background/95 backdrop-blur-md border border-border rounded-xl text-sm font-semibold whitespace-nowrap transition-all duration-300 pointer-events-none shadow-2xl z-[100]",
-                  hoveredItem === item.name ? "opacity-100 translate-y-0 scale-100 visible" : "opacity-0 translate-y-3 scale-90 invisible"
-                )}>
-                  <div className="flex items-center gap-3">
-                    <div className={cn("p-2 rounded-lg bg-gradient-to-br", item.color)}>
-                      <item.Icon className="h-4 w-4 text-foreground" />
-                    </div>
-                    <div className="text-left">
-                      <div className="text-foreground font-bold text-sm">{item.name}</div>
-                      <div className="text-xs text-muted-foreground">{item.count} items</div>
-                    </div>
+                <div className="relative text-center w-full h-full flex flex-col items-center justify-center">
+                  <item.Icon className={cn(
+                    "transition-all duration-300 mx-auto mb-1",
+                    isHovering ? "h-7 w-7 text-primary" : "h-5 w-5 text-foreground group-hover:text-primary"
+                  )} />
+                  <div className={cn(
+                    "text-[9px] font-medium transition-all duration-300 px-1 py-0.5 bg-background/80 rounded-md",
+                    isHovering ? "text-primary font-bold" : "text-muted-foreground group-hover:text-primary"
+                  )}>
+                    {item.count}
                   </div>
-                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-background/95"></div>
                 </div>
+              </Link>
+              
+              {/* Enhanced Tooltip */}
+              <div className={cn(
+                "absolute left-1/2 transform -translate-x-1/2 px-4 py-3 bg-background/95 backdrop-blur-md border border-border/80 rounded-xl text-sm font-semibold whitespace-nowrap transition-all duration-300 pointer-events-none shadow-2xl",
+                isHovering ? "opacity-100 translate-y-0 scale-100 visible z-[60]" : "opacity-0 translate-y-3 scale-90 invisible"
+              )}
+              style={{
+                left: `calc(50% + ${x}px - 40px)`,
+                top: `calc(50% + ${y}px - 120px)`, // Position above the icon
+                zIndex: isHovering ? 60 : 0
+              }}>
+                <div className="flex items-center gap-3">
+                  <div className={cn("p-2 rounded-lg bg-gradient-to-br", item.color)}>
+                    <item.Icon className="h-4 w-4 text-foreground" />
+                  </div>
+                  <div className="text-left">
+                    <div className="text-foreground font-bold text-sm">{item.name}</div>
+                    <div className="text-xs text-muted-foreground">{item.count} items</div>
+                  </div>
+                </div>
+                <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-background/95"></div>
               </div>
-            </Link>
+            </div>
           );
         })}
       </div>
