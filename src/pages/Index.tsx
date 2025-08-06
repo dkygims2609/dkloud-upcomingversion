@@ -10,6 +10,7 @@ import { ModernExploreGrid } from "@/components/ModernExploreGrid";
 import { FloatingActionButton } from "@/components/FloatingActionButton";
 import { ScrollReveal, FloatingElement } from "@/components/ModernAnimations";
 import TeamSection from "@/components/TeamSection";
+import { TeaserAdSection } from "@/components/TeaserAdSection";
 
 const Index = () => {
   const [previewData, setPreviewData] = useState({
@@ -71,6 +72,9 @@ const Index = () => {
 
       {/* Modern Explore Grid */}
       <ModernExploreGrid />
+
+      {/* Teaser Ad Section with Trending Content */}
+      <TeaserAdSection />
 
       {/* About Section - Enhanced */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">

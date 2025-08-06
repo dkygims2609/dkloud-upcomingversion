@@ -9,14 +9,14 @@ interface MovieItem {
 
 const teaserContent = {
   movies: [
-    { title: "Narasimha", description: "Feel mythological magic with epic battles and divine power" },
-    { title: "RRR", description: "Experience high-octane action and friendship in pre-independence India" },
-    { title: "Bahubali 2", description: "Witness the grand conclusion of royal revenge and honor" },
-    { title: "KGF Chapter 2", description: "Enter the dark underworld of gold mining and power" },
-    { title: "Pushpa", description: "Follow the rise of a red sandalwood smuggler's empire" },
-    { title: "Dune", description: "Explore epic sci-fi saga of desert planet and spice wars" },
-    { title: "Avengers Endgame", description: "See the ultimate superhero battle against time and destiny" },
-    { title: "Inception", description: "Dive into mind-bending dreams within dreams thriller" }
+    { title: "Saiyarra", description: "Watch Saiyarra to feel mythological magic with epic battles and divine power" },
+    { title: "Narasimha", description: "Watch Narasimha to witness the divine avatar's legendary quest for justice" },
+    { title: "RRR", description: "Watch RRR to experience high-octane action and friendship in pre-independence India" },
+    { title: "Bahubali 2", description: "Watch Bahubali 2 to witness the grand conclusion of royal revenge and honor" },
+    { title: "KGF Chapter 2", description: "Watch KGF Chapter 2 to enter the dark underworld of gold mining and power" },
+    { title: "Pushpa", description: "Watch Pushpa to follow the rise of a red sandalwood smuggler's empire" },
+    { title: "Dune", description: "Watch Dune to explore epic sci-fi saga of desert planet and spice wars" },
+    { title: "Avengers Endgame", description: "Watch Avengers Endgame to see the ultimate superhero battle against time and destiny" }
   ],
   aiTools: [
     "ChatGPT", "Midjourney", "Stable Diffusion", "GitHub Copilot", "Jasper AI",
@@ -34,7 +34,7 @@ export function TeaserAdSection() {
   const [currentCategory, setCurrentCategory] = useState(0);
   const [currentItems, setCurrentItems] = useState<(string | MovieItem)[]>([]);
   const [isVisible, setIsVisible] = useState(true);
-  const { getTrendingWithDescriptions } = useTrendingMovies();
+  const { getTrendingWithDescriptions, loading: moviesLoading } = useTrendingMovies();
 
   const categories = [
     {
@@ -75,22 +75,31 @@ export function TeaserAdSection() {
   useEffect(() => {
     const shuffleItems = () => {
       const category = categories[currentCategory];
+      if (!category || !category.items || category.items.length === 0) return;
+      
       const shuffled = [...category.items].sort(() => Math.random() - 0.5);
-      setCurrentItems(shuffled.slice(0, 6)); // Show 6 items at a time
+      setCurrentItems(shuffled.slice(0, 8)); // Show 8 items at a time
     };
 
     shuffleItems();
-    const shuffleInterval = setInterval(shuffleItems, 3000);
+    const shuffleInterval = setInterval(shuffleItems, 4000); // Slower shuffling
 
     return () => clearInterval(shuffleInterval);
-  }, [currentCategory]);
+  }, [currentCategory, categories]);
 
   const currentCategoryData = categories[currentCategory];
 
   return (
-    <div className="w-full py-6 bg-gradient-to-r from-background/80 via-muted/20 to-background/80 backdrop-blur-sm border-y border-border/50">
+    <div className="w-full py-8 bg-gradient-to-r from-background/80 via-muted/20 to-background/80 backdrop-blur-sm border-y border-border/50">
       <div className="max-w-6xl mx-auto px-4">
         <div className={`transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
+          {/* Loading State */}
+          {moviesLoading && currentCategory === 0 && (
+            <div className="text-center py-8">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+              <p className="text-muted-foreground">Loading trending content...</p>
+            </div>
+          )}
           {/* Category Header */}
           <div className="flex items-center justify-center gap-3 mb-4">
             <div className={`p-2 rounded-full bg-gradient-to-r ${currentCategoryData.color} backdrop-blur-sm`}>
@@ -106,8 +115,8 @@ export function TeaserAdSection() {
           </div>
 
           {/* Scrolling Items */}
-          <div className="relative overflow-hidden">
-            <div className="flex animate-[scroll-left_60s_linear_infinite] space-x-6 whitespace-nowrap">
+          <div className="relative overflow-hidden bg-muted/5 rounded-xl border border-border/30">
+            <div className="flex animate-[scroll-left_60s_linear_infinite] space-x-6 whitespace-nowrap py-2">
               {/* Duplicate items for seamless loop */}
               {[...currentItems, ...currentItems, ...currentItems].map((item, index) => (
                 <div
@@ -137,15 +146,17 @@ export function TeaserAdSection() {
           </div>
 
           {/* Category Indicators */}
-          <div className="flex justify-center mt-4 space-x-2">
+          <div className="flex justify-center mt-6 space-x-2">
             {categories.map((_, index) => (
-              <div
+              <button
                 key={index}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                onClick={() => setCurrentCategory(index)}
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
                   index === currentCategory 
-                    ? 'bg-primary scale-125' 
-                    : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                    ? 'bg-primary scale-125 shadow-lg shadow-primary/50' 
+                    : 'bg-muted-foreground/30 hover:bg-muted-foreground/50 hover:scale-110'
                 }`}
+                aria-label={`Switch to ${categories[index].title}`}
               />
             ))}
           </div>

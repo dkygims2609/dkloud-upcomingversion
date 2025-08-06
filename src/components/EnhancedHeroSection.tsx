@@ -6,7 +6,7 @@ import { DecodingAnimation } from "./DecodingAnimation";
 import { AudioPlayer } from "./AudioPlayer";
 
 import { MagneticButton, ScrollReveal, GlitchText, FloatingElement } from "./ModernAnimations";
-import { TeaserAdSection } from "./TeaserAdSection";
+
 import { cn } from "@/lib/utils";
 
 export function EnhancedHeroSection() {
@@ -135,12 +135,6 @@ export function EnhancedHeroSection() {
           </div>
         </ScrollReveal>
 
-        {/* Teaser Ad Section - Positioned optimally */}
-        <ScrollReveal direction="up" delay={1300}>
-          <div className="mt-4 mb-4">
-            <TeaserAdSection />
-          </div>
-        </ScrollReveal>
 
         {/* Scroll indicator */}
         <ScrollReveal direction="up" delay={1400}>
