@@ -17,12 +17,14 @@ const categoryIcons = {
   "Utilities": Wrench,
 };
 
-const getCategoryIcon = (category: string) => {
+const getCategoryIcon = (category?: string) => {
+  if (!category) return Globe;
   const IconComponent = categoryIcons[category as keyof typeof categoryIcons] || Globe;
   return IconComponent;
 };
 
-const getCategoryColor = (category: string) => {
+const getCategoryColor = (category?: string) => {
+  if (!category) return "bg-primary/10 text-primary border-primary/20";
   const colors = {
     "Developer Tools": "bg-blue-500/10 text-blue-600 border-blue-500/20",
     "Design Resources": "bg-purple-500/10 text-purple-600 border-purple-500/20", 
@@ -159,7 +161,7 @@ export default function GemWebsites() {
         {/* Results Grid */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredWebsites.map((website, index) => {
-            const IconComponent = getCategoryIcon(website.Category || "");
+            const IconComponent = getCategoryIcon(website.Category);
             return (
               <Card 
                 key={index} 
