@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { ArrowRight, Sparkles, Zap, Volume2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -20,38 +19,29 @@ export function EnhancedHeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden hero-background px-4 py-16">
-      {/* Enhanced Theme-Adaptive Background */}
-      <div className="absolute inset-0 hero-background-pattern opacity-40" />
-      
-      {/* Animated Grid Pattern */}
-      <div className="absolute inset-0 hero-grid-pattern opacity-20" />
-      
-      {/* Floating Gradient Orbs */}
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/20 px-4 py-16">
+      {/* Animated Background Elements */}
       <div className="absolute inset-0 opacity-30">
-        {Array.from({ length: 12 }).map((_, i) => (
+        {/* Floating orbs */}
+        {Array.from({ length: 8 }).map((_, i) => (
           <FloatingElement
             key={i}
-            delay={i * 0.3}
+            delay={i * 0.5}
             className={cn(
-              "absolute rounded-full blur-2xl hero-orb",
-              i % 4 === 0 && "hero-orb-primary",
-              i % 4 === 1 && "hero-orb-secondary", 
-              i % 4 === 2 && "hero-orb-accent",
-              i % 4 === 3 && "hero-orb-muted"
+              "absolute rounded-full blur-xl",
+              i % 2 === 0 
+                ? "bg-gradient-to-r from-primary/20 to-secondary/20" 
+                : "bg-gradient-to-r from-accent/20 to-primary/20"
             )}
             style={{
-              width: `${Math.random() * 120 + 60}px`,
-              height: `${Math.random() * 120 + 60}px`,
+              width: `${Math.random() * 100 + 50}px`,
+              height: `${Math.random() * 100 + 50}px`,
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
             }}
           />
         ))}
       </div>
-
-      {/* Constellation Effect */}
-      <div className="absolute inset-0 hero-constellation opacity-20" />
 
       {/* Main Content */}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
@@ -161,6 +151,9 @@ export function EnhancedHeroSection() {
           </div>
         </ScrollReveal>
       </div>
+
+      {/* Ambient glow */}
+      <div className="absolute inset-0 bg-gradient-to-t from-primary/5 via-transparent to-secondary/5 pointer-events-none" />
     </section>
   );
 }
