@@ -22,7 +22,7 @@ export function useGemWebsitesAPI() {
       setError(null);
       
       const response = await fetch(
-        'https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLifUENDi8XCInb3nG_UZyx7CklBFKO7E__wclRJ0awnzl2JWJpzuJEjGRfQlEwsgWCa86GyWUny1B3xZcjBcvOXCaHkjIDVgsOrqEr1xBBAkOoeuYPz-1G7QK6Q13NfNfxfyENxhyVpKGLNsDY9gLIH63e4vgfctdyr5aCYkL24r97skaORkRmv_8Ksi9LrNwP-QiZaYPN7bCmJ2JrWjNCOdfINDJGz_Tgb0m8Q8nsmUwSMUiDab8tTCRqIpw&lib=M6Ya1GTFZ7g4IDHsSoaF-TbONwxaIsT7L'
+        'https://script.google.com/macros/s/AKfycbym4wPrXWr_z7us8kQEopSOGwUv8yviSqP8OJhlL7Rv73bJ5Q-OulVVlJtAEjMtxunK/exec'
       );
       
       if (!response.ok) {

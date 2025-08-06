@@ -168,7 +168,7 @@ export const AudioPlayer = ({ audioSrc, title, description, compact = false }: A
 
         {/* Speed Controls */}
         <div className="flex items-center space-x-1">
-          {[0.75, 1, 1.25, 1.5].map((rate) => (
+          {[0.8, 1.25].map((rate) => (
             <Button
               key={rate}
               onClick={() => changePlaybackRate(rate)}

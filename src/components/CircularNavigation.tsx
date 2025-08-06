@@ -34,11 +34,11 @@ export function CircularNavigation() {
 
   return (
     <div className="relative w-full max-w-2xl mx-auto h-[500px] flex items-center justify-center">
-      {/* Central Hub with Audio */}
+      {/* Enhanced Central Hub */}
       <div 
         className={cn(
-          "absolute rounded-full bg-gradient-to-br from-primary/10 via-secondary/10 to-accent/10 border-2 border-primary/30 flex items-center justify-center transition-all duration-500 z-10 backdrop-blur-sm",
-          isHovered ? "scale-110 shadow-2xl shadow-primary/20" : "scale-100"
+          "absolute rounded-full bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 border-2 border-primary/50 flex items-center justify-center transition-all duration-500 z-10 backdrop-blur-lg shadow-lg",
+          isHovered ? "scale-110 shadow-2xl shadow-primary/40" : "scale-100"
         )}
         style={{ 
           width: centerSize, 
@@ -47,14 +47,9 @@ export function CircularNavigation() {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <div className="text-center p-2">
-          <div className="text-xs font-bold text-primary mb-1">dKloud</div>
-          <div className="text-[10px] text-muted-foreground mb-1">Universe</div>
-          <AudioPlayer 
-            audioSrc="/dKloudaudio.wav" 
-            title=""
-            compact={true}
-          />
+        <div className="text-center p-4">
+          <div className="text-lg font-bold text-primary mb-1">dKloud</div>
+          <div className="text-sm text-muted-foreground">Universe</div>
         </div>
       </div>
 
@@ -82,9 +77,9 @@ export function CircularNavigation() {
               key={item.name}
               to={item.href}
               className={cn(
-                "absolute w-20 h-20 rounded-full border-2 border-border bg-gradient-to-br backdrop-blur-sm flex flex-col items-center justify-center transition-all duration-300 group hover:scale-125 hover:shadow-xl hover:shadow-primary/30",
+                "absolute w-20 h-20 rounded-full border-2 border-border/50 bg-gradient-to-br backdrop-blur-md flex flex-col items-center justify-center transition-all duration-300 group hover:scale-125 hover:shadow-xl hover:shadow-primary/30 hover:border-primary/70",
                 item.color,
-                hoveredItem === item.name ? "border-primary shadow-xl shadow-primary/30 scale-115" : "hover:border-primary/50"
+                hoveredItem === item.name ? "border-primary shadow-xl shadow-primary/30 scale-115" : ""
               )}
               style={{
                 left: `calc(50% + ${x}px - 40px)`, // Adjusted for smaller size (20px radius)
@@ -109,21 +104,21 @@ export function CircularNavigation() {
                 <item.Icon className="h-5 w-5 text-foreground group-hover:text-primary transition-colors mx-auto mb-0.5" />
                 <div className="text-[9px] font-medium text-muted-foreground group-hover:text-primary px-1 py-0.5 bg-background/80 rounded-md">{item.count}</div>
                 
-                {/* Enhanced YouTube-style Tooltip */}
+                {/* Enhanced Tooltip */}
                 <div className={cn(
-                  "absolute bottom-full mb-4 left-1/2 transform -translate-x-1/2 px-4 py-3 bg-background/95 backdrop-blur-md border border-border rounded-xl text-sm font-semibold whitespace-nowrap transition-all duration-300 pointer-events-none shadow-2xl z-50",
-                  hoveredItem === item.name ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-3 scale-90"
+                  "absolute bottom-full mb-6 left-1/2 transform -translate-x-1/2 px-4 py-3 bg-background/95 backdrop-blur-md border border-border rounded-xl text-sm font-semibold whitespace-nowrap transition-all duration-300 pointer-events-none shadow-2xl z-[100]",
+                  hoveredItem === item.name ? "opacity-100 translate-y-0 scale-100 visible" : "opacity-0 translate-y-3 scale-90 invisible"
                 )}>
                   <div className="flex items-center gap-3">
                     <div className={cn("p-2 rounded-lg bg-gradient-to-br", item.color)}>
-                      <item.Icon className="h-5 w-5 text-foreground" />
+                      <item.Icon className="h-4 w-4 text-foreground" />
                     </div>
                     <div className="text-left">
-                      <div className="text-foreground font-bold">{item.name}</div>
+                      <div className="text-foreground font-bold text-sm">{item.name}</div>
                       <div className="text-xs text-muted-foreground">{item.count} items</div>
                     </div>
                   </div>
-                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-6 border-r-6 border-t-6 border-transparent border-t-background/95"></div>
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-background/95"></div>
                 </div>
               </div>
             </Link>
