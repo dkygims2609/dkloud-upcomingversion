@@ -97,6 +97,9 @@
     --purple: 300 100% 40%;
     --orchid: 302 65% 75%;
     
+    /* Scroll Animations */
+    --scroll-speed-slow: 120s;
+    
     /* Success and Warning */
     --success: 150 75% 55%;
     --success-foreground: 220 15% 8%;
@@ -1204,8 +1207,8 @@
   animation: aiCardGlow 2s ease-in-out infinite, aiCardFloat 3s ease-in-out infinite;
 }
 
-/* Teaser Ad Scroll Animation */
-@keyframes scrollLeftTeaser {
+/* Teaser Ad Scroll Animation - Slower and More Readable */
+@keyframes scroll-left {
   0% {
     transform: translateX(0%);
   }

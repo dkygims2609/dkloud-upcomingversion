@@ -82,10 +82,10 @@ export function TeaserAdSection() {
     };
 
     shuffleItems();
-    const shuffleInterval = setInterval(shuffleItems, 4000); // Slower shuffling
+    const shuffleInterval = setInterval(shuffleItems, 6000); // Even slower shuffling
 
     return () => clearInterval(shuffleInterval);
-  }, [currentCategory, categories]);
+  }, [currentCategory]); // Remove categories dependency to fix infinite loop
 
   const currentCategoryData = categories[currentCategory];
 
@@ -116,7 +116,7 @@ export function TeaserAdSection() {
 
           {/* Scrolling Items */}
           <div className="relative overflow-hidden bg-muted/5 rounded-xl border border-border/30">
-            <div className="flex animate-[scroll-left_60s_linear_infinite] space-x-6 whitespace-nowrap py-2">
+            <div className="flex animate-[scroll-left_120s_linear_infinite] space-x-6 whitespace-nowrap py-2">
               {/* Duplicate items for seamless loop */}
               {[...currentItems, ...currentItems, ...currentItems].map((item, index) => (
                 <div

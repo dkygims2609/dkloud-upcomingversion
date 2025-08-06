@@ -23,8 +23,9 @@ export function useTrendingMovies() {
       setLoading(true);
       setError(null);
       
+      // Updated to fetch from the correct trending subtab API
       const response = await fetch(
-        'https://script.google.com/macros/s/AKfycbzO53FfgLV-2Kq5pP0fYF7yjFw1CQlZkZoc5TEIn3rDcPSxv8MB8koOasYlf6BuXXCQ/exec'
+        'https://script.google.com/macros/s/AKfycbwiNhiUq6yWcGQ5dUwMwclRYt_pTsz_8nNXSsYsZClcmdLJGFp3kZYZdSkfqW0LtGWd7A/exec'
       );
       
       if (!response.ok) {

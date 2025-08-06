@@ -73,9 +73,6 @@ const Index = () => {
       {/* Modern Explore Grid */}
       <ModernExploreGrid />
 
-      {/* Teaser Ad Section with Trending Content */}
-      <TeaserAdSection />
-
       {/* About Section - Enhanced */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         {/* Background decoration */}
@@ -205,6 +202,9 @@ const Index = () => {
 
       {/* Team Section */}
       <TeamSection />
+
+      {/* Teaser Ad Section with Trending Content - Moved to Bottom */}
+      <TeaserAdSection />
 
       {/* Floating Action Button */}
       <FloatingActionButton />

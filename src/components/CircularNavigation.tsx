@@ -19,8 +19,8 @@ export function CircularNavigation() {
   const { websites } = useGemWebsitesAPI();
   const { movies } = useTrendingMovies();
 
-  const radius = 180; // Further reduced to prevent overlapping
-  const centerSize = 100; // Smaller center size
+  const radius = 160; // Proper radius for better alignment
+  const centerSize = 120; // Larger center for better visibility
 
   const navItems = [
     { name: "Movies & TV", href: "/movies", Icon: Clapperboard, color: "from-purple-500/20 to-blue-500/20", count: `${movies.length || 500}+` },
@@ -33,7 +33,7 @@ export function CircularNavigation() {
   ];
 
   return (
-    <div className="relative w-full max-w-2xl mx-auto h-[500px] flex items-center justify-center">
+    <div className="relative w-full max-w-2xl mx-auto h-[450px] flex items-center justify-center">
       {/* Enhanced Central Hub */}
       <div 
         className={cn(
@@ -67,13 +67,13 @@ export function CircularNavigation() {
               <Link
                 to={item.href}
                 className={cn(
-                  "absolute w-20 h-20 rounded-full border-2 border-border/50 bg-gradient-to-br backdrop-blur-md flex flex-col items-center justify-center transition-all duration-300 group shadow-lg",
+                  "absolute w-16 h-16 rounded-full border-2 border-border/50 bg-gradient-to-br backdrop-blur-md flex flex-col items-center justify-center transition-all duration-300 group shadow-lg",
                   item.color,
                   isHovering ? "scale-150 border-primary/80 shadow-2xl shadow-primary/40 z-50" : "scale-100 hover:scale-125 hover:border-primary/60 hover:shadow-xl"
                 )}
                 style={{
-                  left: `calc(50% + ${x}px - 40px)`,
-                  top: `calc(50% + ${y}px - 40px)`,
+                  left: `calc(50% + ${x}px - 32px)`,
+                  top: `calc(50% + ${y}px - 32px)`,
                   zIndex: isHovering ? 50 : 10
                 }}
                 onMouseEnter={() => setHoveredItem(item.name)}
@@ -104,9 +104,9 @@ export function CircularNavigation() {
                 "absolute left-1/2 transform -translate-x-1/2 px-4 py-3 bg-background/95 backdrop-blur-md border border-border/80 rounded-xl text-sm font-semibold whitespace-nowrap transition-all duration-300 pointer-events-none shadow-2xl",
                 isHovering ? "opacity-100 translate-y-0 scale-100 visible z-[60]" : "opacity-0 translate-y-3 scale-90 invisible"
               )}
-              style={{
-                left: `calc(50% + ${x}px - 40px)`,
-                top: `calc(50% + ${y}px - 120px)`, // Position above the icon
+               style={{
+                left: `calc(50% + ${x}px - 32px)`,
+                top: `calc(50% + ${y}px - 100px)`, // Position above the icon
                 zIndex: isHovering ? 60 : 0
               }}>
                 <div className="flex items-center gap-3">
