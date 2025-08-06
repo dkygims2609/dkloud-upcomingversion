@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 export interface GemWebsiteAPI {
   Website: string;
   Purpose: string;
-  Category?: string;
 }
 
 export function useGemWebsitesAPI() {
