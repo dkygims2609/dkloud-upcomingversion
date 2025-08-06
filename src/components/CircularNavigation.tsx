@@ -24,7 +24,7 @@ export function CircularNavigation() {
   const { news } = useNewsData();
   const { gadgets } = useGadgetData();
 
-  const radius = 180;
+  const radius = 200; // Increased from 180
   const centerSize = 140;
 
   const navItems = [
@@ -72,8 +72,9 @@ export function CircularNavigation() {
         style={{ 
           animationDuration: isHovered ? "20s" : "0s",
           animationIterationCount: "infinite",
-          animationTimingFunction: "linear"
-        }}
+          animationTimingFunction: "linear",
+          '--rotation-angle': isHovered ? '360deg' : '0deg'
+        } as React.CSSProperties}
       >
         {navItems.map((item, index) => {
           const angle = (index * 360) / navItems.length;
@@ -86,13 +87,13 @@ export function CircularNavigation() {
               key={item.name}
               to={item.href}
               className={cn(
-                "absolute w-20 h-20 rounded-full border-2 border-border bg-gradient-to-br backdrop-blur-sm flex flex-col items-center justify-center transition-all duration-300 group hover:scale-125 hover:shadow-lg",
+                "absolute w-24 h-24 rounded-full border-2 border-border bg-gradient-to-br backdrop-blur-sm flex flex-col items-center justify-center transition-all duration-300 group hover:scale-125 hover:shadow-lg",
                 item.color,
                 hoveredItem === item.name ? "border-primary shadow-lg shadow-primary/20 scale-110" : "hover:border-primary/50"
               )}
               style={{
-                left: `calc(50% + ${x}px - 40px)`,
-                top: `calc(50% + ${y}px - 40px)`,
+                left: `calc(50% + ${x}px - 48px)`, // Adjusted for larger size
+                top: `calc(50% + ${y}px - 48px)`, // Adjusted for larger size
               }}
               onMouseEnter={() => setHoveredItem(item.name)}
               onMouseLeave={() => setHoveredItem(null)}
@@ -103,17 +104,26 @@ export function CircularNavigation() {
                 });
               }}
             >
-              <div className="relative text-center">
-                <item.Icon className="h-5 w-5 text-foreground group-hover:text-primary transition-colors mx-auto mb-1" />
+              <div 
+                className="relative text-center"
+                style={{
+                  transform: isHovered ? 'rotate(calc(-1 * var(--rotation-angle, 0deg)))' : 'rotate(0deg)',
+                  transition: 'transform 1000ms ease-in-out'
+                }}
+              >
+                <item.Icon className="h-7 w-7 text-foreground group-hover:text-primary transition-colors mx-auto mb-1" />
                 <div className="text-xs font-medium text-muted-foreground group-hover:text-primary">{item.count}</div>
                 
-                {/* Tooltip */}
+                {/* Enhanced Tooltip */}
                 <div className={cn(
-                  "absolute bottom-full mb-2 left-1/2 transform -translate-x-1/2 px-2 py-1 bg-popover border border-border rounded text-xs whitespace-nowrap transition-all duration-200 pointer-events-none",
-                  hoveredItem === item.name ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
+                  "absolute bottom-full mb-3 left-1/2 transform -translate-x-1/2 px-3 py-2 bg-popover/95 backdrop-blur-sm border border-border rounded-lg text-sm font-medium whitespace-nowrap transition-all duration-300 pointer-events-none shadow-lg",
+                  hoveredItem === item.name ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-2 scale-95"
                 )}>
-                  {item.name}
-                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-2 border-r-2 border-t-2 border-transparent border-t-border"></div>
+                  <div className="flex items-center gap-2">
+                    <item.Icon className="h-4 w-4 text-primary" />
+                    <span>{item.name}</span>
+                  </div>
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-border"></div>
                 </div>
               </div>
             </Link>

@@ -198,7 +198,15 @@ export const GlitchText = ({
   className?: string;
 }) => {
   return (
-    <div className={cn("relative inline-block glitch-text", className)} data-text={text}>
+    <div 
+      className={cn("relative inline-block glitch-text text-[#dc2626]", className)} 
+      data-text={text}
+      style={{
+        color: '#dc2626',
+        textShadow: '0 0 10px rgba(220, 38, 38, 0.3)',
+        filter: 'drop-shadow(0 0 5px rgba(220, 38, 38, 0.2))'
+      }}
+    >
       {text}
     </div>
   );

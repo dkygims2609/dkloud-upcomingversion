@@ -820,6 +820,11 @@
   .animate-power-pulse {
     animation: powerPulse 3s ease-in-out forwards;
   }
+
+  /* Teaser Ad Animation */
+  .animate-scroll-left {
+    animation: scrollLeftTeaser 20s linear infinite;
+  }
 }
 
 /* Enhanced IoT Animation Keyframes */
@@ -1197,4 +1202,14 @@
 /* Bright hover effects for AI cards */
 .ai-card-bright:hover {
   animation: aiCardGlow 2s ease-in-out infinite, aiCardFloat 3s ease-in-out infinite;
+}
+
+/* Teaser Ad Scroll Animation */
+@keyframes scrollLeftTeaser {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-33.333%);
+  }
 }

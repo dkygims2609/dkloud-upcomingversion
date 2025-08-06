@@ -88,7 +88,11 @@ export function DecodingAnimation({ text, className = "", delay = 0 }: DecodingA
 
   return (
     <span 
-      className={`${className} font-mono tracking-wider transition-all duration-200`}
+      className={`${className} font-mono tracking-wider transition-all duration-200 bg-gradient-to-r from-[#6366f1] via-[#8b5cf6] to-[#a855f7] bg-clip-text text-transparent`}
+      style={{
+        textShadow: '0 0 20px rgba(139, 92, 246, 0.3)',
+        filter: 'drop-shadow(0 0 10px rgba(139, 92, 246, 0.2))'
+      }}
     >
       {displayText}
     </span>
