@@ -205,8 +205,10 @@ const Index = () => {
       {/* Team Section */}
       <TeamSection />
 
-      {/* Teaser Ad Section with Trending Content - Moved to Bottom */}
-      <TeaserAdSection />
+      {/* Teaser Ad Section - Enhanced Visibility */}
+      <section className="relative z-10 bg-background">
+        <TeaserAdSection />
+      </section>
 
       {/* Floating Action Button */}
       <FloatingActionButton />

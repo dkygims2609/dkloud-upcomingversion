@@ -34,7 +34,16 @@ export function TeaserAdSection() {
   const [currentCategory, setCurrentCategory] = useState(0);
   const [currentItems, setCurrentItems] = useState<(string | MovieItem)[]>([]);
   const [isVisible, setIsVisible] = useState(true);
-  const { getTrendingWithDescriptions, loading: moviesLoading } = useTrendingMovies();
+  const { getTrendingWithDescriptions, loading: moviesLoading, error: moviesError } = useTrendingMovies();
+
+  // Debug logging
+  console.log('TeaserAdSection rendering:', {
+    currentCategory,
+    currentItems: currentItems.length,
+    moviesLoading,
+    moviesError,
+    trendingMovies: getTrendingWithDescriptions()
+  });
 
   const categories = [
     {
@@ -90,33 +99,44 @@ export function TeaserAdSection() {
   const currentCategoryData = categories[currentCategory];
 
   return (
-    <div className="w-full py-8 bg-gradient-to-r from-background/80 via-muted/20 to-background/80 backdrop-blur-sm border-y border-border/50">
+    <div className="w-full py-12 mt-16 mb-8 bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-red-500/10 backdrop-blur-sm border-y-2 border-primary/20 relative">
+      {/* Debug indicator */}
+      <div className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 text-xs rounded">
+        TeaserAd Loaded
+      </div>
       <div className="max-w-6xl mx-auto px-4">
         <div className={`transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
           {/* Loading State */}
           {moviesLoading && currentCategory === 0 && (
             <div className="text-center py-8">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-              <p className="text-muted-foreground">Loading trending content...</p>
+              <p className="text-foreground text-lg font-semibold">Loading trending content...</p>
+            </div>
+          )}
+          
+          {/* Error State */}
+          {moviesError && currentCategory === 0 && (
+            <div className="text-center py-8">
+              <p className="text-red-400 text-lg font-semibold">Using fallback content - {moviesError}</p>
             </div>
           )}
           {/* Category Header */}
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className={`p-2 rounded-full bg-gradient-to-r ${currentCategoryData.color} backdrop-blur-sm`}>
-              <currentCategoryData.icon className={`h-5 w-5 ${currentCategoryData.textColor}`} />
+          <div className="flex items-center justify-center gap-3 mb-6">
+            <div className={`p-3 rounded-full bg-gradient-to-r ${currentCategoryData.color} backdrop-blur-sm border border-white/20`}>
+              <currentCategoryData.icon className={`h-6 w-6 ${currentCategoryData.textColor}`} />
             </div>
-            <h3 className="text-lg font-semibold text-foreground">
+            <h3 className="text-2xl font-bold text-foreground bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent">
               {currentCategoryData.title}
             </h3>
             <div className="flex items-center gap-1">
-              <TrendingUp className="h-4 w-4 text-primary" />
-              <Star className="h-4 w-4 text-primary fill-current" />
+              <TrendingUp className="h-5 w-5 text-primary animate-pulse" />
+              <Star className="h-5 w-5 text-yellow-400 fill-current animate-pulse" />
             </div>
           </div>
 
           {/* Scrolling Items */}
-          <div className="relative overflow-hidden bg-muted/5 rounded-xl border border-border/30">
-            <div className="flex animate-[scroll-left_120s_linear_infinite] space-x-6 whitespace-nowrap py-2">
+          <div className="relative overflow-hidden bg-gradient-to-r from-card/50 to-card/30 rounded-xl border-2 border-primary/30 shadow-lg">
+            <div className="flex animate-[scroll-left_120s_linear_infinite] space-x-6 whitespace-nowrap py-4">
               {/* Duplicate items for seamless loop */}
               {[...currentItems, ...currentItems, ...currentItems].map((item, index) => (
                 <div
