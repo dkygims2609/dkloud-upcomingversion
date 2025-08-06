@@ -11,7 +11,7 @@ import { FloatingActionButton } from "@/components/FloatingActionButton";
 import { ScrollReveal, FloatingElement } from "@/components/ModernAnimations";
 import TeamSection from "@/components/TeamSection";
 import { TeaserAdSection } from "@/components/TeaserAdSection";
-import { TrendingMoviesAdSection } from "@/components/TrendingMoviesAdSection";
+
 
 const Index = () => {
   const [previewData, setPreviewData] = useState({
@@ -201,8 +201,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Trending Movies Ad Section */}
-      <TrendingMoviesAdSection />
 
       {/* Team Section */}
       <TeamSection />
