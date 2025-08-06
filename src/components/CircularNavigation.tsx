@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Clapperboard, Globe, Brain, BookOpen, Zap, Package, Briefcase } from "lucide-react";
+import { Clapperboard, Globe, Brain, BookOpen, Zap, Package, Briefcase, Play, Pause } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useEnhancedNewsData } from "@/hooks/useEnhancedNewsData";
 import { useLatestGadgets } from "@/hooks/useLatestGadgets";
-import { useGemWebsitesAPI } from "@/hooks/useGemWebsitesAPI";
+import { useGemWebsites } from "@/hooks/useGemWebsites";
 import { AudioPlayer } from "./AudioPlayer";
 
 
@@ -15,23 +15,23 @@ export function CircularNavigation() {
   
   const { news } = useEnhancedNewsData();
   const { gadgets } = useLatestGadgets();
-  const { websites } = useGemWebsitesAPI();
+  const { websites } = useGemWebsites();
 
-  const radius = 180; // Further reduced to prevent overlapping
-  const centerSize = 100; // Reduced center size
+  const radius = 200; // Reduced to prevent overlapping
+  const centerSize = 120; // Reduced center size
 
   const navItems = [
     { name: "Movies & TV", href: "/movies", Icon: Clapperboard, color: "from-purple-500/20 to-blue-500/20", count: "500+" },
     { name: "AI Tools", href: "/aitools", Icon: Brain, color: "from-blue-500/20 to-cyan-500/20", count: "200+" },
-    { name: "Gem Websites", href: "/gem-websites", Icon: Globe, color: "from-emerald-500/20 to-teal-500/20", count: `${websites.length}` },
-    { name: "Tech Corner", href: "/techcorner", Icon: BookOpen, color: "from-green-500/20 to-emerald-500/20", count: `${news.length}` },
-    { name: "SmartTech", href: "/smarttech", Icon: Zap, color: "from-yellow-500/20 to-orange-500/20", count: `${gadgets.length}` },
+    { name: "Gem Websites", href: "/gem-websites", Icon: Globe, color: "from-emerald-500/20 to-teal-500/20", count: `${websites.length}+` },
+    { name: "Tech Corner", href: "/techcorner", Icon: BookOpen, color: "from-green-500/20 to-emerald-500/20", count: `${news.length}+` },
+    { name: "SmartTech", href: "/smarttech", Icon: Zap, color: "from-yellow-500/20 to-orange-500/20", count: `${gadgets.length}+` },
     { name: "Products", href: "/digiproducts", Icon: Package, color: "from-purple-500/20 to-violet-500/20", count: "50+" },
     { name: "Services", href: "/services", Icon: Briefcase, color: "from-indigo-500/20 to-blue-500/20", count: "10+" },
   ];
 
   return (
-    <div className="relative w-full max-w-xl mx-auto h-[450px] flex items-center justify-center">
+    <div className="relative w-full max-w-2xl mx-auto h-[500px] flex items-center justify-center">
       {/* Central Hub with Audio */}
       <div 
         className={cn(
@@ -80,13 +80,13 @@ export function CircularNavigation() {
               key={item.name}
               to={item.href}
               className={cn(
-                "absolute w-20 h-20 rounded-full border-2 border-border bg-gradient-to-br backdrop-blur-sm flex flex-col items-center justify-center transition-all duration-300 group hover:scale-125 hover:shadow-xl hover:shadow-primary/30",
+                "absolute w-24 h-24 rounded-full border-2 border-border bg-gradient-to-br backdrop-blur-sm flex flex-col items-center justify-center transition-all duration-300 group hover:scale-125 hover:shadow-xl hover:shadow-primary/30",
                 item.color,
                 hoveredItem === item.name ? "border-primary shadow-xl shadow-primary/30 scale-115" : "hover:border-primary/50"
               )}
               style={{
-                left: `calc(50% + ${x}px - 40px)`, // Adjusted for smaller size (20px radius)
-                top: `calc(50% + ${y}px - 40px)`, // Adjusted for smaller size (20px radius)
+                left: `calc(50% + ${x}px - 48px)`, // Adjusted for smaller size (24px radius)
+                top: `calc(50% + ${y}px - 48px)`, // Adjusted for smaller size (24px radius)
               }}
               onMouseEnter={() => setHoveredItem(item.name)}
               onMouseLeave={() => setHoveredItem(null)}
@@ -104,24 +104,24 @@ export function CircularNavigation() {
                   transition: 'transform 1000ms ease-in-out'
                 }}
               >
-                <item.Icon className="h-5 w-5 text-foreground group-hover:text-primary transition-colors mx-auto mb-1" />
-                <div className="text-[8px] font-medium text-muted-foreground group-hover:text-primary px-1 py-0.5 bg-background/80 rounded-md">{item.count}</div>
+                <item.Icon className="h-6 w-6 text-foreground group-hover:text-primary transition-colors mx-auto mb-1" />
+                <div className="text-[10px] font-medium text-muted-foreground group-hover:text-primary px-1 py-0.5 bg-background/80 rounded-md">{item.count}</div>
                 
-                {/* Enhanced Tooltip */}
+                {/* Enhanced YouTube-style Tooltip */}
                 <div className={cn(
-                  "absolute bottom-full mb-3 left-1/2 transform -translate-x-1/2 px-3 py-2 bg-background/95 backdrop-blur-md border border-border rounded-lg text-xs font-semibold whitespace-nowrap transition-all duration-300 pointer-events-none shadow-xl z-50",
-                  hoveredItem === item.name ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-2 scale-90"
+                  "absolute bottom-full mb-4 left-1/2 transform -translate-x-1/2 px-4 py-3 bg-background/95 backdrop-blur-md border border-border rounded-xl text-sm font-semibold whitespace-nowrap transition-all duration-300 pointer-events-none shadow-2xl z-50",
+                  hoveredItem === item.name ? "opacity-100 translate-y-0 scale-100" : "opacity-0 translate-y-3 scale-90"
                 )}>
-                  <div className="flex items-center gap-2">
-                    <div className={cn("p-1.5 rounded-md bg-gradient-to-br", item.color)}>
-                      <item.Icon className="h-4 w-4 text-foreground" />
+                  <div className="flex items-center gap-3">
+                    <div className={cn("p-2 rounded-lg bg-gradient-to-br", item.color)}>
+                      <item.Icon className="h-5 w-5 text-foreground" />
                     </div>
                     <div className="text-left">
-                      <div className="text-foreground font-bold text-xs">{item.name}</div>
-                      <div className="text-[10px] text-muted-foreground">{item.count} items</div>
+                      <div className="text-foreground font-bold">{item.name}</div>
+                      <div className="text-xs text-muted-foreground">{item.count} items</div>
                     </div>
                   </div>
-                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-background/95"></div>
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-6 border-r-6 border-t-6 border-transparent border-t-background/95"></div>
                 </div>
               </div>
             </Link>

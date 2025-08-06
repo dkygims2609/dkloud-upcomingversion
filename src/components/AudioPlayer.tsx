@@ -1,8 +1,7 @@
 
 import { useState, useRef, useEffect } from "react";
-import { Play, Pause, Volume2, SkipForward, SkipBack, Gauge } from "lucide-react";
+import { Play, Pause, Volume2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 interface AudioPlayerProps {
   audioSrc: string;
@@ -16,7 +15,6 @@ export const AudioPlayer = ({ audioSrc, title, description, compact = false }: A
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [playbackRate, setPlaybackRate] = useState(1);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
@@ -80,109 +78,27 @@ export const AudioPlayer = ({ audioSrc, title, description, compact = false }: A
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
-  const handleSpeedChange = (speed: string) => {
-    const rate = parseFloat(speed);
-    setPlaybackRate(rate);
-    if (audioRef.current) {
-      audioRef.current.playbackRate = rate;
-    }
-  };
-
-  const skipForward = () => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = Math.min(audioRef.current.currentTime + 10, duration);
-    }
-  };
-
-  const skipBackward = () => {
-    if (audioRef.current) {
-      audioRef.current.currentTime = Math.max(audioRef.current.currentTime - 10, 0);
-    }
-  };
-
   const progressPercentage = duration > 0 ? (currentTime / duration) * 100 : 0;
 
   if (compact) {
     return (
-      <div className="flex flex-col items-center space-y-3 p-4 bg-gradient-to-br from-primary/5 to-secondary/5 rounded-xl border border-primary/10">
+      <div className="flex flex-col items-center">
         <audio ref={audioRef} src={audioSrc} preload="metadata" />
-        
-        {/* Listen What is dKloud text */}
-        <div className="text-center">
-          <h4 className="text-sm font-semibold text-foreground mb-1">Listen: What is dKloud?</h4>
-          <p className="text-xs text-muted-foreground">Discover our audio introduction</p>
-        </div>
-
-        {/* Main Controls */}
-        <div className="flex items-center gap-3">
-          <Button
-            onClick={skipBackward}
-            disabled={isLoading}
-            size="sm"
-            variant="ghost"
-            className="rounded-full w-8 h-8 p-0"
-          >
-            <SkipBack className="w-3 h-3" />
-          </Button>
-          
-          <Button
-            onClick={togglePlayPause}
-            disabled={isLoading}
-            size="sm"
-            className="bg-primary/20 hover:bg-primary/30 rounded-full w-10 h-10 p-0 transition-all duration-300"
-          >
-            {isLoading ? (
-              <div className="w-4 h-4 border border-primary/50 border-t-primary rounded-full animate-spin" />
-            ) : isPlaying ? (
-              <Pause className="w-4 h-4" />
-            ) : (
-              <Play className="w-4 h-4 ml-0.5" />
-            )}
-          </Button>
-          
-          <Button
-            onClick={skipForward}
-            disabled={isLoading}
-            size="sm"
-            variant="ghost"
-            className="rounded-full w-8 h-8 p-0"
-          >
-            <SkipForward className="w-3 h-3" />
-          </Button>
-        </div>
-
-        {/* Progress Bar */}
-        <div className="w-full max-w-xs">
-          <div className="flex items-center justify-between text-xs text-muted-foreground mb-1">
-            <span>{formatTime(currentTime)}</span>
-            <span>{formatTime(duration)}</span>
-          </div>
-          <div 
-            className="w-full h-1.5 bg-muted rounded-full cursor-pointer hover:h-2 transition-all duration-200"
-            onClick={handleProgressClick}
-          >
-            <div 
-              className="h-full bg-gradient-to-r from-primary to-secondary rounded-full transition-all duration-200"
-              style={{ width: `${progressPercentage}%` }}
-            />
-          </div>
-        </div>
-
-        {/* Speed Control */}
-        <div className="flex items-center gap-2">
-          <Gauge className="w-3 h-3 text-muted-foreground" />
-          <Select value={playbackRate.toString()} onValueChange={handleSpeedChange}>
-            <SelectTrigger className="w-16 h-6 text-xs">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="0.75">0.75x</SelectItem>
-              <SelectItem value="1">1x</SelectItem>
-              <SelectItem value="1.25">1.25x</SelectItem>
-              <SelectItem value="1.5">1.5x</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+        <Button
+          onClick={togglePlayPause}
+          disabled={isLoading}
+          size="sm"
+          className="bg-primary/20 hover:bg-primary/30 rounded-full w-8 h-8 p-0 transition-all duration-300"
+        >
+          {isLoading ? (
+            <div className="w-3 h-3 border border-primary/50 border-t-primary rounded-full animate-spin" />
+          ) : isPlaying ? (
+            <Pause className="w-3 h-3" />
+          ) : (
+            <Play className="w-3 h-3 ml-0.5" />
+          )}
+        </Button>
+        <div className="text-xs text-muted-foreground mt-1">Listen</div>
       </div>
     );
   }

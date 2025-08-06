@@ -51,7 +51,14 @@ export function EnhancedHeroSection() {
           />
         ))}
         
-{/* Removed interactive cursor glow effect */}
+        {/* Interactive cursor glow */}
+        <div 
+          className="absolute w-96 h-96 rounded-full bg-gradient-radial from-primary/10 via-secondary/5 to-transparent pointer-events-none transition-all duration-300 ease-out"
+          style={{
+            left: mousePosition.x - 192,
+            top: mousePosition.y - 192,
+          }}
+        />
       </div>
 
       {/* Main Content */}
@@ -84,14 +91,17 @@ export function EnhancedHeroSection() {
           </div>
         </ScrollReveal>
 
-        {/* Compact Audio Player */}
+        {/* Audio Player with modern styling - Reduced size */}
         <ScrollReveal direction="scale" delay={600}>
-          <div className="mb-6 max-w-md mx-auto">
-            <AudioPlayer 
-              audioSrc="/dKloudaudio.wav"
-              title=""
-              compact={true}
-            />
+          <div className="mb-6 max-w-sm mx-auto">
+            <div className="glass-card p-3 rounded-lg border border-primary/20 hover-glow transition-all duration-300">
+              <AudioPlayer 
+                audioSrc="/dKloudaudio.wav"
+                title="Listen: What is dKloud?"
+                description=""
+                compact={true}
+              />
+            </div>
           </div>
         </ScrollReveal>
 
