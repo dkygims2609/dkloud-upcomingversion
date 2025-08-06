@@ -69,6 +69,11 @@ const Index = () => {
       {/* Enhanced Hero Section */}
       <EnhancedHeroSection />
 
+      {/* Teaser Ad Section - Positioned right after hero section */}
+      <section className="relative z-10 bg-background">
+        <TeaserAdSection />
+      </section>
+
       {/* Modern Explore Grid */}
       <ModernExploreGrid />
 
@@ -201,11 +206,6 @@ const Index = () => {
 
       {/* Team Section */}
       <TeamSection />
-
-      {/* Teaser Ad Section - Moved to bottom */}
-      <section className="relative z-10 bg-background">
-        <TeaserAdSection />
-      </section>
 
       {/* Floating Action Button */}
       <FloatingActionButton />
