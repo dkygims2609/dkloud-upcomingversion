@@ -16,9 +16,8 @@ export default function GemWebsites() {
       setFilteredWebsites(
         websites.filter(
           (website) =>
-            website.Name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            website.Category?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            website.Description?.toLowerCase().includes(searchTerm.toLowerCase())
+            website.Website?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            website.Purpose?.toLowerCase().includes(searchTerm.toLowerCase())
         )
       );
     } else {
@@ -81,61 +80,32 @@ export default function GemWebsites() {
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <CardTitle className="text-lg group-hover:text-primary transition-colors line-clamp-2">
-                      {website.Name || 'Unnamed Website'}
+                      {website.Website || 'Unnamed Website'}
                     </CardTitle>
-                    <CardDescription className="mt-2 line-clamp-3">
-                      {website.Description || 'No description available'}
+                    <CardDescription className="mt-2 line-clamp-4">
+                      {website.Purpose || 'No purpose description available'}
                     </CardDescription>
                   </div>
                   <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0" />
                 </div>
               </CardHeader>
               <CardContent>
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <Badge variant="secondary">{website.Category || 'General'}</Badge>
-                    {website.Free === "Yes" && (
-                      <Badge variant="outline" className="text-green-600 border-green-600">
-                        Free
-                      </Badge>
-                    )}
-                    {website.Featured === "Yes" && (
-                      <Badge variant="outline" className="text-primary border-primary">
-                        Featured
-                      </Badge>
-                    )}
-                  </div>
-                  
-                  {website.Rating && website.Rating > 0 && (
-                    <div className="flex items-center gap-1">
-                      <Star className="h-4 w-4 text-yellow-500 fill-current" />
-                      <span className="text-sm font-medium">{website.Rating}/5</span>
-                    </div>
-                  )}
-
-                  {website.Tags && (
-                    <p className="text-xs text-muted-foreground">
-                      Tags: {website.Tags}
-                    </p>
-                  )}
-
-                  <Button 
-                    asChild 
-                    className="w-full mt-4"
-                    variant="outline"
-                    disabled={!website.URL}
+                <Button 
+                  asChild 
+                  className="w-full"
+                  variant="outline"
+                  disabled={!website.Website}
+                >
+                  <a 
+                    href={website.Website?.startsWith('http') ? website.Website : `https://${website.Website}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2"
                   >
-                    <a 
-                      href={website.URL || '#'} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2"
-                    >
-                      Visit Website
-                      <ExternalLink className="h-4 w-4" />
-                    </a>
-                  </Button>
-                </div>
+                    Visit Website
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+                </Button>
               </CardContent>
             </Card>
           ))}

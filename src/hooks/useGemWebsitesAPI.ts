@@ -1,14 +1,8 @@
 import { useState, useEffect } from 'react';
 
 export interface GemWebsiteAPI {
-  Name: string;
-  URL: string;
-  Category: string;
-  Description: string;
-  Tags: string;
-  Free: string;
-  Rating: number;
-  Featured: string;
+  Website: string;
+  Purpose: string;
 }
 
 export function useGemWebsitesAPI() {
