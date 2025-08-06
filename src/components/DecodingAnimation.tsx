@@ -88,10 +88,10 @@ export function DecodingAnimation({ text, className = "", delay = 0 }: DecodingA
 
   return (
     <span 
-      className={`${className} font-mono tracking-wider transition-all duration-200 bg-gradient-to-r from-[#6366f1] via-[#8b5cf6] to-[#a855f7] bg-clip-text text-transparent`}
+      className={`${className} font-mono tracking-wider transition-all duration-200 bg-gradient-to-r from-[#3730a3] via-[#4338ca] to-[#6366f1] bg-clip-text text-transparent`}
       style={{
-        textShadow: '0 0 20px rgba(139, 92, 246, 0.3)',
-        filter: 'drop-shadow(0 0 10px rgba(139, 92, 246, 0.2))'
+        textShadow: '0 0 25px rgba(55, 48, 163, 0.4)',
+        filter: 'drop-shadow(0 0 15px rgba(67, 56, 202, 0.3))'
       }}
     >
       {displayText}

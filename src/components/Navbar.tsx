@@ -33,15 +33,15 @@ const navigation = [
     ]
   },
   { 
-    name: "YouTube Picks", 
-    href: "/ytchannels", 
+    name: "Gem Websites", 
+    href: "/gem-websites", 
     icon: Youtube, 
     color: "from-red-500 to-orange-500",
     dropdownItems: [
-      { name: "Tech Channels", href: "/ytchannels?category=tech" },
-      { name: "Entertainment", href: "/ytchannels?category=entertainment" },
-      { name: "Educational", href: "/ytchannels?category=educational" },
-      { name: "Gaming", href: "/ytchannels?category=gaming" }
+      { name: "Developer Tools", href: "/gem-websites?category=dev-tools" },
+      { name: "Design Resources", href: "/gem-websites?category=design" },
+      { name: "Learning Platforms", href: "/gem-websites?category=learning" },
+      { name: "Productivity", href: "/gem-websites?category=productivity" }
     ]
   },
   { 

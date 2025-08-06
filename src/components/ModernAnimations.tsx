@@ -199,12 +199,12 @@ export const GlitchText = ({
 }) => {
   return (
     <div 
-      className={cn("relative inline-block glitch-text text-[#dc2626]", className)} 
+      className={cn("relative inline-block glitch-text text-[#991b1b]", className)} 
       data-text={text}
       style={{
-        color: '#dc2626',
-        textShadow: '0 0 10px rgba(220, 38, 38, 0.3)',
-        filter: 'drop-shadow(0 0 5px rgba(220, 38, 38, 0.2))'
+        color: '#991b1b',
+        textShadow: '0 0 12px rgba(153, 27, 27, 0.4)',
+        filter: 'drop-shadow(0 0 8px rgba(153, 27, 27, 0.3))'
       }}
     >
       {text}

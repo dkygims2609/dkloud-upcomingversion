@@ -151,9 +151,9 @@ export function EnhancedHeroSection() {
           </div>
         </ScrollReveal>
 
-        {/* Teaser Ad Section */}
+        {/* Teaser Ad Section - Moved up */}
         <ScrollReveal direction="up" delay={1300}>
-          <div className="mt-12 mb-8">
+          <div className="mt-8 mb-6">
             <TeaserAdSection />
           </div>
         </ScrollReveal>
