@@ -1,154 +1,142 @@
 import { useState, useEffect } from "react";
-import { Clapperboard, Brain, Briefcase, Star, Zap, TrendingUp } from "lucide-react";
+import { Sparkles, TrendingUp, Play } from "lucide-react";
+import { useTrendingMovies } from "@/hooks/useTrendingMovies";
 
-interface MovieItem {
+interface TrendingItem {
   title: string;
   description: string;
+  summary: string;
+  category: string;
 }
 
-const teaserContent = {
-  movies: [
-    { title: "Narasimha", description: "Feel mythological magic with epic battles and divine power" },
-    { title: "RRR", description: "Experience high-octane action and friendship in pre-independence India" },
-    { title: "Bahubali 2", description: "Witness the grand conclusion of royal revenge and honor" },
-    { title: "KGF Chapter 2", description: "Enter the dark underworld of gold mining and power" },
-    { title: "Pushpa", description: "Follow the rise of a red sandalwood smuggler's empire" },
-    { title: "Dune", description: "Explore epic sci-fi saga of desert planet and spice wars" },
-    { title: "Avengers Endgame", description: "See the ultimate superhero battle against time and destiny" },
-    { title: "Inception", description: "Dive into mind-bending dreams within dreams thriller" }
-  ],
-  aiTools: [
-    "ChatGPT", "Midjourney", "Stable Diffusion", "GitHub Copilot", "Jasper AI",
-    "Copy.ai", "Runway ML", "DeepL", "Grammarly", "Loom AI", "Notion AI",
-    "Canva AI", "Adobe Firefly", "Figma AI", "Framer AI", "Claude AI"
-  ],
-  services: [
-    "AI Consulting", "Cloud Solutions", "Web Development", "Mobile Apps",
-    "Data Analytics", "Machine Learning", "DevOps", "UI/UX Design",
-    "Digital Marketing", "Content Strategy", "Tech Training", "System Integration"
-  ]
-};
-
 export function TeaserAdSection() {
-  const [currentCategory, setCurrentCategory] = useState(0);
-  const [currentItems, setCurrentItems] = useState<(string | MovieItem)[]>([]);
+  const [currentItems, setCurrentItems] = useState<TrendingItem[]>([]);
   const [isVisible, setIsVisible] = useState(true);
+  const { movies, loading } = useTrendingMovies();
 
   const categories = [
     {
       title: "Trending Movies & Series",
-      items: teaserContent.movies,
-      icon: Clapperboard,
-      color: "from-red-500/20 to-pink-500/20",
-      textColor: "text-red-400"
-    },
-    {
-      title: "Find Your Best Suited AI Tools",
-      items: teaserContent.aiTools,
-      icon: Brain,
-      color: "from-blue-500/20 to-cyan-500/20",
-      textColor: "text-blue-400"
-    },
-    {
-      title: "Opt Our Premium Services",
-      items: teaserContent.services,
-      icon: Briefcase,
-      color: "from-purple-500/20 to-violet-500/20",
-      textColor: "text-purple-400"
+      items: movies.map(movie => ({
+        title: movie.title,
+        description: movie.description,
+        summary: movie.summary,
+        category: movie.category
+      })),
+      icon: TrendingUp,
+      gradient: "from-purple-500 to-pink-500"
     }
   ];
 
+  // Update items when movies data changes
   useEffect(() => {
-    const categoryRotationInterval = setInterval(() => {
+    if (movies.length > 0) {
+      const shuffled = [...movies].sort(() => Math.random() - 0.5);
+      setCurrentItems(shuffled.slice(0, 8).map(movie => ({
+        title: movie.title,
+        description: movie.description,
+        summary: movie.summary,
+        category: movie.category
+      })));
+    }
+  }, [movies]);
+
+  // Shuffle items every 5 seconds
+  useEffect(() => {
+    if (movies.length === 0) return;
+    
+    const itemInterval = setInterval(() => {
       setIsVisible(false);
       setTimeout(() => {
-        setCurrentCategory((prev) => (prev + 1) % categories.length);
+        const shuffled = [...movies].sort(() => Math.random() - 0.5);
+        setCurrentItems(shuffled.slice(0, 8).map(movie => ({
+          title: movie.title,
+          description: movie.description,
+          summary: movie.summary,
+          category: movie.category
+        })));
         setIsVisible(true);
       }, 300);
     }, 5000);
 
-    return () => clearInterval(categoryRotationInterval);
-  }, []);
+    return () => clearInterval(itemInterval);
+  }, [movies]);
 
-  useEffect(() => {
-    const shuffleItems = () => {
-      const category = categories[currentCategory];
-      const shuffled = [...category.items].sort(() => Math.random() - 0.5);
-      setCurrentItems(shuffled.slice(0, 6)); // Show 6 items at a time
-    };
+  const currentCategoryData = categories[0]; // Always use trending movies
 
-    shuffleItems();
-    const shuffleInterval = setInterval(shuffleItems, 3000);
-
-    return () => clearInterval(shuffleInterval);
-  }, [currentCategory]);
-
-  const currentCategoryData = categories[currentCategory];
+  if (loading) {
+    return (
+      <section className="relative py-8 overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-secondary/5 border-t border-b border-border/50" />
+        <div className="relative max-w-7xl mx-auto px-4 text-center">
+          <div className="animate-pulse">
+            <div className="h-8 bg-muted rounded w-64 mx-auto mb-4"></div>
+            <div className="h-4 bg-muted rounded w-96 mx-auto"></div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
-    <div className="w-full py-6 bg-gradient-to-r from-background/80 via-muted/20 to-background/80 backdrop-blur-sm border-y border-border/50">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className={`transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
-          {/* Category Header */}
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className={`p-2 rounded-full bg-gradient-to-r ${currentCategoryData.color} backdrop-blur-sm`}>
-              <currentCategoryData.icon className={`h-5 w-5 ${currentCategoryData.textColor}`} />
-            </div>
-            <h3 className="text-lg font-semibold text-foreground">
+    <section className="relative py-8 overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-primary/5 to-secondary/5 border-t border-b border-border/50" />
+      
+      <div className="relative max-w-7xl mx-auto px-4">
+        {/* Header */}
+        <div className="text-center mb-6">
+          <div className="flex items-center justify-center gap-3 mb-2">
+            <currentCategoryData.icon className={`h-6 w-6 bg-gradient-to-r ${currentCategoryData.gradient} bg-clip-text text-transparent`} />
+            <h2 className={`text-2xl font-bold bg-gradient-to-r ${currentCategoryData.gradient} bg-clip-text text-transparent`}>
               {currentCategoryData.title}
-            </h3>
-            <div className="flex items-center gap-1">
-              <TrendingUp className="h-4 w-4 text-primary" />
-              <Star className="h-4 w-4 text-primary fill-current" />
-            </div>
+            </h2>
           </div>
+          <p className="text-muted-foreground max-w-2xl mx-auto text-sm">
+            Discover trending movies and series with contextual descriptions from our live content
+          </p>
+        </div>
 
-          {/* Scrolling Items */}
-          <div className="relative overflow-hidden">
-            <div className="flex animate-scroll-left space-x-6 whitespace-nowrap">
-              {/* Duplicate items for seamless loop */}
-              {[...currentItems, ...currentItems, ...currentItems].map((item, index) => (
-                <div
-                  key={`${currentCategory}-${index}`}
-                  className="inline-flex flex-col items-start px-6 py-4 bg-card/80 backdrop-blur-sm rounded-xl border border-border/50 hover:border-primary/50 transition-all duration-300 hover:scale-105 cursor-pointer group min-w-[280px]"
-                >
-                  {currentCategory === 0 ? (
-                    // Movie format with title and description
-                    <>
-                      <span className="text-lg font-bold text-foreground group-hover:text-primary transition-colors mb-1">
-                        {typeof item === 'object' && 'title' in item ? item.title : typeof item === 'string' ? item : ''}
-                      </span>
-                      <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors line-clamp-2">
-                        {typeof item === 'object' && 'description' in item ? item.description : ''}
-                      </span>
-                    </>
-                  ) : (
-                    // Regular format for other categories
-                    <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-                      {typeof item === 'object' && 'title' in item ? item.title : typeof item === 'string' ? item : ''}
-                    </span>
-                  )}
-                  <Zap className="h-3 w-3 ml-auto mt-2 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Category Indicators */}
-          <div className="flex justify-center mt-4 space-x-2">
-            {categories.map((_, index) => (
+        {/* Scrolling Content */}
+        <div className="relative">
+          <div className="flex gap-4 animate-scroll overflow-hidden">
+            {/* Duplicate items for seamless loop */}
+            {[...currentItems, ...currentItems].map((item, index) => (
               <div
-                key={index}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                  index === currentCategory 
-                    ? 'bg-primary scale-125' 
-                    : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
+                key={`${item.title}-${index}`}
+                className={`flex-none w-72 p-4 bg-gradient-to-br from-card/50 to-card/30 backdrop-blur-sm border border-border/50 rounded-lg hover:scale-105 transition-all duration-300 group ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
                 }`}
-              />
+                style={{
+                  transitionDelay: `${(index % currentItems.length) * 100}ms`
+                }}
+              >
+                <div className="flex items-start gap-3">
+                  <div className={`w-3 h-3 rounded-full bg-gradient-to-r ${currentCategoryData.gradient} group-hover:scale-110 transition-transform flex-shrink-0 mt-1`} />
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-foreground mb-1 group-hover:text-primary transition-colors text-sm truncate">
+                      {item.title}
+                    </h3>
+                    <p className="text-xs text-muted-foreground line-clamp-2 group-hover:text-foreground/80 transition-colors mb-2">
+                      {item.description}
+                    </p>
+                    <p className="text-xs text-muted-foreground/70 line-clamp-2">
+                      {item.summary}
+                    </p>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         </div>
+
+        {/* Trending Indicator */}
+        <div className="flex justify-center mt-6">
+          <div className="flex items-center gap-2 px-3 py-1 bg-gradient-to-r from-primary/20 to-secondary/20 rounded-full border border-primary/30">
+            <Play className="w-3 h-3 text-primary" />
+            <span className="text-xs text-primary font-medium">Live Trending Content</span>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   );
 }
