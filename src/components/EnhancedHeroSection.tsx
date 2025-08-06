@@ -91,14 +91,15 @@ export function EnhancedHeroSection() {
           </div>
         </ScrollReveal>
 
-        {/* Audio Player with modern styling */}
+        {/* Audio Player with modern styling - Reduced size */}
         <ScrollReveal direction="scale" delay={600}>
-          <div className="mb-8 max-w-md mx-auto">
-            <div className="glass-card p-4 rounded-xl border border-primary/20 hover-glow transition-all duration-300">
+          <div className="mb-6 max-w-sm mx-auto">
+            <div className="glass-card p-3 rounded-lg border border-primary/20 hover-glow transition-all duration-300">
               <AudioPlayer 
                 audioSrc="/dKloudaudio.wav"
                 title="Listen: What is dKloud?"
-                description="Hear directly from the founder about dKloud's vision"
+                description=""
+                compact={true}
               />
             </div>
           </div>
@@ -151,9 +152,9 @@ export function EnhancedHeroSection() {
           </div>
         </ScrollReveal>
 
-        {/* Teaser Ad Section - Moved up */}
+        {/* Teaser Ad Section - Moved closer to CTA */}
         <ScrollReveal direction="up" delay={1300}>
-          <div className="mt-8 mb-6">
+          <div className="mt-6 mb-4">
             <TeaserAdSection />
           </div>
         </ScrollReveal>

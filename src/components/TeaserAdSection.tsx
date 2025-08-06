@@ -1,12 +1,21 @@
 import { useState, useEffect } from "react";
 import { Clapperboard, Brain, Briefcase, Star, Zap, TrendingUp } from "lucide-react";
 
+interface MovieItem {
+  title: string;
+  description: string;
+}
+
 const teaserContent = {
   movies: [
-    "The Godfather", "Pulp Fiction", "The Dark Knight", "Schindler's List", "12 Angry Men",
-    "The Lord of the Rings", "Forrest Gump", "Fight Club", "Inception", "The Matrix",
-    "Goodfellas", "The Empire Strikes Back", "One Flew Over the Cuckoo's Nest", "Se7en",
-    "It's a Wonderful Life", "Seven Samurai", "The Silence of the Lambs", "Saving Private Ryan"
+    { title: "Narasimha", description: "Feel mythological magic with epic battles and divine power" },
+    { title: "RRR", description: "Experience high-octane action and friendship in pre-independence India" },
+    { title: "Bahubali 2", description: "Witness the grand conclusion of royal revenge and honor" },
+    { title: "KGF Chapter 2", description: "Enter the dark underworld of gold mining and power" },
+    { title: "Pushpa", description: "Follow the rise of a red sandalwood smuggler's empire" },
+    { title: "Dune", description: "Explore epic sci-fi saga of desert planet and spice wars" },
+    { title: "Avengers Endgame", description: "See the ultimate superhero battle against time and destiny" },
+    { title: "Inception", description: "Dive into mind-bending dreams within dreams thriller" }
   ],
   aiTools: [
     "ChatGPT", "Midjourney", "Stable Diffusion", "GitHub Copilot", "Jasper AI",
@@ -22,12 +31,12 @@ const teaserContent = {
 
 export function TeaserAdSection() {
   const [currentCategory, setCurrentCategory] = useState(0);
-  const [currentItems, setCurrentItems] = useState<string[]>([]);
+  const [currentItems, setCurrentItems] = useState<(string | MovieItem)[]>([]);
   const [isVisible, setIsVisible] = useState(true);
 
   const categories = [
     {
-      title: "Curated Best Movies",
+      title: "Trending Movies & Series",
       items: teaserContent.movies,
       icon: Clapperboard,
       color: "from-red-500/20 to-pink-500/20",
@@ -96,17 +105,30 @@ export function TeaserAdSection() {
 
           {/* Scrolling Items */}
           <div className="relative overflow-hidden">
-            <div className="flex animate-scroll-left space-x-8 whitespace-nowrap">
+            <div className="flex animate-scroll-left space-x-6 whitespace-nowrap">
               {/* Duplicate items for seamless loop */}
               {[...currentItems, ...currentItems, ...currentItems].map((item, index) => (
                 <div
                   key={`${currentCategory}-${index}`}
-                  className="inline-flex items-center px-4 py-2 bg-card/80 backdrop-blur-sm rounded-full border border-border/50 hover:border-primary/50 transition-all duration-300 hover:scale-105 cursor-pointer group"
+                  className="inline-flex flex-col items-start px-6 py-4 bg-card/80 backdrop-blur-sm rounded-xl border border-border/50 hover:border-primary/50 transition-all duration-300 hover:scale-105 cursor-pointer group min-w-[280px]"
                 >
-                  <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-                    {item}
-                  </span>
-                  <Zap className="h-3 w-3 ml-2 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
+                  {currentCategory === 0 ? (
+                    // Movie format with title and description
+                    <>
+                      <span className="text-lg font-bold text-foreground group-hover:text-primary transition-colors mb-1">
+                        {typeof item === 'object' && 'title' in item ? item.title : typeof item === 'string' ? item : ''}
+                      </span>
+                      <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors line-clamp-2">
+                        {typeof item === 'object' && 'description' in item ? item.description : ''}
+                      </span>
+                    </>
+                  ) : (
+                    // Regular format for other categories
+                    <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                      {typeof item === 'object' && 'title' in item ? item.title : typeof item === 'string' ? item : ''}
+                    </span>
+                  )}
+                  <Zap className="h-3 w-3 ml-auto mt-2 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
                 </div>
               ))}
             </div>

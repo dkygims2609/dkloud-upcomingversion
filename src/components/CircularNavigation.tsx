@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Clapperboard, Youtube, Brain, BookOpen, Zap, Package, Briefcase, Play, Pause } from "lucide-react";
+import { Clapperboard, Globe, Brain, BookOpen, Zap, Package, Briefcase, Play, Pause } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useEnhancedNewsData } from "@/hooks/useEnhancedNewsData";
@@ -8,15 +8,6 @@ import { useLatestGadgets } from "@/hooks/useLatestGadgets";
 import { useGemWebsites } from "@/hooks/useGemWebsites";
 import { AudioPlayer } from "./AudioPlayer";
 
-const navItems = [
-  { name: "Movies & TV", href: "/movies", Icon: Clapperboard, color: "from-red-500/20 to-pink-500/20" },
-  { name: "AI Tools", href: "/aitools", Icon: Brain, color: "from-blue-500/20 to-cyan-500/20" },
-  { name: "YouTube", href: "/youtubechannels", Icon: Youtube, color: "from-red-600/20 to-red-400/20" },
-  { name: "Tech Corner", href: "/techcorner", Icon: BookOpen, color: "from-green-500/20 to-emerald-500/20" },
-  { name: "SmartTech", href: "/smarttech", Icon: Zap, color: "from-yellow-500/20 to-orange-500/20" },
-  { name: "Products", href: "/digiproducts", Icon: Package, color: "from-purple-500/20 to-violet-500/20" },
-  { name: "Services", href: "/services", Icon: Briefcase, color: "from-indigo-500/20 to-blue-500/20" },
-];
 
 export function CircularNavigation() {
   const [isHovered, setIsHovered] = useState(false);
@@ -26,13 +17,13 @@ export function CircularNavigation() {
   const { gadgets } = useLatestGadgets();
   const { websites } = useGemWebsites();
 
-  const radius = 220; // Increased for better spacing
-  const centerSize = 150;
+  const radius = 200; // Reduced to prevent overlapping
+  const centerSize = 120; // Reduced center size
 
   const navItems = [
     { name: "Movies & TV", href: "/movies", Icon: Clapperboard, color: "from-purple-500/20 to-blue-500/20", count: "500+" },
     { name: "AI Tools", href: "/aitools", Icon: Brain, color: "from-blue-500/20 to-cyan-500/20", count: "200+" },
-    { name: "Gem Websites", href: "/gem-websites", Icon: Youtube, color: "from-red-600/20 to-red-400/20", count: `${websites.length}+` },
+    { name: "Gem Websites", href: "/gem-websites", Icon: Globe, color: "from-emerald-500/20 to-teal-500/20", count: `${websites.length}+` },
     { name: "Tech Corner", href: "/techcorner", Icon: BookOpen, color: "from-green-500/20 to-emerald-500/20", count: `${news.length}+` },
     { name: "SmartTech", href: "/smarttech", Icon: Zap, color: "from-yellow-500/20 to-orange-500/20", count: `${gadgets.length}+` },
     { name: "Products", href: "/digiproducts", Icon: Package, color: "from-purple-500/20 to-violet-500/20", count: "50+" },
@@ -40,7 +31,7 @@ export function CircularNavigation() {
   ];
 
   return (
-    <div className="relative w-full max-w-lg mx-auto h-96 flex items-center justify-center">
+    <div className="relative w-full max-w-2xl mx-auto h-[500px] flex items-center justify-center">
       {/* Central Hub with Audio */}
       <div 
         className={cn(
@@ -55,8 +46,8 @@ export function CircularNavigation() {
         onMouseLeave={() => setIsHovered(false)}
       >
         <div className="text-center p-2">
-          <div className="text-sm font-bold text-primary mb-1">dKloud</div>
-          <div className="text-xs text-muted-foreground mb-2">Universe</div>
+          <div className="text-xs font-bold text-primary mb-1">dKloud</div>
+          <div className="text-[10px] text-muted-foreground mb-1">Universe</div>
           <AudioPlayer 
             audioSrc="/dKloudaudio.wav" 
             title=""
@@ -89,13 +80,13 @@ export function CircularNavigation() {
               key={item.name}
               to={item.href}
               className={cn(
-                "absolute w-28 h-28 rounded-full border-2 border-border bg-gradient-to-br backdrop-blur-sm flex flex-col items-center justify-center transition-all duration-300 group hover:scale-125 hover:shadow-xl hover:shadow-primary/30",
+                "absolute w-24 h-24 rounded-full border-2 border-border bg-gradient-to-br backdrop-blur-sm flex flex-col items-center justify-center transition-all duration-300 group hover:scale-125 hover:shadow-xl hover:shadow-primary/30",
                 item.color,
                 hoveredItem === item.name ? "border-primary shadow-xl shadow-primary/30 scale-115" : "hover:border-primary/50"
               )}
               style={{
-                left: `calc(50% + ${x}px - 56px)`, // Adjusted for larger size (28px radius)
-                top: `calc(50% + ${y}px - 56px)`, // Adjusted for larger size (28px radius)
+                left: `calc(50% + ${x}px - 48px)`, // Adjusted for smaller size (24px radius)
+                top: `calc(50% + ${y}px - 48px)`, // Adjusted for smaller size (24px radius)
               }}
               onMouseEnter={() => setHoveredItem(item.name)}
               onMouseLeave={() => setHoveredItem(null)}
@@ -107,14 +98,14 @@ export function CircularNavigation() {
               }}
             >
               <div 
-                className="relative text-center"
+                className="relative text-center w-full h-full flex flex-col items-center justify-center"
                 style={{
                   transform: isHovered ? 'rotate(calc(-1 * var(--rotation-angle, 0deg)))' : 'rotate(0deg)',
                   transition: 'transform 1000ms ease-in-out'
                 }}
               >
-                <item.Icon className="h-8 w-8 text-foreground group-hover:text-primary transition-colors mx-auto mb-1" />
-                <div className="text-xs font-medium text-muted-foreground group-hover:text-primary">{item.count}</div>
+                <item.Icon className="h-6 w-6 text-foreground group-hover:text-primary transition-colors mx-auto mb-1" />
+                <div className="text-[10px] font-medium text-muted-foreground group-hover:text-primary px-1 py-0.5 bg-background/80 rounded-md">{item.count}</div>
                 
                 {/* Enhanced YouTube-style Tooltip */}
                 <div className={cn(
