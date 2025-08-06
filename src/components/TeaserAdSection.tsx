@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Clapperboard, Brain, Briefcase, Star, Zap, TrendingUp } from "lucide-react";
 import { useTrendingMovies } from "@/hooks/useTrendingMovies";
@@ -36,36 +37,24 @@ export function TeaserAdSection() {
   const [isVisible, setIsVisible] = useState(true);
   const { getTrendingWithDescriptions, loading: moviesLoading, error: moviesError } = useTrendingMovies();
 
-  // Debug logging
-  console.log('TeaserAdSection rendering:', {
-    currentCategory,
-    currentItems: currentItems.length,
-    moviesLoading,
-    moviesError,
-    trendingMovies: getTrendingWithDescriptions()
-  });
-
   const categories = [
     {
       title: "Trending Movies & Series",
       items: getTrendingWithDescriptions().length > 0 ? getTrendingWithDescriptions() : teaserContent.movies,
       icon: Clapperboard,
-      color: "from-red-500/20 to-pink-500/20",
-      textColor: "text-red-400"
+      color: "text-red-400"
     },
     {
       title: "Find Your Best Suited AI Tools",
       items: teaserContent.aiTools,
       icon: Brain,
-      color: "from-blue-500/20 to-cyan-500/20",
-      textColor: "text-blue-400"
+      color: "text-blue-400"
     },
     {
       title: "Opt Our Premium Services",
       items: teaserContent.services,
       icon: Briefcase,
-      color: "from-purple-500/20 to-violet-500/20",
-      textColor: "text-purple-400"
+      color: "text-purple-400"
     }
   ];
 
@@ -87,99 +76,94 @@ export function TeaserAdSection() {
       if (!category || !category.items || category.items.length === 0) return;
       
       const shuffled = [...category.items].sort(() => Math.random() - 0.5);
-      setCurrentItems(shuffled.slice(0, 8)); // Show 8 items at a time
+      setCurrentItems(shuffled.slice(0, 8));
     };
 
     shuffleItems();
-    const shuffleInterval = setInterval(shuffleItems, 6000); // Even slower shuffling
+    const shuffleInterval = setInterval(shuffleItems, 6000);
 
     return () => clearInterval(shuffleInterval);
-  }, [currentCategory]); // Remove categories dependency to fix infinite loop
+  }, [currentCategory]);
 
   const currentCategoryData = categories[currentCategory];
 
   return (
-    <div className="w-full py-12 mt-16 mb-8 bg-gradient-to-r from-purple-500/10 via-blue-500/10 to-red-500/10 backdrop-blur-sm border-y-2 border-primary/20 relative">
-      {/* Debug indicator */}
-      <div className="absolute top-2 right-2 bg-green-500 text-white px-2 py-1 text-xs rounded">
-        TeaserAd Loaded
-      </div>
-      <div className="max-w-6xl mx-auto px-4">
-        <div className={`transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
-          {/* Loading State */}
-          {moviesLoading && currentCategory === 0 && (
-            <div className="text-center py-8">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
-              <p className="text-foreground text-lg font-semibold">Loading trending content...</p>
-            </div>
-          )}
-          
-          {/* Error State */}
-          {moviesError && currentCategory === 0 && (
-            <div className="text-center py-8">
-              <p className="text-red-400 text-lg font-semibold">Using fallback content - {moviesError}</p>
-            </div>
-          )}
-          {/* Category Header */}
-          <div className="flex items-center justify-center gap-3 mb-6">
-            <div className={`p-3 rounded-full bg-gradient-to-r ${currentCategoryData.color} backdrop-blur-sm border border-white/20`}>
-              <currentCategoryData.icon className={`h-6 w-6 ${currentCategoryData.textColor}`} />
-            </div>
-            <h3 className="text-2xl font-bold text-foreground bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent">
-              {currentCategoryData.title}
-            </h3>
-            <div className="flex items-center gap-1">
-              <TrendingUp className="h-5 w-5 text-primary animate-pulse" />
-              <Star className="h-5 w-5 text-yellow-400 fill-current animate-pulse" />
-            </div>
+    <div className="w-full max-w-6xl mx-auto">
+      <div className={`transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}>
+        {/* Loading State */}
+        {moviesLoading && currentCategory === 0 && (
+          <div className="text-center py-4">
+            <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary mx-auto mb-2"></div>
+            <p className="text-foreground text-sm font-medium">Loading trending content...</p>
           </div>
+        )}
+        
+        {/* Error State */}
+        {moviesError && currentCategory === 0 && (
+          <div className="text-center py-4">
+            <p className="text-red-400 text-sm">Using fallback content</p>
+          </div>
+        )}
 
-          {/* Scrolling Items */}
-          <div className="relative overflow-hidden bg-gradient-to-r from-card/50 to-card/30 rounded-xl border-2 border-primary/30 shadow-lg">
-            <div className="flex animate-[scroll-left_120s_linear_infinite] space-x-6 whitespace-nowrap py-4">
-              {/* Duplicate items for seamless loop */}
-              {[...currentItems, ...currentItems, ...currentItems].map((item, index) => (
-                <div
-                  key={`${currentCategory}-${index}`}
-                  className="inline-flex flex-col items-start px-6 py-4 bg-card/80 backdrop-blur-sm rounded-xl border border-border/50 hover:border-primary/50 transition-all duration-300 hover:scale-105 cursor-pointer group min-w-[280px]"
-                >
-                  {currentCategory === 0 ? (
-                    // Movie format with title and description
-                    <>
-                      <span className="text-lg font-bold text-foreground group-hover:text-primary transition-colors mb-1">
-                        {typeof item === 'object' && 'title' in item ? item.title : typeof item === 'string' ? item : ''}
-                      </span>
-                      <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors line-clamp-2">
-                        {typeof item === 'object' && 'description' in item ? item.description : ''}
-                      </span>
-                    </>
-                  ) : (
-                    // Regular format for other categories
-                    <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+        {/* Category Header */}
+        <div className="flex items-center justify-center gap-2 mb-4">
+          <div className="p-2 rounded-full bg-background/50 backdrop-blur-sm">
+            <currentCategoryData.icon className={`h-5 w-5 ${currentCategoryData.color}`} />
+          </div>
+          <h3 className="text-lg md:text-xl font-bold text-foreground/90">
+            {currentCategoryData.title}
+          </h3>
+          <div className="flex items-center gap-1">
+            <TrendingUp className="h-4 w-4 text-primary/70 animate-pulse" />
+            <Star className="h-4 w-4 text-yellow-400/70 fill-current animate-pulse" />
+          </div>
+        </div>
+
+        {/* Scrolling Items */}
+        <div className="relative overflow-hidden rounded-lg">
+          <div className="flex animate-[scroll-left_120s_linear_infinite] space-x-4 whitespace-nowrap py-3">
+            {/* Duplicate items for seamless loop */}
+            {[...currentItems, ...currentItems, ...currentItems].map((item, index) => (
+              <div
+                key={`${currentCategory}-${index}`}
+                className="inline-flex flex-col items-start px-4 py-3 bg-background/30 backdrop-blur-sm rounded-lg border border-border/30 hover:border-primary/30 transition-all duration-300 hover:bg-background/50 cursor-pointer group min-w-[260px]"
+              >
+                {currentCategory === 0 ? (
+                  // Movie format with title and description
+                  <>
+                    <span className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors mb-1">
                       {typeof item === 'object' && 'title' in item ? item.title : typeof item === 'string' ? item : ''}
                     </span>
-                  )}
-                  <Zap className="h-3 w-3 ml-auto mt-2 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Category Indicators */}
-          <div className="flex justify-center mt-6 space-x-2">
-            {categories.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentCategory(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index === currentCategory 
-                    ? 'bg-primary scale-125 shadow-lg shadow-primary/50' 
-                    : 'bg-muted-foreground/30 hover:bg-muted-foreground/50 hover:scale-110'
-                }`}
-                aria-label={`Switch to ${categories[index].title}`}
-              />
+                    <span className="text-xs text-muted-foreground group-hover:text-foreground/80 transition-colors line-clamp-2">
+                      {typeof item === 'object' && 'description' in item ? item.description : ''}
+                    </span>
+                  </>
+                ) : (
+                  // Regular format for other categories
+                  <span className="text-sm font-medium text-foreground/80 group-hover:text-foreground transition-colors">
+                    {typeof item === 'object' && 'title' in item ? item.title : typeof item === 'string' ? item : ''}
+                  </span>
+                )}
+                <Zap className="h-3 w-3 ml-auto mt-1 text-primary/50 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
             ))}
           </div>
+        </div>
+
+        {/* Category Indicators */}
+        <div className="flex justify-center mt-4 space-x-2">
+          {categories.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentCategory(index)}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                index === currentCategory 
+                  ? 'bg-primary scale-125' 
+                  : 'bg-muted-foreground/30 hover:bg-muted-foreground/50 hover:scale-110'
+              }`}
+              aria-label={`Switch to ${categories[index].title}`}
+            />
+          ))}
         </div>
       </div>
     </div>
