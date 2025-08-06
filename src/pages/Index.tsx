@@ -11,6 +11,7 @@ import { InteractiveCard } from "@/components/ModernMicroInteractions";
 import TeamSection from "@/components/TeamSection";
 import { TeaserAdSection } from "@/components/TeaserAdSection";
 import { FloatingActionButton } from "@/components/FloatingActionButton";
+import { cn } from "@/lib/utils";
 
 const Index = () => {
   const [previewData, setPreviewData] = useState({
