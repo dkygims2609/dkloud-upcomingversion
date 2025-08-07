@@ -19,7 +19,7 @@ export function EnhancedHeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-gradient-to-br from-background via-background to-muted/20 px-4 py-16">
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden theme-adaptive-hero-bg px-4 py-16">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 opacity-30">
         {/* Floating orbs */}
