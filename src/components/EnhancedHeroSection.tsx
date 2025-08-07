@@ -18,39 +18,23 @@ export function EnhancedHeroSection() {
       {/* Main Content */}
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
         
-        {/* Logo */}
-        <div className="mb-8 animate-fade-in">
-          <img 
-            src="/lovable-uploads/ee1833ab-bad9-4cb7-9fba-b36f2c77858b.png" 
-            alt="dKloud Logo" 
-            className="h-20 mx-auto"
-          />
-        </div>
-
-        {/* Main Title - dKloud.in */}
+        {/* Main Tagline - Decoding Knowledge */}
         <div className="mb-4">
-          <h1 className="main-title animate-gentle-slide">
-            dKloud.in
+          <h1 className="decoding-knowledge-title animate-tagline">
+            Decoding Knowledge
           </h1>
         </div>
 
-        {/* Tagline - Decoding Knowledge */}
-        <div className="mb-2">
-          <h2 className="tagline animate-tagline">
-            Decoding Knowledge
-          </h2>
-        </div>
-
         {/* Subtitle - Library of Unique Discoveries */}
-        <div className="mb-2">
-          <h3 className="subtitle animate-tagline" style={{ animationDelay: '0.2s' }}>
-            Library of Unique Discoveries
-          </h3>
+        <div className="mb-4">
+          <h2 className="library-subtitle animate-tagline" style={{ animationDelay: '0.2s' }}>
+            Library Of Unique Discoveries
+          </h2>
         </div>
 
         {/* Powered by dKloud Tech */}
         <div className="mb-8">
-          <p className="powered-by animate-tagline" style={{ animationDelay: '0.4s' }}>
+          <p className="powered-by-text animate-tagline" style={{ animationDelay: '0.4s' }}>
             Powered by dKloud Tech
           </p>
         </div>

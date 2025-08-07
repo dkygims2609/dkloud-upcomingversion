@@ -54,8 +54,8 @@
   }
 
   .dark {
-    /* Exact Dark Mode Background - Dark Blue-Gray */
-    --background: 222.2 84% 4.9%;
+    /* Exact Dark Mode Background - Deep brownish-black */
+    --background: 24 9.8% 3.9%; /* #0C0A09 Deep brownish-black */
     --foreground: 220 6% 92%;
     
     --card: 217.2 32.6% 17.5%;
@@ -299,41 +299,61 @@
     position: relative;
   }
 
-  /* Main Title - dKloud.in */
-  .main-title {
-    font-size: clamp(3rem, 8vw, 4.5rem);
+  .dark .theme-adaptive-hero-bg {
+    background: linear-gradient(135deg, 
+      hsl(24, 9.8%, 3.9%), 
+      hsl(24, 9.8%, 3.9%) 20%,
+      hsla(217.2, 32.6%, 17.5%, 0.3) 100%
+    );
+    background-size: 400% 400%;
+    animation: subtle-texture 20s ease-in-out infinite;
+  }
+
+  @keyframes subtle-texture {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  /* Main Tagline - Decoding Knowledge */
+  .decoding-knowledge-title {
+    font-size: clamp(2.5rem, 6vw, 3.5rem);
     font-weight: 700;
-    background: linear-gradient(to right, #2563EB, #9333EA, #1E40AF);
+    background: linear-gradient(135deg, #8B5CF6 0%, #3B82F6 50%, #1E40AF 100%);
     background-clip: text;
     -webkit-background-clip: text;
     color: transparent;
+    letter-spacing: 0.025em;
     text-align: center;
     line-height: 1.1;
   }
 
-  /* Tagline - Decoding Knowledge */
-  .tagline {
-    font-size: clamp(1.25rem, 3vw, 1.5rem);
-    font-weight: 500;
-    color: hsl(var(--muted-foreground));
+  /* Subtitle - Library Of Unique Discoveries */
+  .library-subtitle {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 600;
+    background: linear-gradient(135deg, #F97316 0%, #EF4444 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
     text-align: center;
-  }
-
-  /* Subtitle - Library of Unique Discoveries */
-  .subtitle {
-    font-size: clamp(1.125rem, 2.5vw, 1.25rem);
-    font-weight: 400;
-    color: hsl(var(--muted-foreground));
-    text-align: center;
+    line-height: 1.2;
   }
 
   /* Powered by dKloud Tech */
-  .powered-by {
+  .powered-by-text {
     font-size: clamp(0.875rem, 2vw, 1rem);
     font-weight: 400;
-    color: hsl(var(--muted-foreground));
+    color: hsl(220, 13%, 65%);
     text-align: center;
     opacity: 0.8;
+  }
+
+  .dark .powered-by-text {
+    color: hsl(220, 9%, 46%);
   }
 
   /* Description text */
