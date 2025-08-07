@@ -100,65 +100,49 @@ export const AudioPlayer = ({ audioSrc, title, description, compact = false }: A
 
   if (compact) {
     return (
-      <div className="spotify-card">
+      <div className="bg-[#191414] rounded-xl p-4 w-80 mx-auto text-white relative">
         <audio ref={audioRef} src={audioSrc} preload="metadata" />
         
-        <div className="spotify-top">
-          <div className="spotify-pfp">
-            {isLoading ? (
-              <div className="w-4 h-4 border border-white/50 border-t-white rounded-full animate-spin" />
-            ) : isPlaying ? (
-              <Pause className="w-4 h-4 text-white" />
-            ) : (
-              <Play className="w-4 h-4 text-white ml-0.5" />
-            )}
-          </div>
-          <div>
-            <div className="spotify-title-1">{title}</div>
-            <div className="spotify-title-2">dKloud Tech</div>
-          </div>
+        {/* Header with title and artist */}
+        <div className="text-center mb-4">
+          <h3 className="text-white font-bold text-lg">{title}</h3>
+          <p className="text-gray-300 text-sm">dKloud Tech</p>
         </div>
 
-        {/* Animated Equalizer - Only show when playing */}
-        {isPlaying && (
-          <div className="spotify-playing" style={{ position: 'absolute', top: '10px', right: '10px' }}>
-            <div className="spotify-greenline spotify-line-1"></div>
-            <div className="spotify-greenline spotify-line-2"></div>
-            <div className="spotify-greenline spotify-line-3"></div>
-            <div className="spotify-greenline spotify-line-4"></div>
-            <div className="spotify-greenline spotify-line-5"></div>
-          </div>
-        )}
-
-        {/* Progress Bar */}
-        <div className="spotify-time" onClick={handleProgressClick}>
-          <div className="spotify-elapsed" style={{ width: `${progressPercentage}%` }}></div>
+        {/* Time display */}
+        <div className="text-center mb-2">
+          <div className="text-gray-300 text-sm">{formatTime(currentTime)}</div>
+          <div className="text-gray-300 text-sm">{formatTime(duration)}</div>
         </div>
 
-        {/* Time Display */}
-        <div className="spotify-timetext spotify-time-now">{formatTime(currentTime)}</div>
-        <div className="spotify-timetext spotify-time-full">{formatTime(duration)}</div>
-
-        {/* Play/Pause Control */}
-        <div className="spotify-controls">
-          <button onClick={togglePlayPause} disabled={isLoading}>
+        {/* Play button */}
+        <div className="flex justify-center mb-4">
+          <button 
+            onClick={togglePlayPause} 
+            disabled={isLoading}
+            className="bg-transparent border-0 text-white p-2 rounded-full hover:text-[#1db954] transition-colors"
+          >
             {isLoading ? (
-              <div className="w-4 h-4 border border-white/50 border-t-white rounded-full animate-spin" />
+              <div className="w-8 h-8 border-2 border-white/50 border-t-white rounded-full animate-spin" />
             ) : isPlaying ? (
-              <Pause className="w-4 h-4" />
+              <Pause className="w-8 h-8" />
             ) : (
-              <Play className="w-4 h-4" />
+              <Play className="w-8 h-8" />
             )}
           </button>
         </div>
 
         {/* Speed Controls */}
-        <div className="spotify-speed-controls">
+        <div className="flex justify-center gap-2">
           {[0.8, 1.25].map((rate) => (
             <button
               key={rate}
               onClick={() => changePlaybackRate(rate)}
-              className={`spotify-speed-btn ${playbackRate === rate ? 'active' : ''}`}
+              className={`px-3 py-1 text-sm rounded border transition-colors ${
+                playbackRate === rate 
+                  ? 'bg-[#1db954] border-[#1db954] text-white' 
+                  : 'bg-transparent border-gray-500 text-white hover:border-[#1db954] hover:text-[#1db954]'
+              }`}
             >
               {rate}x
             </button>
