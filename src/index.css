@@ -318,20 +318,16 @@
     }
   }
 
-  /* Main Tagline - Decoding Knowledge */
+  /* Main Tagline - Decoding Knowledge - Hero Sized */
   .decoding-knowledge {
-    font-size: 1.25rem;
-    font-weight: 500;
+    font-size: clamp(3rem, 8vw, 4.5rem);
+    font-weight: 700;
     color: hsl(215.4, 16.3%, 46.9%);
     transition: color 300ms ease;
     display: inline-block;
     text-align: center;
-  }
-
-  @media (min-width: 768px) {
-    .decoding-knowledge {
-      font-size: 1.5rem;
-    }
+    line-height: 1.1;
+    letter-spacing: -0.025em;
   }
 
   .dark .decoding-knowledge {

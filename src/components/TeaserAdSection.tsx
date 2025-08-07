@@ -105,46 +105,32 @@ export function TeaserAdSection() {
           </div>
         )}
 
-        {/* Category Header */}
-        <div className="flex items-center justify-center gap-2 mb-4">
-          <div className="p-2 rounded-full bg-background/50 backdrop-blur-sm">
-            <currentCategoryData.icon className={`h-5 w-5 ${currentCategoryData.color}`} />
+        {/* Category Header - Clean Style */}
+        <div className="flex items-center justify-center gap-3 mb-6">
+          <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-border/30">
+            <currentCategoryData.icon className="h-5 w-5 text-blue-400" />
           </div>
-          <h3 className="text-lg md:text-xl font-bold text-foreground/90">
-            {currentCategoryData.title}
+          <h3 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+            React + TypeScript
           </h3>
-          <div className="flex items-center gap-1">
-            <TrendingUp className="h-4 w-4 text-primary/70 animate-pulse" />
-            <Star className="h-4 w-4 text-yellow-400/70 fill-current animate-pulse" />
+          <div className="px-3 py-1 rounded-full bg-gradient-to-r from-purple-500/20 to-violet-500/20 border border-purple-300/30">
+            <span className="text-sm font-medium text-purple-300">Tailwind CSS + Shadcn UI</span>
           </div>
         </div>
 
-        {/* Scrolling Items */}
-        <div className="relative overflow-hidden rounded-lg">
-          <div className="flex animate-[scroll-left_120s_linear_infinite] space-x-4 whitespace-nowrap py-3">
+        {/* Scrolling Items - Clean Style */}
+        <div className="relative overflow-hidden rounded-xl bg-gradient-to-r from-background/50 to-background/30 border border-border/20">
+          <div className="flex animate-[scroll-left_80s_linear_infinite] space-x-3 py-4 px-2">
             {/* Duplicate items for seamless loop */}
-            {[...currentItems, ...currentItems, ...currentItems].map((item, index) => (
+            {[...currentItems, ...currentItems].map((item, index) => (
               <div
                 key={`${currentCategory}-${index}`}
-                className="inline-flex flex-col items-start px-4 py-3 bg-background/30 backdrop-blur-sm rounded-lg border border-border/30 hover:border-primary/30 transition-all duration-300 hover:bg-background/50 cursor-pointer group min-w-[260px]"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm rounded-lg border border-white/10 hover:border-blue-400/30 transition-all duration-300 hover:bg-white/10 cursor-pointer group min-w-[220px] whitespace-nowrap"
               >
-                {currentCategory === 0 ? (
-                  // Movie format with title and description
-                  <>
-                    <span className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors mb-1">
-                      {typeof item === 'object' && 'title' in item ? item.title : typeof item === 'string' ? item : ''}
-                    </span>
-                    <span className="text-xs text-muted-foreground group-hover:text-foreground/80 transition-colors line-clamp-2">
-                      {typeof item === 'object' && 'description' in item ? item.description : ''}
-                    </span>
-                  </>
-                ) : (
-                  // Regular format for other categories
-                  <span className="text-sm font-medium text-foreground/80 group-hover:text-foreground transition-colors">
-                    {typeof item === 'object' && 'title' in item ? item.title : typeof item === 'string' ? item : ''}
-                  </span>
-                )}
-                <Zap className="h-3 w-3 ml-auto mt-1 text-primary/50 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="w-2 h-2 rounded-full bg-gradient-to-r from-blue-400 to-purple-500 animate-pulse"></div>
+                <span className="text-sm font-medium text-foreground/90 group-hover:text-blue-400 transition-colors truncate">
+                  {typeof item === 'object' && 'title' in item ? item.title : typeof item === 'string' ? item : ''}
+                </span>
               </div>
             ))}
           </div>

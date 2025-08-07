@@ -24,11 +24,11 @@ export function CircularNavigation() {
   const iconSize = 72; // Larger icons for better visibility
 
   const navItems = [
-    { name: "Movies & TV", href: "/movies", Icon: Clapperboard, color: "from-purple-500/20 to-blue-500/20", count: `${movies.length || 500}+` },
-    { name: "AI Tools", href: "/aitools", Icon: Brain, color: "from-blue-500/20 to-cyan-500/20", count: "200+" },
-    { name: "Gem Websites", href: "/gem-websites", Icon: Globe, color: "from-emerald-500/20 to-teal-500/20", count: `${websites.length || 0}+` },
-    { name: "Tech Corner", href: "/techcorner", Icon: BookOpen, color: "from-green-500/20 to-emerald-500/20", count: `${news.length || 0}+` },
-    { name: "SmartTech", href: "/smarttech", Icon: Zap, color: "from-yellow-500/20 to-orange-500/20", count: `${gadgets.length || 0}+` },
+    { name: "Movies & TV", href: "/movies", Icon: Clapperboard, color: "from-blue-500/20 to-blue-600/20", count: `${movies.length || 500}+` },
+    { name: "AI Tools", href: "/aitools", Icon: Brain, color: "from-purple-500/20 to-violet-600/20", count: "200+" },
+    { name: "Gem Websites", href: "/gem-websites", Icon: Globe, color: "from-green-500/20 to-emerald-600/20", count: `${websites.length || 0}+` },
+    { name: "Tech Corner", href: "/techcorner", Icon: BookOpen, color: "from-gray-600/20 to-gray-700/20", count: `${news.length || 0}+` },
+    { name: "SmartTech", href: "/smarttech", Icon: Zap, color: "from-blue-600/20 to-purple-600/20", count: `${gadgets.length || 0}+` },
     { name: "Products", href: "/digiproducts", Icon: Package, color: "from-purple-500/20 to-violet-500/20", count: "50+" },
     { name: "Services", href: "/services", Icon: Briefcase, color: "from-indigo-500/20 to-blue-500/20", count: "10+" },
   ];
