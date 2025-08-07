@@ -320,7 +320,7 @@
 
   /* Main Tagline - Decoding Knowledge - Hero Sized */
   .decoding-knowledge {
-    font-size: clamp(3rem, 8vw, 4.5rem);
+    font-size: clamp(4rem, 10vw, 6rem);
     font-weight: 700;
     color: hsl(215.4, 16.3%, 46.9%);
     transition: color 300ms ease;

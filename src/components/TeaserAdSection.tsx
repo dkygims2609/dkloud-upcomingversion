@@ -111,11 +111,8 @@ export function TeaserAdSection() {
             <currentCategoryData.icon className="h-5 w-5 text-blue-400" />
           </div>
           <h3 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
-            React + TypeScript
+            {currentCategoryData.title}
           </h3>
-          <div className="px-3 py-1 rounded-full bg-gradient-to-r from-purple-500/20 to-violet-500/20 border border-purple-300/30">
-            <span className="text-sm font-medium text-purple-300">Tailwind CSS + Shadcn UI</span>
-          </div>
         </div>
 
         {/* Scrolling Items - Clean Style */}
