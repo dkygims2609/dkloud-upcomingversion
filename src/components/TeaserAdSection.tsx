@@ -110,7 +110,7 @@ export function TeaserAdSection() {
           <div className="p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-border/30">
             <currentCategoryData.icon className="h-5 w-5 text-blue-400" />
           </div>
-          <h3 className="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+          <h3 className="text-lg md:text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
             {currentCategoryData.title}
           </h3>
         </div>

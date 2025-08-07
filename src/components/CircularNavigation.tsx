@@ -24,13 +24,13 @@ export function CircularNavigation() {
   const iconSize = 72; // Larger icons for better visibility
 
   const navItems = [
-    { name: "Movies & TV", href: "/movies", Icon: Clapperboard, color: "from-blue-500/20 to-blue-600/20", count: `${movies.length || 500}+` },
-    { name: "AI Tools", href: "/aitools", Icon: Brain, color: "from-purple-500/20 to-violet-600/20", count: "200+" },
-    { name: "Gem Websites", href: "/gem-websites", Icon: Globe, color: "from-green-500/20 to-emerald-600/20", count: `${websites.length || 0}+` },
-    { name: "Tech Corner", href: "/techcorner", Icon: BookOpen, color: "from-gray-600/20 to-gray-700/20", count: `${news.length || 0}+` },
-    { name: "SmartTech", href: "/smarttech", Icon: Zap, color: "from-blue-600/20 to-purple-600/20", count: `${gadgets.length || 0}+` },
-    { name: "Products", href: "/digiproducts", Icon: Package, color: "from-purple-500/20 to-violet-500/20", count: "50+" },
-    { name: "Services", href: "/services", Icon: Briefcase, color: "from-indigo-500/20 to-blue-500/20", count: "10+" },
+    { name: "Movies & TV", href: "/movies", Icon: Clapperboard, color: "from-blue-800/25 to-blue-900/25", count: `${movies.length || 500}+` },
+    { name: "AI Tools", href: "/aitools", Icon: Brain, color: "from-purple-800/25 to-purple-900/25", count: "200+" },
+    { name: "Gem Websites", href: "/gem-websites", Icon: Globe, color: "from-emerald-800/25 to-emerald-900/25", count: `${websites.length || 0}+` },
+    { name: "Tech Corner", href: "/techcorner", Icon: BookOpen, color: "from-slate-700/25 to-slate-800/25", count: `${news.length || 0}+` },
+    { name: "SmartTech", href: "/smarttech", Icon: Zap, color: "from-indigo-800/25 to-purple-800/25", count: `${gadgets.length || 0}+` },
+    { name: "Products", href: "/digiproducts", Icon: Package, color: "from-violet-800/25 to-violet-900/25", count: "50+" },
+    { name: "Services", href: "/services", Icon: Briefcase, color: "from-slate-800/25 to-slate-900/25", count: "10+" },
   ];
 
   return (
