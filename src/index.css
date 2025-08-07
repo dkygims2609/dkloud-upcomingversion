@@ -292,37 +292,92 @@
 
   /* Theme-Adaptive Hero Background */
   .theme-adaptive-hero-bg {
-    background: linear-gradient(135deg, 
-      hsl(var(--background)) 0%, 
-      hsl(var(--background)) 60%, 
-      hsl(var(--muted) / 0.3) 100%);
+    background: linear-gradient(to bottom right, 
+      hsl(var(--background)), 
+      hsl(var(--background)), 
+      hsl(var(--muted) / 0.3));
     position: relative;
   }
 
-  /* Dark mode constellation effect */
-  .dark .theme-adaptive-hero-bg::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: 
-      radial-gradient(2px 2px at 20px 30px, rgba(147, 51, 234, 0.3), transparent),
-      radial-gradient(2px 2px at 40px 70px, rgba(37, 99, 235, 0.2), transparent),
-      radial-gradient(1px 1px at 90px 40px, rgba(30, 64, 175, 0.4), transparent),
-      radial-gradient(1px 1px at 130px 80px, rgba(147, 51, 234, 0.2), transparent),
-      radial-gradient(2px 2px at 160px 30px, rgba(37, 99, 235, 0.3), transparent);
-    background-repeat: repeat;
-    background-size: 200px 100px;
-    animation: constellation-drift 20s linear infinite;
-    pointer-events: none;
-    opacity: 0.6;
+  /* Main Title - dKloud.in */
+  .main-title {
+    font-size: clamp(3rem, 8vw, 4.5rem);
+    font-weight: 700;
+    background: linear-gradient(to right, #2563EB, #9333EA, #1E40AF);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    text-align: center;
+    line-height: 1.1;
   }
 
-  @keyframes constellation-drift {
-    0% { transform: translateX(0) translateY(0); }
-    100% { transform: translateX(-200px) translateY(-100px); }
+  /* Tagline - Decoding Knowledge */
+  .tagline {
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+    font-weight: 500;
+    color: hsl(var(--muted-foreground));
+    text-align: center;
+  }
+
+  /* Subtitle - Library of Unique Discoveries */
+  .subtitle {
+    font-size: clamp(1.125rem, 2.5vw, 1.25rem);
+    font-weight: 400;
+    color: hsl(var(--muted-foreground));
+    text-align: center;
+  }
+
+  /* Powered by dKloud Tech */
+  .powered-by {
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    font-weight: 400;
+    color: hsl(var(--muted-foreground));
+    text-align: center;
+    opacity: 0.8;
+  }
+
+  /* Description text */
+  .description {
+    font-size: clamp(1.125rem, 2.5vw, 1.25rem);
+    color: hsl(var(--muted-foreground));
+    line-height: 1.75;
+    text-align: center;
+  }
+
+  /* CTA Button */
+  .cta-button {
+    background: linear-gradient(to right, #2563EB, #9333EA);
+    padding: 0.75rem 2rem;
+    border-radius: 9999px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    transition: all 300ms;
+    font-size: 1rem;
+  }
+
+  .cta-button:hover {
+    background: linear-gradient(to right, #1D4ED8, #7C3AED);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
+  }
+
+  /* Gentle Slide Animation */
+  @keyframes gentleSlide {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-gentle-slide {
+    animation: gentleSlide 1s ease-out forwards;
+  }
+
+  .animate-tagline {
+    animation: gentleSlide 0.9s ease-out forwards;
   }
 
   @keyframes enhancedGradientFlow {
