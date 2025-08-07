@@ -319,28 +319,36 @@
   }
 
   /* Main Tagline - Decoding Knowledge */
-  .decoding-knowledge-title {
-    font-size: clamp(2.5rem, 6vw, 3.5rem);
-    font-weight: 700;
-    background: linear-gradient(135deg, #8B5CF6 0%, #3B82F6 50%, #1E40AF 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-    letter-spacing: 0.025em;
+  .decoding-knowledge {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: hsl(215.4, 16.3%, 46.9%);
+    transition: color 300ms ease;
+    display: inline-block;
     text-align: center;
-    line-height: 1.1;
   }
 
-  /* Subtitle - Library Of Unique Discoveries */
-  .library-subtitle {
-    font-size: clamp(1.5rem, 4vw, 2rem);
-    font-weight: 600;
-    background: linear-gradient(135deg, #F97316 0%, #EF4444 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
+  @media (min-width: 768px) {
+    .decoding-knowledge {
+      font-size: 1.5rem;
+    }
+  }
+
+  .dark .decoding-knowledge {
+    color: hsl(215, 20.2%, 65.1%);
+  }
+
+  /* Subtitle - Library Of Unique Discoveries - Smaller & Dark Blood Red */
+  .library-subtitle-small {
+    font-size: clamp(1rem, 2.5vw, 1.25rem);
+    font-weight: 500;
+    color: hsl(0, 70%, 25%); /* Dark blood red */
     text-align: center;
     line-height: 1.2;
+  }
+
+  .dark .library-subtitle-small {
+    color: hsl(0, 60%, 35%); /* Slightly lighter dark blood red for dark mode */
   }
 
   /* Powered by dKloud Tech */

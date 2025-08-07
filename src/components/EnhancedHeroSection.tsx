@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { AudioPlayer } from "./AudioPlayer";
 import { TeaserAdSection } from "./TeaserAdSection";
+import { DecodingAnimation } from "./DecodingAnimation";
 
 export function EnhancedHeroSection() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -20,14 +21,14 @@ export function EnhancedHeroSection() {
         
         {/* Main Tagline - Decoding Knowledge */}
         <div className="mb-4">
-          <h1 className="decoding-knowledge-title animate-tagline">
-            Decoding Knowledge
+          <h1 className="decoding-knowledge animate-tagline">
+            <DecodingAnimation text="Decoding Knowledge" />
           </h1>
         </div>
 
         {/* Subtitle - Library of Unique Discoveries */}
         <div className="mb-4">
-          <h2 className="library-subtitle animate-tagline" style={{ animationDelay: '0.2s' }}>
+          <h2 className="library-subtitle-small animate-tagline" style={{ animationDelay: '0.2s' }}>
             Library Of Unique Discoveries
           </h2>
         </div>
