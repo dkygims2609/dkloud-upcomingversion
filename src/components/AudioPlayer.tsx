@@ -100,88 +100,68 @@ export const AudioPlayer = ({ audioSrc, title, description, compact = false }: A
 
   if (compact) {
     return (
-      <div className="flex flex-col items-center space-y-2">
+      <div className="spotify-card">
         <audio ref={audioRef} src={audioSrc} preload="metadata" />
         
-        {/* Title */}
-        {title && (
-          <div className="text-xs font-semibold text-foreground text-center">{title}</div>
-        )}
-        
-        {/* Controls Row */}
-        <div className="flex items-center space-x-2">
-          {/* Skip Back */}
-          <Button
-            onClick={() => skipTime(-10)}
-            disabled={isLoading}
-            size="sm"
-            variant="ghost"
-            className="w-6 h-6 p-0 text-muted-foreground hover:text-primary"
-          >
-            <span className="text-xs">-10</span>
-          </Button>
-          
-          {/* Play/Pause */}
-          <Button
-            onClick={togglePlayPause}
-            disabled={isLoading}
-            size="sm"
-            className="bg-primary/20 hover:bg-primary/30 rounded-full w-8 h-8 p-0 transition-all duration-300"
-          >
+        <div className="spotify-top">
+          <div className="spotify-pfp">
             {isLoading ? (
-              <div className="w-3 h-3 border border-primary/50 border-t-primary rounded-full animate-spin" />
+              <div className="w-4 h-4 border border-white/50 border-t-white rounded-full animate-spin" />
             ) : isPlaying ? (
-              <Pause className="w-3 h-3" />
+              <Pause className="w-4 h-4 text-white" />
             ) : (
-              <Play className="w-3 h-3 ml-0.5" />
+              <Play className="w-4 h-4 text-white ml-0.5" />
             )}
-          </Button>
-          
-          {/* Skip Forward */}
-          <Button
-            onClick={() => skipTime(10)}
-            disabled={isLoading}
-            size="sm"
-            variant="ghost"
-            className="w-6 h-6 p-0 text-muted-foreground hover:text-primary"
-          >
-            <span className="text-xs">+10</span>
-          </Button>
+          </div>
+          <div>
+            <div className="spotify-title-1">{title}</div>
+            <div className="spotify-title-2">dKloud Tech</div>
+          </div>
         </div>
 
+        {/* Animated Equalizer - Only show when playing */}
+        {isPlaying && (
+          <div className="spotify-playing" style={{ position: 'absolute', top: '10px', right: '10px' }}>
+            <div className="spotify-greenline spotify-line-1"></div>
+            <div className="spotify-greenline spotify-line-2"></div>
+            <div className="spotify-greenline spotify-line-3"></div>
+            <div className="spotify-greenline spotify-line-4"></div>
+            <div className="spotify-greenline spotify-line-5"></div>
+          </div>
+        )}
+
         {/* Progress Bar */}
-        <div className="w-full max-w-32">
-          <div 
-            className="w-full h-1 bg-muted rounded-full cursor-pointer hover:h-1.5 transition-all duration-200 group"
-            onClick={handleProgressClick}
-          >
-            <div 
-              className="h-full bg-gradient-to-r from-primary to-secondary rounded-full transition-all duration-200"
-              style={{ width: `${progressPercentage}%` }}
-            />
-          </div>
-          <div className="flex justify-between text-xs text-muted-foreground mt-1">
-            <span>{formatTime(currentTime)}</span>
-            <span>{formatTime(duration)}</span>
-          </div>
+        <div className="spotify-time" onClick={handleProgressClick}>
+          <div className="spotify-elapsed" style={{ width: `${progressPercentage}%` }}></div>
+        </div>
+
+        {/* Time Display */}
+        <div className="spotify-timetext spotify-time-now">{formatTime(currentTime)}</div>
+        <div className="spotify-timetext spotify-time-full">{formatTime(duration)}</div>
+
+        {/* Play/Pause Control */}
+        <div className="spotify-controls">
+          <button onClick={togglePlayPause} disabled={isLoading}>
+            {isLoading ? (
+              <div className="w-4 h-4 border border-white/50 border-t-white rounded-full animate-spin" />
+            ) : isPlaying ? (
+              <Pause className="w-4 h-4" />
+            ) : (
+              <Play className="w-4 h-4" />
+            )}
+          </button>
         </div>
 
         {/* Speed Controls */}
-        <div className="flex items-center space-x-1">
+        <div className="spotify-speed-controls">
           {[0.8, 1.25].map((rate) => (
-            <Button
+            <button
               key={rate}
               onClick={() => changePlaybackRate(rate)}
-              size="sm"
-              variant="ghost"
-              className={`text-xs px-2 py-1 h-6 transition-colors ${
-                playbackRate === rate 
-                  ? 'bg-primary/20 text-primary' 
-                  : 'text-muted-foreground hover:text-primary'
-              }`}
+              className={`spotify-speed-btn ${playbackRate === rate ? 'active' : ''}`}
             >
               {rate}x
-            </Button>
+            </button>
           ))}
         </div>
       </div>
