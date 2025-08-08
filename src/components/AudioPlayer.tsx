@@ -103,15 +103,15 @@ export const AudioPlayer = ({ audioSrc, title, description, compact = false }: A
       <div className="w-full max-w-[560px] mx-auto">
         <audio ref={audioRef} src={audioSrc} preload="metadata" />
 
-        <div className="flex items-center gap-3 bg-[hsl(var(--spotify-bg))] text-foreground rounded-full px-4 py-2 border border-white/10 shadow-md">
+        <div className="flex items-center gap-3 bg-card text-card-foreground rounded-full px-4 py-2 border border-border shadow-md backdrop-blur-sm">
           <button
             onClick={togglePlayPause}
             disabled={isLoading}
-            className="w-10 h-10 rounded-full grid place-items-center border border-white/15 hover:border-[hsl(var(--spotify-green))] hover:text-[hsl(var(--spotify-green))] transition-colors"
+            className="w-10 h-10 rounded-full grid place-items-center border border-border hover:border-[hsl(var(--spotify-green))] hover:text-[hsl(var(--spotify-green))] transition-colors bg-background/50"
             aria-label={isPlaying ? 'Pause' : 'Play'}
           >
             {isLoading ? (
-              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              <div className="w-4 h-4 border-2 border-muted border-t-foreground rounded-full animate-spin" />
             ) : isPlaying ? (
               <Pause className="w-5 h-5" />
             ) : (
@@ -132,7 +132,7 @@ export const AudioPlayer = ({ audioSrc, title, description, compact = false }: A
               )}
             </div>
             <div 
-              className="mt-1 w-[200px] sm:w-[260px] h-1.5 bg-muted rounded-full cursor-pointer group"
+              className="mt-1 w-[200px] sm:w-[260px] h-1.5 bg-secondary/30 rounded-full cursor-pointer group"
               onClick={handleProgressClick}
             >
               <div 
@@ -157,7 +157,7 @@ export const AudioPlayer = ({ audioSrc, title, description, compact = false }: A
                 className={`px-2 py-1 text-[10px] rounded-full border transition-colors ${
                   playbackRate === rate 
                     ? 'bg-[hsl(var(--spotify-green))] border-[hsl(var(--spotify-green))] text-background' 
-                    : 'bg-transparent border-white/15 text-foreground hover:border-[hsl(var(--spotify-green))] hover:text-[hsl(var(--spotify-green))]'
+                    : 'bg-transparent border-border text-foreground hover:border-[hsl(var(--spotify-green))] hover:text-[hsl(var(--spotify-green))]'
                 }`}
               >
                 {rate}x

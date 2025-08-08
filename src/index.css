@@ -326,18 +326,29 @@
 
   /* Main Tagline - Decoding Knowledge - Hero Sized */
   .decoding-knowledge {
-    font-size: clamp(6.5rem, 18vw, 14rem);
-    font-weight: 800;
-    color: hsl(215.4, 16.3%, 46.9%);
-    transition: color 300ms ease;
-    display: inline-block;
-    text-align: center;
-    line-height: 1.05;
-    letter-spacing: -0.03em;
+    font-size: clamp(6.5rem, 18vw, 14rem) !important;
+    font-weight: 800 !important;
+    color: hsl(215.4, 16.3%, 46.9%) !important;
+    transition: color 300ms ease !important;
+    display: inline-block !important;
+    text-align: center !important;
+    line-height: 1.05 !important;
+    letter-spacing: -0.03em !important;
   }
 
   .dark .decoding-knowledge {
-    color: hsl(215, 20.2%, 65.1%);
+    color: hsl(215, 20.2%, 65.1%) !important;
+  }
+
+  /* Spotify-style colors for audio player */
+  :root {
+    --spotify-green: 29 185 84;  /* #1DB954 */
+    --spotify-bg: 18 18 18;       /* #121212 */
+    --spotify-bg-light: 249 249 249; /* #f9f9f9 */
+  }
+
+  [data-theme="light"] {
+    --spotify-bg: var(--spotify-bg-light);
   }
 
   /* Subtitle - Library Of Unique Discoveries - Smaller & Dark Blood Red */
