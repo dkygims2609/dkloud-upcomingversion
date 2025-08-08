@@ -41,16 +41,13 @@ export function EnhancedHeroSection() {
         </div>
 
         {/* Audio Player with modern styling */}
-        <div className="mb-6 max-w-md mx-auto animate-tagline" style={{ animationDelay: '0.6s' }}>
-          <div className="glass-card p-4 rounded-xl border border-primary/20 hover-glow transition-all duration-300">
+          <div className="mb-6 mx-auto animate-tagline" style={{ animationDelay: '0.6s' }}>
             <AudioPlayer 
               audioSrc="/dKloudaudio.wav"
               title="Listen: What is dKloud?"
-              description=""
-              compact={true}
+              compact
             />
           </div>
-        </div>
 
         {/* Description */}
         <div className="max-w-3xl mx-auto mb-8 animate-tagline" style={{ animationDelay: '0.8s' }}>

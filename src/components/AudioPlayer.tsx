@@ -100,53 +100,70 @@ export const AudioPlayer = ({ audioSrc, title, description, compact = false }: A
 
   if (compact) {
     return (
-      <div className="bg-[#191414] rounded-xl p-4 w-80 mx-auto text-white relative">
+      <div className="w-full max-w-[560px] mx-auto">
         <audio ref={audioRef} src={audioSrc} preload="metadata" />
-        
-        {/* Header with title and artist */}
-        <div className="text-center mb-4">
-          <h3 className="text-white font-bold text-lg">{title}</h3>
-          <p className="text-gray-300 text-sm">dKloud Tech</p>
-        </div>
 
-        {/* Time display */}
-        <div className="text-center mb-2">
-          <div className="text-gray-300 text-sm">{formatTime(currentTime)}</div>
-          <div className="text-gray-300 text-sm">{formatTime(duration)}</div>
-        </div>
-
-        {/* Play button */}
-        <div className="flex justify-center mb-4">
-          <button 
-            onClick={togglePlayPause} 
+        <div className="flex items-center gap-3 bg-[hsl(var(--spotify-bg))] text-foreground rounded-full px-4 py-2 border border-white/10 shadow-md">
+          <button
+            onClick={togglePlayPause}
             disabled={isLoading}
-            className="bg-transparent border-0 text-white p-2 rounded-full hover:text-[#1db954] transition-colors"
+            className="w-10 h-10 rounded-full grid place-items-center border border-white/15 hover:border-[hsl(var(--spotify-green))] hover:text-[hsl(var(--spotify-green))] transition-colors"
+            aria-label={isPlaying ? 'Pause' : 'Play'}
           >
             {isLoading ? (
-              <div className="w-8 h-8 border-2 border-white/50 border-t-white rounded-full animate-spin" />
+              <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
             ) : isPlaying ? (
-              <Pause className="w-8 h-8" />
+              <Pause className="w-5 h-5" />
             ) : (
-              <Play className="w-8 h-8" />
+              <Play className="w-5 h-5 ml-0.5" />
             )}
           </button>
-        </div>
 
-        {/* Speed Controls */}
-        <div className="flex justify-center gap-2">
-          {[0.8, 1.25].map((rate) => (
-            <button
-              key={rate}
-              onClick={() => changePlaybackRate(rate)}
-              className={`px-3 py-1 text-sm rounded border transition-colors ${
-                playbackRate === rate 
-                  ? 'bg-[#1db954] border-[#1db954] text-white' 
-                  : 'bg-transparent border-gray-500 text-white hover:border-[#1db954] hover:text-[#1db954]'
-              }`}
+          {/* Title and mini EQ */}
+          <div className="min-w-0">
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-medium truncate max-w-[180px]">{title}</span>
+              {isPlaying && (
+                <div className="flex items-end gap-0.5 h-3" aria-hidden="true">
+                  <span className="block origin-bottom w-0.5 h-2 bg-[hsl(var(--spotify-green))] animate-[playing_1s_ease-in-out_infinite_0.2s]" />
+                  <span className="block origin-bottom w-0.5 h-3 bg-[hsl(var(--spotify-green))] animate-[playing_1s_ease-in-out_infinite_0.4s]" />
+                  <span className="block origin-bottom w-0.5 h-2 bg-[hsl(var(--spotify-green))] animate-[playing_1s_ease-in-out_infinite_0s]" />
+                </div>
+              )}
+            </div>
+            <div 
+              className="mt-1 w-[200px] sm:w-[260px] h-1.5 bg-muted rounded-full cursor-pointer group"
+              onClick={handleProgressClick}
             >
-              {rate}x
-            </button>
-          ))}
+              <div 
+                className="h-full bg-[hsl(var(--spotify-green))] rounded-full group-hover:shadow-[0_0_10px_hsl(var(--spotify-green)/0.6)] transition-all"
+                style={{ width: `${progressPercentage}%` }}
+              />
+            </div>
+          </div>
+
+          {/* Time */}
+          <div className="hidden sm:flex flex-col items-end text-[10px] text-muted-foreground ml-auto">
+            <span>{formatTime(currentTime)}</span>
+            <span>{formatTime(duration)}</span>
+          </div>
+
+          {/* Speed */}
+          <div className="flex items-center gap-1 ml-2">
+            {[0.8, 1.25].map((rate) => (
+              <button
+                key={rate}
+                onClick={() => changePlaybackRate(rate)}
+                className={`px-2 py-1 text-[10px] rounded-full border transition-colors ${
+                  playbackRate === rate 
+                    ? 'bg-[hsl(var(--spotify-green))] border-[hsl(var(--spotify-green))] text-background' 
+                    : 'bg-transparent border-white/15 text-foreground hover:border-[hsl(var(--spotify-green))] hover:text-[hsl(var(--spotify-green))]'
+                }`}
+              >
+                {rate}x
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     );

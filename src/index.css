@@ -50,6 +50,8 @@
     --purple: 300 100% 25%; /* #800080 */
     --orchid: 302 59% 65%; /* #DA70D6 */
     
+    --spotify-bg: 0 0% 9%;
+    --spotify-green: 141 72% 45%;
     --radius: 0.5rem;
   }
 
@@ -105,6 +107,10 @@
     --success-foreground: 220 15% 8%;
     --warning: 45 85% 60%;
     --warning-foreground: 220 15% 8%;
+    
+    /* Spotify-like tokens */
+    --spotify-bg: 0 0% 9%;
+    --spotify-green: 141 72% 45%;
   }
 
   /* Base Styles */
@@ -320,14 +326,14 @@
 
   /* Main Tagline - Decoding Knowledge - Hero Sized */
   .decoding-knowledge {
-    font-size: clamp(6rem, 15vw, 10rem);
-    font-weight: 700;
+    font-size: clamp(6.5rem, 18vw, 14rem);
+    font-weight: 800;
     color: hsl(215.4, 16.3%, 46.9%);
     transition: color 300ms ease;
     display: inline-block;
     text-align: center;
-    line-height: 1.1;
-    letter-spacing: -0.025em;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
   }
 
   .dark .decoding-knowledge {
@@ -414,6 +420,13 @@
     66% { 
       background-position: 100% 0%; 
     }
+  }
+
+  @keyframes playing {
+    0% { transform: scaleY(0.2); }
+    33% { transform: scaleY(0.6); }
+    66% { transform: scaleY(0.9); }
+    100% { transform: scaleY(0.2); }
   }
 
   /* Enhanced AI Tools Cards - Stronger Visibility */
