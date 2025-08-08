@@ -324,16 +324,16 @@
     }
   }
 
-  /* Main Tagline - Decoding Knowledge - Hero Sized */
+  /* Main Tagline - Decoding Knowledge - Normal Heading Size */
   .decoding-knowledge {
-    font-size: clamp(6.5rem, 18vw, 14rem) !important;
+    font-size: clamp(2.5rem, 8vw, 4rem) !important;
     font-weight: 800 !important;
     color: hsl(215.4, 16.3%, 46.9%) !important;
     transition: color 300ms ease !important;
     display: inline-block !important;
     text-align: center !important;
-    line-height: 0.85 !important;
-    letter-spacing: -0.03em !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.02em !important;
   }
 
   .dark .decoding-knowledge {
