@@ -103,15 +103,15 @@ export const AudioPlayer = ({ audioSrc, title, description, compact = false }: A
       <div className="w-full max-w-[560px] mx-auto">
         <audio ref={audioRef} src={audioSrc} preload="metadata" />
 
-        <div className="flex items-center gap-3 bg-card text-card-foreground rounded-full px-4 py-2 border border-border shadow-md backdrop-blur-sm">
+        <div className="flex items-center gap-3 bg-[#121212] text-white rounded-full px-4 py-2 border border-[#1DB954]/20 shadow-lg shadow-[#1DB954]/10">
           <button
             onClick={togglePlayPause}
             disabled={isLoading}
-            className="w-10 h-10 rounded-full grid place-items-center border border-border hover:border-[hsl(var(--spotify-green))] hover:text-[hsl(var(--spotify-green))] transition-colors bg-background/50"
+            className="w-10 h-10 rounded-full grid place-items-center bg-[#1DB954] hover:bg-[#1ed760] hover:scale-105 transition-all text-black"
             aria-label={isPlaying ? 'Pause' : 'Play'}
           >
             {isLoading ? (
-              <div className="w-4 h-4 border-2 border-muted border-t-foreground rounded-full animate-spin" />
+              <div className="w-4 h-4 border-2 border-black/30 border-t-black rounded-full animate-spin" />
             ) : isPlaying ? (
               <Pause className="w-5 h-5" />
             ) : (
@@ -120,30 +120,32 @@ export const AudioPlayer = ({ audioSrc, title, description, compact = false }: A
           </button>
 
           {/* Title and mini EQ */}
-          <div className="min-w-0">
-            <div className="flex items-center gap-2">
-              <span className="text-sm font-medium truncate max-w-[180px]">{title}</span>
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-3">
+              <span className="text-sm font-medium text-white truncate max-w-[160px]">{title}</span>
               {isPlaying && (
                 <div className="flex items-end gap-0.5 h-3" aria-hidden="true">
-                  <span className="block origin-bottom w-0.5 h-2 bg-[hsl(var(--spotify-green))] animate-[playing_1s_ease-in-out_infinite_0.2s]" />
-                  <span className="block origin-bottom w-0.5 h-3 bg-[hsl(var(--spotify-green))] animate-[playing_1s_ease-in-out_infinite_0.4s]" />
-                  <span className="block origin-bottom w-0.5 h-2 bg-[hsl(var(--spotify-green))] animate-[playing_1s_ease-in-out_infinite_0s]" />
+                  <span className="block origin-bottom w-0.5 h-2 bg-[#1DB954] animate-[playing_1s_ease-in-out_infinite_0.2s]" />
+                  <span className="block origin-bottom w-0.5 h-3 bg-[#1DB954] animate-[playing_1s_ease-in-out_infinite_0.4s]" />
+                  <span className="block origin-bottom w-0.5 h-2 bg-[#1DB954] animate-[playing_1s_ease-in-out_infinite_0s]" />
                 </div>
               )}
             </div>
             <div 
-              className="mt-1 w-[200px] sm:w-[260px] h-1.5 bg-secondary/30 rounded-full cursor-pointer group"
+              className="mt-1.5 w-full h-1 bg-[#404040] rounded-full cursor-pointer group overflow-hidden"
               onClick={handleProgressClick}
             >
               <div 
-                className="h-full bg-[hsl(var(--spotify-green))] rounded-full group-hover:shadow-[0_0_10px_hsl(var(--spotify-green)/0.6)] transition-all"
+                className="h-full bg-[#1DB954] rounded-full group-hover:bg-[#1ed760] transition-all relative"
                 style={{ width: `${progressPercentage}%` }}
-              />
+              >
+                <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity -mr-1.5" />
+              </div>
             </div>
           </div>
 
           {/* Time */}
-          <div className="hidden sm:flex flex-col items-end text-[10px] text-muted-foreground ml-auto">
+          <div className="hidden sm:flex flex-col items-end text-[10px] text-[#a7a7a7] ml-2 min-w-[35px]">
             <span>{formatTime(currentTime)}</span>
             <span>{formatTime(duration)}</span>
           </div>
@@ -154,10 +156,10 @@ export const AudioPlayer = ({ audioSrc, title, description, compact = false }: A
               <button
                 key={rate}
                 onClick={() => changePlaybackRate(rate)}
-                className={`px-2 py-1 text-[10px] rounded-full border transition-colors ${
+                className={`px-2 py-1 text-[10px] rounded-full border transition-all ${
                   playbackRate === rate 
-                    ? 'bg-[hsl(var(--spotify-green))] border-[hsl(var(--spotify-green))] text-background' 
-                    : 'bg-transparent border-border text-foreground hover:border-[hsl(var(--spotify-green))] hover:text-[hsl(var(--spotify-green))]'
+                    ? 'bg-[#1DB954] border-[#1DB954] text-black font-medium' 
+                    : 'bg-transparent border-[#404040] text-[#a7a7a7] hover:border-[#1DB954] hover:text-[#1DB954]'
                 }`}
               >
                 {rate}x

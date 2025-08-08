@@ -88,7 +88,7 @@ export function DecodingAnimation({ text, className = "", delay = 0 }: DecodingA
 
   return (
     <span 
-      className={`${className} decoding-knowledge decoding-knowledge-gradient font-inter transition-all duration-200`}
+      className={`decoding-knowledge decoding-knowledge-gradient font-inter transition-all duration-200 ${className}`}
       style={{
         textShadow: '0 0 25px rgba(37, 99, 235, 0.4)',
         filter: 'drop-shadow(0 0 15px rgba(147, 51, 234, 0.3))'

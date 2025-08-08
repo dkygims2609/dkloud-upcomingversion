@@ -332,7 +332,7 @@
     transition: color 300ms ease !important;
     display: inline-block !important;
     text-align: center !important;
-    line-height: 1.05 !important;
+    line-height: 0.85 !important;
     letter-spacing: -0.03em !important;
   }
 
