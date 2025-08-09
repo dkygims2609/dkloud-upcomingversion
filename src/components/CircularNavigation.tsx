@@ -57,8 +57,8 @@ export function CircularNavigation() {
         </div>
       </div>
 
-      {/* Navigation Items - Properly Centered */}
-      <div className="absolute inset-0 flex items-center justify-center">
+      {/* Navigation Items - Orbital Motion */}
+      <div className="absolute inset-0 flex items-center justify-center animate-orbital-rotation">
         {navItems.map((item, index) => {
           // Start from top (-90 degrees) for better visual alignment
           const angle = -90 + (index * 360) / navItems.length;
@@ -72,7 +72,7 @@ export function CircularNavigation() {
               <Link
                 to={item.href}
                 className={cn(
-                  "absolute rounded-full border-2 border-white/20 backdrop-blur-md flex flex-col items-center justify-center transition-all duration-300 group shadow-lg",
+                  "absolute rounded-full border-2 border-white/20 backdrop-blur-md flex flex-col items-center justify-center transition-all duration-300 group shadow-lg animate-counter-rotation",
                   item.color,
                   isHovering ? "scale-150 border-white/40 shadow-2xl shadow-white/40 z-50" : "scale-100 hover:scale-125 hover:border-white/30 hover:shadow-xl"
                 )}
@@ -94,7 +94,7 @@ export function CircularNavigation() {
               >
                 <div className="relative text-center w-full h-full flex flex-col items-center justify-center">
                   <item.Icon className={cn(
-                    "transition-all duration-300 mx-auto mb-1 animate-spin-slow",
+                    "transition-all duration-300 mx-auto mb-1",
                     isHovering ? "h-8 w-8 text-white" : "h-6 w-6 text-white group-hover:text-white"
                   )} />
                   <div className={cn(

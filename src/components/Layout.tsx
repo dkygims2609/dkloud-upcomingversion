@@ -8,6 +8,7 @@ import { ScrollToTop } from "./ScrollToTop";
 import { ServicesSidebar } from "./ServicesSidebar";
 import { BackgroundQuestions } from "./BackgroundQuestions";
 import { AnimatedHomeButton } from "./AnimatedHomeButton";
+import { IoTFloatingIcons } from "./IoTFloatingIcons";
 
 interface LayoutProps {
   children: ReactNode;
@@ -15,7 +16,8 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   return (
-    <div className="min-h-screen bg-background relative">
+    <div className="min-h-screen bg-background relative dark-theme-fabric">
+      <IoTFloatingIcons showOnHomePage={true} />
       <BackgroundQuestions />
       <RunningBanner />
       <Navbar />
