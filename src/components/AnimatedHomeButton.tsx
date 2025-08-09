@@ -17,7 +17,7 @@ export function AnimatedHomeButton() {
       onClick={() => navigate("/")}
       size="sm"
       className={cn(
-        "fixed bottom-8 right-8 z-50 w-12 h-12 p-0 rounded-full shadow-xl",
+        "fixed bottom-8 right-20 z-50 w-12 h-12 p-0 rounded-full shadow-xl",
         "bg-gradient-to-r from-primary via-secondary to-accent",
         "hover:from-primary/90 hover:via-secondary/90 hover:to-accent/90",
         "transition-all duration-300 hover:scale-110 hover:shadow-2xl",

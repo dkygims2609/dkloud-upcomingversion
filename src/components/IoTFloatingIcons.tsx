@@ -101,7 +101,7 @@ export function IoTFloatingIcons({ showOnHomePage = false }: { showOnHomePage?: 
         y: animationType === 'fade-in-out' ? Math.random() * (window.innerHeight - 100) : window.innerHeight + 50,
         duration: 12000 + Math.random() * 8000, // Much slower: 12-20s for subtle movement
         delay: Math.random() * 3000, // Increased delay variation
-        scale: 0.1 + Math.random() * 0.15, // Ultra tiny: 0.1-0.25 for extremely small icons
+        scale: 0.3 + Math.random() * 0.2, // Tiny but visible: 0.3-0.5
         animationType,
         direction: Math.random() * 360 // for random direction animation
       };
@@ -114,8 +114,8 @@ export function IoTFloatingIcons({ showOnHomePage = false }: { showOnHomePage?: 
       }, newIcon.duration + newIcon.delay + 2000);
     };
 
-    // Much less frequent: Every 12-18 seconds for ultra subtle effect
-    const initialInterval = setInterval(createIcon, 12000 + Math.random() * 6000);
+    // More frequent but still subtle: Every 8-12 seconds
+    const initialInterval = setInterval(createIcon, 8000 + Math.random() * 4000);
 
     // Cleanup
     return () => clearInterval(initialInterval);
@@ -168,15 +168,15 @@ export function IoTFloatingIcons({ showOnHomePage = false }: { showOnHomePage?: 
   const getAnimationClass = (animationType: FloatingIcon['animationType']) => {
     switch (animationType) {
       case 'float-up':
-        return 'animate-float-up opacity-10'; // Ultra subtle
+        return 'animate-float-up opacity-30'; // More visible
       case 'fade-in-out':
-        return 'animate-fade-in-out opacity-12'; // Barely visible
+        return 'animate-fade-in-out opacity-25'; // Visible but subtle
       case 'spiral':
-        return 'animate-spiral opacity-8'; // Almost invisible
+        return 'animate-spiral opacity-20'; // Slightly visible
       case 'random-direction':
-        return 'animate-random-direction opacity-15'; // Very subtle presence
+        return 'animate-random-direction opacity-35'; // Moderately visible
       case 'power-pulse':
-        return 'animate-power-pulse opacity-18'; // Slightly more visible but still very subtle
+        return 'animate-power-pulse opacity-40'; // More prominent but still subtle
       default:
         return 'animate-float-up opacity-20';
     }
@@ -191,7 +191,7 @@ export function IoTFloatingIcons({ showOnHomePage = false }: { showOnHomePage?: 
           style={getAnimationStyle(icon)}
         >
           <icon.Icon 
-            className={`h-1 w-1 ${icon.color} animate-pulse`} // Ultra tiny: 4px x 4px
+            className={`h-3 w-3 ${icon.color} animate-pulse`} // Tiny but visible: 12px x 12px
             style={{
               filter: `drop-shadow(0 0 ${icon.animationType === 'power-pulse' ? '8px' : '4px'}) currentColor`, // Very subtle glow
               animationDuration: icon.animationType === 'power-pulse' ? '3s' : '6s', // Much slower pulse
