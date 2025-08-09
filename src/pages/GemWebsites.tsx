@@ -1,29 +1,54 @@
 import { useState, useEffect } from "react";
-import { Search, Filter, Star, ExternalLink, Globe } from "lucide-react";
+import { Search, Filter, ExternalLink, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { useGemWebsitesAPI } from "@/hooks/useGemWebsitesAPI";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ModernCard } from "@/components/ModernCard";
+import { useGemWebsitesSupabase } from "@/hooks/useGemWebsitesSupabase";
 
 export default function GemWebsites() {
-  const { websites, loading, error } = useGemWebsitesAPI();
+  const { websites, loading, error, categories, refetch } = useGemWebsitesSupabase();
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [filteredWebsites, setFilteredWebsites] = useState(websites);
 
   useEffect(() => {
-    if (searchTerm) {
-      setFilteredWebsites(
-        websites.filter(
-          (website) =>
-            website.Website?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            website.Purpose?.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-      );
-    } else {
-      setFilteredWebsites(websites);
+    let filtered = websites;
+    
+    // Filter by category
+    if (selectedCategory !== "all") {
+      filtered = filtered.filter(website => website.Category === selectedCategory);
     }
-  }, [websites, searchTerm]);
+    
+    // Filter by search term
+    if (searchTerm) {
+      filtered = filtered.filter(
+        (website) =>
+          website.Website?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          website.Purpose?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          website.Category?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+    
+    setFilteredWebsites(filtered);
+  }, [websites, searchTerm, selectedCategory]);
+
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+    if (category === "all") {
+      refetch();
+    } else {
+      refetch(category);
+    }
+  };
+
+  const getCategoryForCard = (category: string): 'movies' | 'aitools' | 'tech' | 'youtube' | 'default' => {
+    if (category?.toLowerCase().includes('ai') || category?.toLowerCase().includes('tool')) return 'aitools';
+    if (category?.toLowerCase().includes('tech')) return 'tech';
+    if (category?.toLowerCase().includes('youtube') || category?.toLowerCase().includes('video')) return 'youtube';
+    if (category?.toLowerCase().includes('movie') || category?.toLowerCase().includes('film')) return 'movies';
+    return 'default';
+  };
 
   if (loading) {
     return (
@@ -59,55 +84,47 @@ export default function GemWebsites() {
           </p>
         </div>
 
-        {/* Search */}
-        <div className="max-w-md mx-auto mb-8">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              placeholder="Search websites..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
-            />
+        {/* Filters */}
+        <div className="max-w-4xl mx-auto mb-8">
+          <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+              <Input
+                placeholder="Search websites..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 w-full sm:w-80"
+              />
+            </div>
+            <Select value={selectedCategory} onValueChange={handleCategoryChange}>
+              <SelectTrigger className="w-full sm:w-48">
+                <Filter className="h-4 w-4 mr-2" />
+                <SelectValue placeholder="Filter by category" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Categories</SelectItem>
+                {categories.map((category) => (
+                  <SelectItem key={category} value={category}>
+                    {category}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
 
         {/* Results */}
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {filteredWebsites.map((website, index) => (
-            <Card key={index} className="group hover:shadow-lg transition-all duration-300 hover:scale-105">
-              <CardHeader>
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <CardTitle className="text-lg group-hover:text-primary transition-colors line-clamp-2">
-                      {website.Website || 'Unnamed Website'}
-                    </CardTitle>
-                    <CardDescription className="mt-2 line-clamp-4">
-                      {website.Purpose || 'No purpose description available'}
-                    </CardDescription>
-                  </div>
-                  <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <Button 
-                  asChild 
-                  className="w-full"
-                  variant="outline"
-                  disabled={!website.Website}
-                >
-                  <a 
-                    href={website.Website?.startsWith('http') ? website.Website : `https://${website.Website}`} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2"
-                  >
-                    Visit Website
-                    <ExternalLink className="h-4 w-4" />
-                  </a>
-                </Button>
-              </CardContent>
-            </Card>
+            <ModernCard
+              key={website.id || index}
+              title={website.Website || 'Unnamed Website'}
+              description={website.Purpose || 'No purpose description available'}
+              category={getCategoryForCard(website.Category)}
+              badge={website.Category}
+              href={website.Website?.startsWith('http') ? website.Website : `https://${website.Website}`}
+              className="h-full"
+            />
           ))}
         </div>
 
