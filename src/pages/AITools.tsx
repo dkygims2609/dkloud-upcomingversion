@@ -8,19 +8,16 @@ import { Search, Filter, Star, ExternalLink, Brain, ChevronLeft, ChevronRight, G
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { ModernLoader, SkeletonCard } from "@/components/ui/modern-loader";
+import { supabase } from "@/integrations/supabase/client";
 
 interface AITool {
-  "Toolname"?: string;
-  "Tool name"?: string;
-  "toolname"?: string;
-  "name"?: string;
-  "Name"?: string;
-  "Category"?: string;
-  "Purpose"?: string;
-  "Pricingmodel"?: string;
-  "EstimatedCost (per month)"?: string;
-  "Tools Link"?: string;
-  [key: string]: any;
+  id?: string;
+  toolname: string;
+  category: string;
+  purpose?: string | null;
+  pricing_model?: string | null;
+  estimated_cost_per_month?: string | null;
+  tool_link?: string | null;
 }
 
 const AITools = () => {
@@ -36,37 +33,28 @@ const AITools = () => {
 
   const fetchData = async (retryCount = 0) => {
     try {
-      console.log("Fetching AI Tools data...", { retryCount });
+      console.log("Fetching AI Tools data from Supabase...", { retryCount });
       setLoading(true);
       setError(null);
       
-      const response = await fetch("https://script.google.com/macros/s/AKfycbxpIEMPY1Ji3tft5mYLNaObg9csvvzCdoWuAcOpz-KQlMWWmytkzShEgZBJNQ3r3yl7/exec", {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-        },
-      });
+      const { data: aiToolsData, error: supabaseError } = await supabase
+        .from('ai_tools')
+        .select('*')
+        .order('toolname', { ascending: true });
       
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      if (supabaseError) {
+        throw new Error(`Supabase error: ${supabaseError.message}`);
       }
       
-      const jsonData = await response.json();
-      console.log("AI Tools API response:", jsonData);
-      console.log("First item structure:", jsonData[0]);
-      console.log("All available keys in first item:", jsonData[0] ? Object.keys(jsonData[0]) : "No data");
+      console.log("AI Tools Supabase response:", aiToolsData);
+      console.log("First item structure:", aiToolsData?.[0]);
+      console.log("All available keys in first item:", aiToolsData?.[0] ? Object.keys(aiToolsData[0]) : "No data");
       
-      // Debug column names
-      if (jsonData && jsonData.length > 0) {
-        console.log("Sample item keys:", Object.keys(jsonData[0]));
-        console.log("Sample item values:", Object.values(jsonData[0]));
+      if (!Array.isArray(aiToolsData)) {
+        throw new Error("Invalid data format received from Supabase");
       }
       
-      if (!Array.isArray(jsonData)) {
-        throw new Error("Invalid data format received");
-      }
-      
-      setData(jsonData);
+      setData(aiToolsData || []);
       setError(null);
     } catch (error) {
       console.error("Error fetching AI Tools data:", error);
@@ -89,32 +77,9 @@ const AITools = () => {
     fetchData();
   }, []);
 
-  // Helper function to get tool name from various possible column names
+  // Helper function to get tool name from Supabase column
   const getToolName = (tool: AITool): string => {
-    // Check all possible column name variations including the exact one from your sheet
-    const possibleKeys = [
-      "Toolname", 
-      "Tool name", 
-      "toolname", 
-      "name", 
-      "Name",
-      "Tool Name",
-      "TOOLNAME"
-    ];
-    
-    let toolName = "";
-    for (const key of possibleKeys) {
-      if (tool[key] && typeof tool[key] === 'string' && tool[key].trim()) {
-        toolName = tool[key].trim();
-        break;
-      }
-    }
-    
-    console.log("Tool object keys:", Object.keys(tool));
-    console.log("Tool name search result:", toolName);
-    console.log("Full tool object:", tool);
-    
-    return toolName || "Unknown Tool";
+    return tool.toolname || "Unknown Tool";
   };
 
   const getUniqueValues = (key: keyof AITool) => {
@@ -124,12 +89,12 @@ const AITools = () => {
   const filteredTools = data.filter(tool => {
     const toolName = getToolName(tool);
     const searchMatch = toolName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                        (tool["Category"]?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-                        (tool["Purpose"]?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-                        (tool["Pricingmodel"]?.toLowerCase() || '').includes(searchTerm.toLowerCase());
+                        (tool.category?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
+                        (tool.purpose?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
+                        (tool.pricing_model?.toLowerCase() || '').includes(searchTerm.toLowerCase());
     
-    const categoryMatch = selectedCategory === "all" || tool["Category"] === selectedCategory;
-    const pricingMatch = selectedPricing === "all" || tool["Pricingmodel"] === selectedPricing;
+    const categoryMatch = selectedCategory === "all" || tool.category === selectedCategory;
+    const pricingMatch = selectedPricing === "all" || tool.pricing_model === selectedPricing;
 
     return searchMatch && categoryMatch && pricingMatch;
   });
@@ -178,9 +143,9 @@ const AITools = () => {
               <CardTitle className="text-base font-bold text-foreground line-clamp-2 leading-tight group-hover:text-blue-600 transition-colors duration-300">
                 {toolName}
               </CardTitle>
-              {tool["Category"] && (
+              {tool.category && (
                 <Badge variant="outline" className="text-xs mt-2 bg-gradient-to-r from-blue-100 to-purple-100 border-blue-200 text-blue-700 group-hover:bg-gradient-to-r group-hover:from-blue-200 group-hover:to-purple-200">
-                  {tool["Category"]}
+                  {tool.category}
                 </Badge>
               )}
             </div>
@@ -190,40 +155,40 @@ const AITools = () => {
         <CardContent className="pt-0 relative z-10 flex-1 flex flex-col space-y-3">
           {/* Purpose */}
           <CardDescription className="text-sm text-muted-foreground leading-relaxed line-clamp-2 flex-1 group-hover:text-foreground transition-colors duration-300">
-            {tool["Purpose"]}
+            {tool.purpose}
           </CardDescription>
 
           {/* Pricing and Cost */}
           <div className="space-y-2">
             <div className="flex flex-wrap gap-2">
-              {tool["Pricingmodel"] && (
+              {tool.pricing_model && (
                 <Badge 
-                  variant={tool["Pricingmodel"].toLowerCase().includes('free') ? 'default' : 'secondary'} 
+                  variant={tool.pricing_model.toLowerCase().includes('free') ? 'default' : 'secondary'} 
                   className={`text-xs transition-all duration-300 ${
-                    tool["Pricingmodel"].toLowerCase().includes('free') 
+                    tool.pricing_model.toLowerCase().includes('free') 
                       ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:from-green-600 hover:to-emerald-700' 
                       : 'bg-gradient-to-r from-orange-500 to-red-600 text-white hover:from-orange-600 hover:to-red-700'
                   }`}
                 >
-                  {tool["Pricingmodel"]}
+                  {tool.pricing_model}
                 </Badge>
               )}
-              {tool["EstimatedCost (per month)"] && (
+              {tool.estimated_cost_per_month && (
                 <Badge variant="outline" className="text-xs bg-gradient-to-r from-yellow-100 to-orange-100 border-yellow-300 text-yellow-700">
                   <DollarSign className="h-3 w-3 mr-1" />
-                  {tool["EstimatedCost (per month)"]}
+                  {tool.estimated_cost_per_month}
                 </Badge>
               )}
             </div>
 
             {/* Visit Button */}
-            {tool["Tools Link"] && (
+            {tool.tool_link && (
               <Button 
                 asChild 
                 size="sm" 
                 className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-105"
               >
-                <a href={tool["Tools Link"]} target="_blank" rel="noopener noreferrer">
+                <a href={tool.tool_link} target="_blank" rel="noopener noreferrer">
                   <ExternalLink className="h-4 w-4 mr-2" />
                   Visit Tool
                 </a>
@@ -300,7 +265,7 @@ const AITools = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Categories</SelectItem>
-              {getUniqueValues('Category').map(category => (
+              {getUniqueValues('category').map(category => (
                 <SelectItem key={String(category)} value={String(category)}>
                   {String(category)}
                 </SelectItem>
@@ -314,7 +279,7 @@ const AITools = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Pricing</SelectItem>
-              {getUniqueValues('Pricingmodel').map(pricing => (
+              {getUniqueValues('pricing_model').map(pricing => (
                 <SelectItem key={String(pricing)} value={String(pricing)}>
                   {String(pricing)}
                 </SelectItem>
