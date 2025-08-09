@@ -24,13 +24,13 @@ export function CircularNavigation() {
   const iconSize = 72; // Larger icons for better visibility
 
   const navItems = [
-    { name: "Movies & TV", href: "/movies", Icon: Clapperboard, color: "from-blue-800/25 to-blue-900/25", count: `${movies.length || 500}+` },
-    { name: "AI Tools", href: "/aitools", Icon: Brain, color: "from-purple-800/25 to-purple-900/25", count: "200+" },
-    { name: "Gem Websites", href: "/gem-websites", Icon: Globe, color: "from-emerald-800/25 to-emerald-900/25", count: `${websites.length || 0}+` },
-    { name: "Tech Corner", href: "/techcorner", Icon: BookOpen, color: "from-slate-700/25 to-slate-800/25", count: `${news.length || 0}+` },
-    { name: "SmartTech", href: "/smarttech", Icon: Zap, color: "from-indigo-800/25 to-purple-800/25", count: `${gadgets.length || 0}+` },
-    { name: "Products", href: "/digiproducts", Icon: Package, color: "from-violet-800/25 to-violet-900/25", count: "50+" },
-    { name: "Services", href: "/services", Icon: Briefcase, color: "from-slate-800/25 to-slate-900/25", count: "10+" },
+    { name: "Movies & TV", href: "/movies", Icon: Clapperboard, color: "nav-deep-blue", count: `${movies.length || 500}+` },
+    { name: "AI Tools", href: "/aitools", Icon: Brain, color: "nav-purple", count: "200+" },
+    { name: "Gem Websites", href: "/gem-websites", Icon: Globe, color: "nav-green", count: `${websites.length || 0}+` },
+    { name: "Tech Corner", href: "/techcorner", Icon: BookOpen, color: "nav-indigo", count: `${news.length || 0}+` },
+    { name: "SmartTech", href: "/smarttech", Icon: Zap, color: "nav-deep-purple", count: `${gadgets.length || 0}+` },
+    { name: "Products", href: "/digiproducts", Icon: Package, color: "nav-violet", count: "50+" },
+    { name: "Services", href: "/services", Icon: Briefcase, color: "nav-slate", count: "10+" },
   ];
 
   return (
@@ -72,9 +72,9 @@ export function CircularNavigation() {
               <Link
                 to={item.href}
                 className={cn(
-                  "absolute rounded-full border-2 border-border/50 bg-gradient-to-br backdrop-blur-md flex flex-col items-center justify-center transition-all duration-300 group shadow-lg",
+                  "absolute rounded-full border-2 border-white/20 backdrop-blur-md flex flex-col items-center justify-center transition-all duration-300 group shadow-lg",
                   item.color,
-                  isHovering ? "scale-150 border-primary/80 shadow-2xl shadow-primary/40 z-50" : "scale-100 hover:scale-125 hover:border-primary/60 hover:shadow-xl"
+                  isHovering ? "scale-150 border-white/40 shadow-2xl shadow-white/40 z-50" : "scale-100 hover:scale-125 hover:border-white/30 hover:shadow-xl"
                 )}
                 style={{
                   width: iconSize,
@@ -94,8 +94,8 @@ export function CircularNavigation() {
               >
                 <div className="relative text-center w-full h-full flex flex-col items-center justify-center">
                   <item.Icon className={cn(
-                    "transition-all duration-300 mx-auto mb-1",
-                    isHovering ? "h-8 w-8 text-primary" : "h-6 w-6 text-foreground group-hover:text-primary"
+                    "transition-all duration-300 mx-auto mb-1 animate-spin-slow",
+                    isHovering ? "h-8 w-8 text-white" : "h-6 w-6 text-white group-hover:text-white"
                   )} />
                   <div className={cn(
                     "text-[10px] font-medium transition-all duration-300 px-1 py-0.5 bg-background/80 rounded-md",

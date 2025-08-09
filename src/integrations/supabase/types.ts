@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      ai_tools: {
+        Row: {
+          category: string
+          created_at: string
+          estimated_cost_per_month: string | null
+          id: string
+          pricing_model: string | null
+          purpose: string | null
+          tool_link: string | null
+          toolname: string
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          estimated_cost_per_month?: string | null
+          id?: string
+          pricing_model?: string | null
+          purpose?: string | null
+          tool_link?: string | null
+          toolname: string
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          estimated_cost_per_month?: string | null
+          id?: string
+          pricing_model?: string | null
+          purpose?: string | null
+          tool_link?: string | null
+          toolname?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       banner_content: {
         Row: {
           content: string
@@ -74,6 +110,36 @@ export type Database = {
           section_name?: string
           title?: string | null
           updated_at?: string
+        }
+        Relationships: []
+      }
+      gem_websites: {
+        Row: {
+          category: string | null
+          created_at: string
+          id: string
+          purpose: string | null
+          updated_at: string
+          website_name: string
+          website_url: string | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          id?: string
+          purpose?: string | null
+          updated_at?: string
+          website_name: string
+          website_url?: string | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          id?: string
+          purpose?: string | null
+          updated_at?: string
+          website_name?: string
+          website_url?: string | null
         }
         Relationships: []
       }

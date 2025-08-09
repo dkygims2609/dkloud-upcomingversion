@@ -324,6 +324,49 @@
     }
   }
 
+  /* Slow spinning animation for navigation icons */
+  @keyframes spin-slow {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .animate-spin-slow {
+    animation: spin-slow 12s linear infinite;
+  }
+
+  /* Thematic color gradients for navigation */
+  .nav-deep-blue {
+    background: linear-gradient(135deg, hsl(220, 91%, 40%) 0%, hsl(220, 91%, 30%) 100%);
+  }
+  
+  .nav-purple {
+    background: linear-gradient(135deg, hsl(262, 83%, 58%) 0%, hsl(262, 83%, 48%) 100%);
+  }
+  
+  .nav-deep-purple {
+    background: linear-gradient(135deg, hsl(262, 69%, 43%) 0%, hsl(262, 69%, 33%) 100%);
+  }
+  
+  .nav-green {
+    background: linear-gradient(135deg, hsl(165, 95%, 40%) 0%, hsl(165, 95%, 30%) 100%);
+  }
+  
+  .nav-indigo {
+    background: linear-gradient(135deg, hsl(239, 62%, 52%) 0%, hsl(239, 62%, 42%) 100%);
+  }
+  
+  .nav-violet {
+    background: linear-gradient(135deg, hsl(20, 67%, 30%) 0%, hsl(20, 67%, 20%) 100%);
+  }
+  
+  .nav-slate {
+    background: linear-gradient(135deg, hsl(215, 16%, 45%) 0%, hsl(215, 16%, 35%) 100%);
+  }
+
   /* Main Tagline - Decoding Knowledge - Normal Heading Size */
   .decoding-knowledge {
     font-size: clamp(2.5rem, 8vw, 4rem) !important;
