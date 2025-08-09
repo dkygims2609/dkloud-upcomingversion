@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -12,12 +11,12 @@ import { supabase } from "@/integrations/supabase/client";
 
 interface AITool {
   id?: string;
-  toolname: string;
-  category: string;
-  purpose?: string | null;
-  pricing_model?: string | null;
-  estimated_cost_per_month?: string | null;
-  tool_link?: string | null;
+  Toolname: string;
+  Category: string;
+  Purpose?: string | null;
+  Pricingmodel?: string | null;
+  "EstimatedCost/Permonth"?: string | null;
+  ToolsLink?: string | null;
 }
 
 const AITools = () => {
@@ -40,7 +39,7 @@ const AITools = () => {
       const { data: aiToolsData, error: supabaseError } = await supabase
         .from('ai_tools')
         .select('*')
-        .order('toolname', { ascending: true });
+        .order('Toolname', { ascending: true });
       
       if (supabaseError) {
         throw new Error(`Supabase error: ${supabaseError.message}`);
@@ -54,7 +53,7 @@ const AITools = () => {
         throw new Error("Invalid data format received from Supabase");
       }
       
-      setData(aiToolsData || []);
+      setData(aiToolsData as any || []);
       setError(null);
     } catch (error) {
       console.error("Error fetching AI Tools data:", error);
@@ -79,7 +78,7 @@ const AITools = () => {
 
   // Helper function to get tool name from Supabase column
   const getToolName = (tool: AITool): string => {
-    return tool.toolname || "Unknown Tool";
+    return tool.Toolname || "Unknown Tool";
   };
 
   const getUniqueValues = (key: keyof AITool) => {
@@ -89,12 +88,12 @@ const AITools = () => {
   const filteredTools = data.filter(tool => {
     const toolName = getToolName(tool);
     const searchMatch = toolName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                        (tool.category?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-                        (tool.purpose?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
-                        (tool.pricing_model?.toLowerCase() || '').includes(searchTerm.toLowerCase());
+                        (tool.Category?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
+                        (tool.Purpose?.toLowerCase() || '').includes(searchTerm.toLowerCase()) ||
+                        (tool.Pricingmodel?.toLowerCase() || '').includes(searchTerm.toLowerCase());
     
-    const categoryMatch = selectedCategory === "all" || tool.category === selectedCategory;
-    const pricingMatch = selectedPricing === "all" || tool.pricing_model === selectedPricing;
+    const categoryMatch = selectedCategory === "all" || tool.Category === selectedCategory;
+    const pricingMatch = selectedPricing === "all" || tool.Pricingmodel === selectedPricing;
 
     return searchMatch && categoryMatch && pricingMatch;
   });
@@ -143,9 +142,9 @@ const AITools = () => {
               <CardTitle className="text-base font-bold text-foreground line-clamp-2 leading-tight group-hover:text-blue-600 transition-colors duration-300">
                 {toolName}
               </CardTitle>
-              {tool.category && (
+              {tool.Category && (
                 <Badge variant="outline" className="text-xs mt-2 bg-gradient-to-r from-blue-100 to-purple-100 border-blue-200 text-blue-700 group-hover:bg-gradient-to-r group-hover:from-blue-200 group-hover:to-purple-200">
-                  {tool.category}
+                  {tool.Category}
                 </Badge>
               )}
             </div>
@@ -155,40 +154,40 @@ const AITools = () => {
         <CardContent className="pt-0 relative z-10 flex-1 flex flex-col space-y-3">
           {/* Purpose */}
           <CardDescription className="text-sm text-muted-foreground leading-relaxed line-clamp-2 flex-1 group-hover:text-foreground transition-colors duration-300">
-            {tool.purpose}
+            {tool.Purpose}
           </CardDescription>
 
           {/* Pricing and Cost */}
           <div className="space-y-2">
             <div className="flex flex-wrap gap-2">
-              {tool.pricing_model && (
+              {tool.Pricingmodel && (
                 <Badge 
-                  variant={tool.pricing_model.toLowerCase().includes('free') ? 'default' : 'secondary'} 
+                  variant={tool.Pricingmodel.toLowerCase().includes('free') ? 'default' : 'secondary'} 
                   className={`text-xs transition-all duration-300 ${
-                    tool.pricing_model.toLowerCase().includes('free') 
+                    tool.Pricingmodel.toLowerCase().includes('free') 
                       ? 'bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:from-green-600 hover:to-emerald-700' 
                       : 'bg-gradient-to-r from-orange-500 to-red-600 text-white hover:from-orange-600 hover:to-red-700'
                   }`}
                 >
-                  {tool.pricing_model}
+                  {tool.Pricingmodel}
                 </Badge>
               )}
-              {tool.estimated_cost_per_month && (
+              {tool["EstimatedCost/Permonth"] && (
                 <Badge variant="outline" className="text-xs bg-gradient-to-r from-yellow-100 to-orange-100 border-yellow-300 text-yellow-700">
                   <DollarSign className="h-3 w-3 mr-1" />
-                  {tool.estimated_cost_per_month}
+                  {tool["EstimatedCost/Permonth"]}
                 </Badge>
               )}
             </div>
 
             {/* Visit Button */}
-            {tool.tool_link && (
+            {tool.ToolsLink && (
               <Button 
                 asChild 
                 size="sm" 
                 className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 group-hover:scale-105"
               >
-                <a href={tool.tool_link} target="_blank" rel="noopener noreferrer">
+                <a href={tool.ToolsLink} target="_blank" rel="noopener noreferrer">
                   <ExternalLink className="h-4 w-4 mr-2" />
                   Visit Tool
                 </a>
@@ -265,7 +264,7 @@ const AITools = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Categories</SelectItem>
-              {getUniqueValues('category').map(category => (
+              {getUniqueValues('Category').map(category => (
                 <SelectItem key={String(category)} value={String(category)}>
                   {String(category)}
                 </SelectItem>
@@ -279,7 +278,7 @@ const AITools = () => {
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">All Pricing</SelectItem>
-              {getUniqueValues('pricing_model').map(pricing => (
+              {getUniqueValues('Pricingmodel').map(pricing => (
                 <SelectItem key={String(pricing)} value={String(pricing)}>
                   {String(pricing)}
                 </SelectItem>
