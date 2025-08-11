@@ -11,30 +11,9 @@ import { ModernLoader, SkeletonCard } from "@/components/ui/modern-loader";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
-
-interface Movie {
-  Name?: string;
-  Genre?: string;
-  Platform?: string;
-  DKcloudRating?: string | number;
-  Language?: string;
-  Awards?: string;
-  Achievements?: string;
-  "Why to Watch"?: string;
-  Director?: string;
-  Year?: string;
-}
-
-interface TVSeries {
-  Name?: string;
-  Genre?: string;
-  Platform?: string;
-  DKcloudRating?: string | number;
-  Language?: string;
-  Awards?: string;
-  Achievements?: string;
-  "Why to Watch"?: string;
-}
+import { useMoviesSupabase, type Movie } from "@/hooks/useMoviesSupabase";
+import { useTVSeriesSupabase, type TVSeries } from "@/hooks/useTVSeriesSupabase";
+import { useTrendingMovies, type TrendingMovie } from "@/hooks/useTrendingMovies";
 
 interface TrendingItem {
   Title?: string;
@@ -58,8 +37,6 @@ interface UltimateItem {
 type ContentItem = Movie | TVSeries | TrendingItem | UltimateItem;
 
 const API_ENDPOINTS = {
-  movies: "https://script.google.com/macros/s/AKfycbzO53FfgLV-2Kq5pP0fYF7yjFw1CQlZkZoc5TEIn3rDcPSxv8MB8koOasYlf6BuXXCQ/exec",
-  tv: "https://script.google.com/macros/s/AKfycbxr64a2W4VL2ymbigPXUB3EQmMULCmUhMuDDwvhGNaG4lSwgqAQitXO_hTY2lhh3n1f/exec",
   ultimate: "https://script.google.com/macros/s/AKfycbwA8KIHelLQllAKNIgIYtfo3dyvBCef7kOfuYuEfM4SEF4y1ivyTHFddVUO1VrWyA4c-Q/exec",
   trending: "https://script.google.com/macros/s/AKfycbyCeRakH_SOeSQO3PGFMtphknTGIe3mzcFRZcCmjQdAEkOtiK8-3m2WSL1tJ8dOXy8/exec"
 };
@@ -71,8 +48,19 @@ const MoviesTV = () => {
   
   const [activeTab, setActiveTab] = useState(initialTab);
   const [data, setData] = useState<ContentItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  
+  // Supabase hooks
+  const { movies, loading: moviesLoading, error: moviesError } = useMoviesSupabase();
+  const { tvSeries, loading: tvLoading, error: tvError } = useTVSeriesSupabase();
+  const { movies: trendingMovies, loading: trendingLoading, error: trendingError } = useTrendingMovies();
+  
+  // Combined loading and error states
+  const loading = activeTab === 'movies' ? moviesLoading : 
+                 activeTab === 'tv' ? tvLoading :
+                 activeTab === 'trending' ? trendingLoading : false;
+  const error = activeTab === 'movies' ? moviesError :
+               activeTab === 'tv' ? tvError :
+               activeTab === 'trending' ? trendingError : null;
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("all");
   const [selectedPlatform, setSelectedPlatform] = useState("all");
@@ -92,54 +80,66 @@ const MoviesTV = () => {
   };
 
   const fetchDataForTab = async (tab: string, retryCount = 0) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const endpoint = API_ENDPOINTS[tab as keyof typeof API_ENDPOINTS];
-      console.log(`Fetching data from ${tab} endpoint:`, endpoint);
-      
-      const response = await fetch(endpoint, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json',
-        },
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+    if (tab === 'ultimate' || tab === 'trending') {
+      try {
+        const endpoint = API_ENDPOINTS[tab as keyof typeof API_ENDPOINTS];
+        console.log(`Fetching data from ${tab} endpoint:`, endpoint);
+        
+        const response = await fetch(endpoint, {
+          method: 'GET',
+          headers: {
+            'Accept': 'application/json',
+          },
+        });
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        console.log(`${tab} API response:`, result);
+        
+        if (!Array.isArray(result)) {
+          throw new Error("Invalid data format received");
+        }
+        
+        setData(result);
+      } catch (error) {
+        console.error(`Error fetching ${tab} data:`, error);
+        if (retryCount < 2) {
+          console.log(`Retrying ${tab}... attempt ${retryCount + 1}`);
+          setTimeout(() => fetchDataForTab(tab, retryCount + 1), 2000);
+          return;
+        }
+        toast.error(`Failed to load ${tab} data. Please try again later.`);
+        setData([]);
       }
-      
-      const result = await response.json();
-      console.log(`${tab} API response:`, result);
-      console.log(`First ${tab} item structure:`, result[0]);
-      
-      if (!Array.isArray(result)) {
-        throw new Error("Invalid data format received");
-      }
-      
-      setData(result);
-      setError(null);
-    } catch (error) {
-      console.error(`Error fetching ${tab} data:`, error);
-      const errorMessage = error instanceof Error ? error.message : `Failed to load ${tab} data`;
-      setError(errorMessage);
-      
-      if (retryCount < 2) {
-        console.log(`Retrying ${tab}... attempt ${retryCount + 1}`);
-        setTimeout(() => fetchDataForTab(tab, retryCount + 1), 2000);
-        return;
-      }
-      
-      toast.error(`Failed to load ${tab} data. Please try again later.`);
-      setData([]);
-    } finally {
-      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchDataForTab(activeTab);
-  }, [activeTab]);
+    // Set data based on activeTab using Supabase hooks
+    if (activeTab === 'movies') {
+      setData(movies);
+    } else if (activeTab === 'tv') {
+      setData(tvSeries);
+    } else if (activeTab === 'trending') {
+      // Convert trending movies to the expected format
+      const convertedTrending = trendingMovies.map(movie => ({
+        Title: movie.Title,
+        Summary: movie.Summary,
+        Type: 'Movie',
+        Genre: '',
+        Platform: '',
+        "dKloud rating": '',
+        "poster url": ''
+      }));
+      setData(convertedTrending);
+    } else {
+      // For ultimate tab, fetch from API
+      fetchDataForTab(activeTab);
+    }
+  }, [activeTab, movies, tvSeries, trendingMovies]);
 
   const getUniqueValues = (key: string) => {
     return [...new Set(data.map(item => (item as any)[key]).filter(Boolean))].sort();
@@ -159,7 +159,7 @@ const MoviesTV = () => {
         movieItem.Platform,
         movieItem.Language,
         movieItem.Awards,
-        movieItem["Why to Watch"]
+        movieItem.Why2Watch
       ].filter(Boolean).join(" ").toLowerCase();
       rating = parseFloat(String(movieItem.DKcloudRating || '0'));
     } else if (activeTab === 'tv') {
@@ -170,7 +170,7 @@ const MoviesTV = () => {
         tvItem.Platform,
         tvItem.Language,
         tvItem.Awards,
-        tvItem["Why to Watch"]
+        tvItem.Why2Watch
       ].filter(Boolean).join(" ").toLowerCase();
       rating = parseFloat(String(tvItem.DKcloudRating || '0'));
     } else if (activeTab === 'trending') {
@@ -266,7 +266,7 @@ const MoviesTV = () => {
 
           <CardContent className="pt-0 space-y-3 relative z-10">
             <p className="text-sm text-muted-foreground line-clamp-3 group-hover:text-foreground/80 transition-colors duration-300">
-              <span className="text-primary font-medium">Why to Watch:</span> {movie["Why to Watch"]}
+              <span className="text-primary font-medium">Why to Watch:</span> {movie.Why2Watch}
             </p>
             
             <div className="flex flex-wrap gap-2">
@@ -331,7 +331,7 @@ const MoviesTV = () => {
 
           <CardContent className="pt-0 space-y-3 relative z-10">
             <p className="text-sm text-muted-foreground line-clamp-3 group-hover:text-foreground/80 transition-colors duration-300">
-              <span className="text-primary font-medium">Why to Watch:</span> {tvShow["Why to Watch"]}
+              <span className="text-primary font-medium">Why to Watch:</span> {tvShow.Why2Watch}
             </p>
             
             <div className="flex flex-wrap gap-2">
