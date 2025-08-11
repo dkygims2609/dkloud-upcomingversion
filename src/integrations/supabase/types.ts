@@ -16,37 +16,31 @@ export type Database = {
     Tables: {
       ai_tools: {
         Row: {
-          category: string
-          created_at: string
-          estimated_cost_per_month: string | null
+          Category: string
+          "EstimatedCost/Permonth": string | null
           id: string
-          pricing_model: string | null
-          purpose: string | null
-          tool_link: string | null
-          toolname: string
-          updated_at: string
+          Pricingmodel: string | null
+          Purpose: string | null
+          Toolname: string
+          ToolsLink: string | null
         }
         Insert: {
-          category: string
-          created_at?: string
-          estimated_cost_per_month?: string | null
+          Category: string
+          "EstimatedCost/Permonth"?: string | null
           id?: string
-          pricing_model?: string | null
-          purpose?: string | null
-          tool_link?: string | null
-          toolname: string
-          updated_at?: string
+          Pricingmodel?: string | null
+          Purpose?: string | null
+          Toolname: string
+          ToolsLink?: string | null
         }
         Update: {
-          category?: string
-          created_at?: string
-          estimated_cost_per_month?: string | null
+          Category?: string
+          "EstimatedCost/Permonth"?: string | null
           id?: string
-          pricing_model?: string | null
-          purpose?: string | null
-          tool_link?: string | null
-          toolname?: string
-          updated_at?: string
+          Pricingmodel?: string | null
+          Purpose?: string | null
+          Toolname?: string
+          ToolsLink?: string | null
         }
         Relationships: []
       }
@@ -115,31 +109,64 @@ export type Database = {
       }
       gem_websites: {
         Row: {
-          category: string | null
-          created_at: string
+          Category: string | null
           id: string
-          purpose: string | null
-          updated_at: string
-          website_name: string
-          website_url: string | null
+          Purpose: string | null
+          Website: string
         }
         Insert: {
-          category?: string | null
-          created_at?: string
+          Category?: string | null
           id?: string
-          purpose?: string | null
-          updated_at?: string
-          website_name: string
-          website_url?: string | null
+          Purpose?: string | null
+          Website: string
         }
         Update: {
-          category?: string | null
-          created_at?: string
+          Category?: string | null
           id?: string
-          purpose?: string | null
-          updated_at?: string
-          website_name?: string
-          website_url?: string | null
+          Purpose?: string | null
+          Website?: string
+        }
+        Relationships: []
+      }
+      Movies: {
+        Row: {
+          Achievements: string | null
+          Awards: string | null
+          Director: string | null
+          DKcloudRating: string | null
+          Genre: string | null
+          id: number
+          Language: string | null
+          Name: string
+          Platform: string | null
+          Why2Watch: string | null
+          Year: string | null
+        }
+        Insert: {
+          Achievements?: string | null
+          Awards?: string | null
+          Director?: string | null
+          DKcloudRating?: string | null
+          Genre?: string | null
+          id?: number
+          Language?: string | null
+          Name: string
+          Platform?: string | null
+          Why2Watch?: string | null
+          Year?: string | null
+        }
+        Update: {
+          Achievements?: string | null
+          Awards?: string | null
+          Director?: string | null
+          DKcloudRating?: string | null
+          Genre?: string | null
+          id?: number
+          Language?: string | null
+          Name?: string
+          Platform?: string | null
+          Why2Watch?: string | null
+          Year?: string | null
         }
         Relationships: []
       }
@@ -305,6 +332,45 @@ export type Database = {
           title?: string
           updated_at?: string
           url?: string
+        }
+        Relationships: []
+      }
+      TvSeries: {
+        Row: {
+          Achievements: string | null
+          Awards: string | null
+          DKcloudRating: string | null
+          Genre: string | null
+          id: number
+          Language: string | null
+          Name: string
+          Platform: string | null
+          Why2Watch: string | null
+          Year: string | null
+        }
+        Insert: {
+          Achievements?: string | null
+          Awards?: string | null
+          DKcloudRating?: string | null
+          Genre?: string | null
+          id?: number
+          Language?: string | null
+          Name: string
+          Platform?: string | null
+          Why2Watch?: string | null
+          Year?: string | null
+        }
+        Update: {
+          Achievements?: string | null
+          Awards?: string | null
+          DKcloudRating?: string | null
+          Genre?: string | null
+          id?: number
+          Language?: string | null
+          Name?: string
+          Platform?: string | null
+          Why2Watch?: string | null
+          Year?: string | null
         }
         Relationships: []
       }
