@@ -13,33 +13,10 @@ import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { useMoviesSupabase, type Movie } from "@/hooks/useMoviesSupabase";
 import { useTVSeriesSupabase, type TVSeries } from "@/hooks/useTVSeriesSupabase";
-import { useTrendingMovies, type TrendingMovie } from "@/hooks/useTrendingMovies";
-
-interface TrendingItem {
-  Title?: string;
-  Platform?: string;
-  Type?: string;
-  Genre?: string;
-  "dKloud rating"?: string | number;
-  Summary?: string;
-  "poster url"?: string;
-}
-
-interface UltimateItem {
-  Title?: string;
-  Type?: string;
-  Genre?: string;
-  Platform?: string;
-  "Why to watch"?: string;
-  "Poster URL"?: string;
-}
+import { useTrendingSupabase, type TrendingItem } from "@/hooks/useTrendingSupabase";
+import { useUltimateListSupabase, type UltimateItem } from "@/hooks/useUltimateListSupabase";
 
 type ContentItem = Movie | TVSeries | TrendingItem | UltimateItem;
-
-const API_ENDPOINTS = {
-  ultimate: "https://script.google.com/macros/s/AKfycbwA8KIHelLQllAKNIgIYtfo3dyvBCef7kOfuYuEfM4SEF4y1ivyTHFddVUO1VrWyA4c-Q/exec",
-  trending: "https://script.google.com/macros/s/AKfycbyCeRakH_SOeSQO3PGFMtphknTGIe3mzcFRZcCmjQdAEkOtiK8-3m2WSL1tJ8dOXy8/exec"
-};
 
 const MoviesTV = () => {
   const navigate = useNavigate();
@@ -52,15 +29,18 @@ const MoviesTV = () => {
   // Supabase hooks
   const { movies, loading: moviesLoading, error: moviesError } = useMoviesSupabase();
   const { tvSeries, loading: tvLoading, error: tvError } = useTVSeriesSupabase();
-  const { movies: trendingMovies, loading: trendingLoading, error: trendingError } = useTrendingMovies();
+  const { trending, loading: trendingLoading, error: trendingError } = useTrendingSupabase();
+  const { ultimateList, loading: ultimateLoading, error: ultimateError } = useUltimateListSupabase();
   
   // Combined loading and error states
   const loading = activeTab === 'movies' ? moviesLoading : 
                  activeTab === 'tv' ? tvLoading :
-                 activeTab === 'trending' ? trendingLoading : false;
+                 activeTab === 'trending' ? trendingLoading :
+                 activeTab === 'ultimate' ? ultimateLoading : false;
   const error = activeTab === 'movies' ? moviesError :
                activeTab === 'tv' ? tvError :
-               activeTab === 'trending' ? trendingError : null;
+               activeTab === 'trending' ? trendingError :
+               activeTab === 'ultimate' ? ultimateError : null;
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedGenre, setSelectedGenre] = useState("all");
   const [selectedPlatform, setSelectedPlatform] = useState("all");
@@ -79,44 +59,6 @@ const MoviesTV = () => {
     navigate(`/movies-tv?tab=${tabId}`, { replace: true });
   };
 
-  const fetchDataForTab = async (tab: string, retryCount = 0) => {
-    if (tab === 'ultimate' || tab === 'trending') {
-      try {
-        const endpoint = API_ENDPOINTS[tab as keyof typeof API_ENDPOINTS];
-        console.log(`Fetching data from ${tab} endpoint:`, endpoint);
-        
-        const response = await fetch(endpoint, {
-          method: 'GET',
-          headers: {
-            'Accept': 'application/json',
-          },
-        });
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        
-        const result = await response.json();
-        console.log(`${tab} API response:`, result);
-        
-        if (!Array.isArray(result)) {
-          throw new Error("Invalid data format received");
-        }
-        
-        setData(result);
-      } catch (error) {
-        console.error(`Error fetching ${tab} data:`, error);
-        if (retryCount < 2) {
-          console.log(`Retrying ${tab}... attempt ${retryCount + 1}`);
-          setTimeout(() => fetchDataForTab(tab, retryCount + 1), 2000);
-          return;
-        }
-        toast.error(`Failed to load ${tab} data. Please try again later.`);
-        setData([]);
-      }
-    }
-  };
-
   useEffect(() => {
     // Set data based on activeTab using Supabase hooks
     if (activeTab === 'movies') {
@@ -124,22 +66,11 @@ const MoviesTV = () => {
     } else if (activeTab === 'tv') {
       setData(tvSeries);
     } else if (activeTab === 'trending') {
-      // Convert trending movies to the expected format
-      const convertedTrending = trendingMovies.map(movie => ({
-        Title: movie.Title,
-        Summary: movie.Summary,
-        Type: 'Movie',
-        Genre: '',
-        Platform: '',
-        "dKloud rating": '',
-        "poster url": ''
-      }));
-      setData(convertedTrending);
-    } else {
-      // For ultimate tab, fetch from API
-      fetchDataForTab(activeTab);
+      setData(trending);
+    } else if (activeTab === 'ultimate') {
+      setData(ultimateList);
     }
-  }, [activeTab, movies, tvSeries, trendingMovies]);
+  }, [activeTab, movies, tvSeries, trending, ultimateList]);
 
   const getUniqueValues = (key: string) => {
     return [...new Set(data.map(item => (item as any)[key]).filter(Boolean))].sort();
@@ -438,10 +369,10 @@ const MoviesTV = () => {
         <Card key={ultimate.Title} className="group relative overflow-hidden bg-gradient-to-br from-card/95 to-card/85 backdrop-blur-md border border-border/50 shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-[1.02] h-full">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
           
-          {ultimate["Poster URL"] && (
+          {ultimate.PosterURL && (
             <div className="relative overflow-hidden h-48 bg-muted">
               <img
-                src={ultimate["Poster URL"]}
+                src={ultimate.PosterURL}
                 alt={ultimate.Title || "Poster"}
                 className="w-full h-full object-contain object-center transition-transform duration-500 group-hover:scale-105"
                 onError={(e) => {
@@ -690,12 +621,6 @@ const MoviesTV = () => {
               <Filter className="h-4 w-4 mr-2" />
               Clear Filters
             </Button>
-            {error && (
-              <Button variant="outline" size="sm" onClick={() => fetchDataForTab(activeTab)}>
-                <RefreshCw className="h-4 w-4 mr-2" />
-                Retry
-              </Button>
-            )}
           </div>
         </div>
       </div>
@@ -717,10 +642,6 @@ const MoviesTV = () => {
         <div className="text-center py-12">
           <h3 className="text-2xl font-semibold mb-2 text-destructive">Failed to Load {activeTab}</h3>
           <p className="text-muted-foreground mb-4">{error}</p>
-          <Button onClick={() => fetchDataForTab(activeTab)}>
-            <RefreshCw className="h-4 w-4 mr-2" />
-            Try Again
-          </Button>
         </div>
       ) : filteredData.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">

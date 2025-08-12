@@ -335,6 +335,39 @@ export type Database = {
         }
         Relationships: []
       }
+      Trending: {
+        Row: {
+          "dKloud rating": string | null
+          Genre: string | null
+          id: number
+          Platform: string | null
+          "poster url": string | null
+          Summary: string | null
+          Title: string
+          Type: string | null
+        }
+        Insert: {
+          "dKloud rating"?: string | null
+          Genre?: string | null
+          id?: number
+          Platform?: string | null
+          "poster url"?: string | null
+          Summary?: string | null
+          Title: string
+          Type?: string | null
+        }
+        Update: {
+          "dKloud rating"?: string | null
+          Genre?: string | null
+          id?: number
+          Platform?: string | null
+          "poster url"?: string | null
+          Summary?: string | null
+          Title?: string
+          Type?: string | null
+        }
+        Relationships: []
+      }
       TvSeries: {
         Row: {
           Achievements: string | null
@@ -371,6 +404,36 @@ export type Database = {
           Platform?: string | null
           Why2Watch?: string | null
           Year?: string | null
+        }
+        Relationships: []
+      }
+      "Ultimate list": {
+        Row: {
+          Genre: string | null
+          id: number
+          Platform: string | null
+          PosterURL: string | null
+          Title: string
+          Type: string | null
+          "Why to watch": string | null
+        }
+        Insert: {
+          Genre?: string | null
+          id?: number
+          Platform?: string | null
+          PosterURL?: string | null
+          Title: string
+          Type?: string | null
+          "Why to watch"?: string | null
+        }
+        Update: {
+          Genre?: string | null
+          id?: number
+          Platform?: string | null
+          PosterURL?: string | null
+          Title?: string
+          Type?: string | null
+          "Why to watch"?: string | null
         }
         Relationships: []
       }
