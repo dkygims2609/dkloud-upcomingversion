@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Home, Clapperboard, Youtube, Brain, BookOpen, Zap, Package, Briefcase, Settings, ChevronDown } from "lucide-react";
+import { Menu, X, Home, Clapperboard, Youtube, Brain, Zap, Package, Briefcase, Settings, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "./ThemeToggle";
 import { cn } from "@/lib/utils";
@@ -33,18 +33,6 @@ const navigation = [
     ]
   },
   { 
-    name: "Gem Websites", 
-    href: "/gem-websites", 
-    icon: Youtube, 
-    color: "from-red-500 to-orange-500",
-    dropdownItems: [
-      { name: "Developer Tools", href: "/gem-websites?category=dev-tools" },
-      { name: "Design Resources", href: "/gem-websites?category=design" },
-      { name: "Learning Platforms", href: "/gem-websites?category=learning" },
-      { name: "Productivity", href: "/gem-websites?category=productivity" }
-    ]
-  },
-  { 
     name: "AI Tools", 
     href: "/aitools", 
     icon: Brain, 
@@ -57,15 +45,15 @@ const navigation = [
     ]
   },
   { 
-    name: "Tech Corner", 
-    href: "/techcorner", 
-    icon: BookOpen, 
-    color: "from-green-500 to-emerald-500",
+    name: "Gem Websites", 
+    href: "/gem-websites", 
+    icon: Youtube, 
+    color: "from-red-500 to-orange-500",
     dropdownItems: [
-      { name: "Free Hacks & Resources", href: "https://learn.dkloud.in", external: true },
-      { name: "Professional Courses", href: "https://learn.dkloud.in", external: true },
-      { name: "Quick Guides & SOPs", href: "https://learn.dkloud.in", external: true },
-      { name: "Tutorials", href: "/techcorner?tab=tutorials" }
+      { name: "Developer Tools", href: "/gem-websites?category=dev-tools" },
+      { name: "Design Resources", href: "/gem-websites?category=design" },
+      { name: "Learning Platforms", href: "/gem-websites?category=learning" },
+      { name: "Productivity", href: "/gem-websites?category=productivity" }
     ]
   },
   { 
@@ -185,11 +173,11 @@ export function Navbar() {
                         {item.dropdownItems.map((dropItem) => (
                           <DropdownMenuItem 
                             key={dropItem.name} 
-                            asChild={!dropItem.external}
+                            asChild={!(dropItem as any).external}
                             className="focus:bg-primary/10 focus:text-primary"
-                            onClick={() => dropItem.external && handleDropdownClick(dropItem)}
+                            onClick={() => (dropItem as any).external && handleDropdownClick(dropItem)}
                           >
-                            {dropItem.external ? (
+                            {(dropItem as any).external ? (
                               <button 
                                 className="flex items-center px-3 py-2 text-sm hover:bg-muted/50 transition-colors duration-200 rounded-md mx-1 w-full text-left"
                               >
@@ -278,7 +266,7 @@ export function Navbar() {
                   {item.dropdownItems && (
                     <div className="ml-6 space-y-1">
                       {item.dropdownItems.map((dropItem) => (
-                        dropItem.external ? (
+                        (dropItem as any).external ? (
                           <button
                             key={dropItem.name}
                             onClick={() => {

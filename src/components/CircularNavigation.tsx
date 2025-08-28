@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Clapperboard, Globe, Brain, BookOpen, Zap, Package, Briefcase, Play, Pause } from "lucide-react";
+import { Clapperboard, Globe, Brain, Zap, Package, Briefcase, Play, Pause } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { useEnhancedNewsData } from "@/hooks/useEnhancedNewsData";
@@ -28,7 +28,6 @@ export function CircularNavigation() {
     { name: "Movies & TV", href: "/movies", Icon: Clapperboard, color: "nav-deep-blue", count: `${movies.length || 500}+` },
     { name: "AI Tools", href: "/aitools", Icon: Brain, color: "nav-purple", count: "200+" },
     { name: "Gem Websites", href: "/gem-websites", Icon: Globe, color: "nav-green", count: `${websites.length || 0}+` },
-    { name: "Tech Corner", href: "/techcorner", Icon: BookOpen, color: "nav-indigo", count: `${news.length || 0}+` },
     { name: "SmartTech", href: "/smarttech", Icon: Zap, color: "nav-deep-purple", count: `${gadgets.length || 0}+` },
     { name: "Products", href: "/digiproducts", Icon: Package, color: "nav-violet", count: "50+" },
     { name: "Services", href: "/services", Icon: Briefcase, color: "nav-slate", count: "10+" },
