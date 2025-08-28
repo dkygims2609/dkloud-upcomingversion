@@ -13,7 +13,7 @@ import Index from "./pages/Index";
 import MoviesTV from "./pages/MoviesTV";
 import YouTubeChannels from "./pages/YouTubeChannels";
 import AITools from "./pages/AITools";
-import TechCorner from "./pages/TechCorner";
+
 import SmartTech from "./pages/SmartTech";
 import DigiProducts from "./pages/DigiProducts";
 import Portfolio from "./pages/Portfolio";
@@ -42,7 +42,7 @@ const App = () => (
             <Route path="/youtube-channels" element={<YouTubeChannels />} />
             <Route path="/ytchannels" element={<YouTubeChannels />} />
             <Route path="/aitools" element={<AITools />} />
-            <Route path="/techcorner" element={<TechCorner />} />
+            
             <Route path="/smarttech" element={<SmartTech />} />
             <Route path="/digi-products" element={<DigiProducts />} />
             <Route path="/gem-websites" element={<GemWebsites />} />

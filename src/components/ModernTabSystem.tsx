@@ -53,13 +53,6 @@ export const createTabData = (type: 'portfolio' | 'main'): TabData[] => {
       description: 'Entertainment content'
     },
     {
-      id: 'youtube',
-      label: 'YouTube Picks',
-      icon: Youtube,
-      gradient: 'from-red-500 to-rose-600',
-      description: 'Curated YouTube channels'
-    },
-    {
       id: 'ai-tools',
       label: 'AI Tools',
       icon: Bot,
@@ -67,11 +60,11 @@ export const createTabData = (type: 'portfolio' | 'main'): TabData[] => {
       description: 'AI-powered solutions'
     },
     {
-      id: 'tech-corner',
-      label: 'Tech Corner',
-      icon: FileText,
-      gradient: 'from-emerald-500 to-teal-600',
-      description: 'Tech tutorials and guides'
+      id: 'youtube',
+      label: 'YouTube Picks',
+      icon: Youtube,
+      gradient: 'from-red-500 to-rose-600',
+      description: 'Curated YouTube channels'
     },
     {
       id: 'smarttech',
