@@ -15,9 +15,9 @@ export function EnhancedHeroSection() {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden theme-adaptive-hero-bg px-4 py-16">
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden theme-adaptive-hero-bg px-2 sm:px-4 py-8 sm:py-16">
       {/* Main Content */}
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+      <div className="relative max-w-7xl mx-auto px-2 xs:px-4 sm:px-6 lg:px-8 text-center z-10 w-full">
         
         {/* Main Tagline - Decoding Knowledge */}
         <div className="mb-4">
@@ -41,7 +41,7 @@ export function EnhancedHeroSection() {
         </div>
 
         {/* Audio Player with modern styling */}
-          <div className="mb-6 mx-auto animate-tagline" style={{ animationDelay: '0.6s' }}>
+          <div className="mb-4 sm:mb-6 mx-auto animate-tagline w-full max-w-md" style={{ animationDelay: '0.6s' }}>
             <AudioPlayer 
               audioSrc="/dKloudaudio.wav"
               title="Listen: What is dKloud?"
@@ -49,9 +49,9 @@ export function EnhancedHeroSection() {
             />
           </div>
 
-        {/* Description */}
-        <div className="max-w-3xl mx-auto mb-8 animate-tagline" style={{ animationDelay: '0.8s' }}>
-          <p className="description">
+        {/* Description - Responsive */}
+        <div className="max-w-3xl mx-auto mb-6 sm:mb-8 animate-tagline px-2" style={{ animationDelay: '0.8s' }}>
+          <p className="description text-sm sm:text-base lg:text-lg leading-relaxed sm:leading-loose">
             At dKloud, we're crafting a{" "}
             <span className="text-primary font-semibold">universe</span>{" "}
             where{" "}
@@ -61,16 +61,16 @@ export function EnhancedHeroSection() {
           </p>
         </div>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8 animate-tagline" style={{ animationDelay: '1s' }}>
+        {/* CTA Buttons - Responsive */}
+        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-6 sm:mb-8 animate-tagline px-2" style={{ animationDelay: '1s' }}>
           <Button 
             asChild 
             size="lg" 
-            className="cta-button"
+            className="cta-button w-full sm:w-auto touch-manipulation"
           >
-            <Link to="/aitools" className="flex items-center gap-2">
-              <span>Dive into dKloud Tech Universe</span>
-              <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+            <Link to="/aitools" className="flex items-center justify-center gap-2 min-h-[48px]">
+              <span className="text-sm sm:text-base">Dive into dKloud Tech Universe</span>
+              <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </Button>
 
@@ -78,9 +78,9 @@ export function EnhancedHeroSection() {
             asChild 
             variant="outline" 
             size="lg" 
-            className="text-base px-8 py-3 rounded-full transition-all duration-300 hover:bg-primary/10 border border-primary/30 hover:border-primary/50"
+            className="text-sm sm:text-base px-6 sm:px-8 py-3 rounded-full transition-all duration-300 hover:bg-primary/10 border border-primary/30 hover:border-primary/50 w-full sm:w-auto touch-manipulation min-h-[48px]"
           >
-            <Link to="/portfolio" className="flex items-center gap-2">
+            <Link to="/portfolio" className="flex items-center justify-center gap-2">
               <span>View Portfolio</span>
             </Link>
           </Button>

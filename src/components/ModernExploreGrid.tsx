@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 
 export function ModernExploreGrid() {
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <section className="py-10 sm:py-16 lg:py-20 px-2 sm:px-4 lg:px-8 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-gradient-to-br from-muted/30 via-background to-muted/20" />
       
@@ -30,9 +30,9 @@ export function ModernExploreGrid() {
           </div>
         </ScrollReveal>
 
-        {/* Featured Stats */}
+        {/* Featured Stats - Responsive Grid */}
         <ScrollReveal direction="up" delay={800}>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-16">
+          <div className="responsive-grid mt-8 sm:mt-12 lg:mt-16">
             {[
               { label: "Content", value: "1000+", icon: "📚" },
               { label: "AI Tools", value: "200+", icon: "🤖" },
@@ -42,16 +42,16 @@ export function ModernExploreGrid() {
               <div 
                 key={stat.label}
                 className={cn(
-                  "text-center p-4 rounded-xl glass-card hover-glow transition-all duration-500",
+                  "text-center mobile-p-3 sm:p-4 rounded-xl glass-card hover-glow transition-all duration-500 touch-manipulation min-h-[100px] sm:min-h-[120px] flex flex-col justify-center",
                   "transform hover:scale-105"
                 )}
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="text-2xl mb-1 animate-bounce-subtle" style={{ animationDelay: `${index * 200}ms` }}>
+                <div className="text-lg sm:text-2xl mb-1 animate-bounce-subtle" style={{ animationDelay: `${index * 200}ms` }}>
                   {stat.icon}
                 </div>
-                <div className="text-xl font-bold text-primary mb-1">{stat.value}</div>
-                <div className="text-xs text-muted-foreground">{stat.label}</div>
+                <div className="text-lg sm:text-xl font-bold text-primary mb-1">{stat.value}</div>
+                <div className="text-xs sm:text-sm text-muted-foreground">{stat.label}</div>
               </div>
             ))}
           </div>

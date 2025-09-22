@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Clapperboard, Globe, Brain, Zap, Package, Briefcase, Play, Pause } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -14,15 +14,28 @@ export function CircularNavigation() {
   const [isHovered, setIsHovered] = useState(false);
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [isOrbiting, setIsOrbiting] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   
   const { news } = useEnhancedNewsData();
   const { gadgets } = useLatestGadgets();
   const { websites } = useGemWebsitesAPI();
   const { movies } = useTrendingMovies();
 
-  const radius = 200; // Increased radius for better spacing
-  const centerSize = 120; // Larger center for better visibility
-  const iconSize = 72; // Larger icons for better visibility
+  // Responsive sizing based on screen size
+  const radius = isMobile ? 120 : 200; // Smaller radius for mobile
+  const centerSize = isMobile ? 80 : 120; // Smaller center for mobile
+  const iconSize = isMobile ? 50 : 72; // Smaller icons for mobile
+
+  // Check for mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const navItems = [
     { name: "Movies & TV", href: "/movies", Icon: Clapperboard, color: "nav-deep-blue", count: `${movies.length || 500}+` },
@@ -34,7 +47,10 @@ export function CircularNavigation() {
   ];
 
   return (
-    <div className="relative w-full max-w-3xl mx-auto h-[550px] flex items-center justify-center">
+    <div className={cn(
+      "relative w-full mx-auto flex items-center justify-center px-4",
+      isMobile ? "h-[350px] max-w-sm" : "h-[550px] max-w-3xl"
+    )}>
       {/* Enhanced Central Hub */}
       <div 
         className={cn(
@@ -57,9 +73,13 @@ export function CircularNavigation() {
           setIsOrbiting(false);
         }}
       >
-        <div className="text-center p-4">
-          <div className="text-lg font-bold text-primary mb-1">dKloud</div>
-          <div className="text-sm text-muted-foreground">Universe</div>
+        <div className={cn("text-center", isMobile ? "p-2" : "p-4")}>
+          <div className={cn("font-bold text-primary mb-1", isMobile ? "text-sm" : "text-lg")}>
+            dKloud
+          </div>
+          <div className={cn("text-muted-foreground", isMobile ? "text-xs" : "text-sm")}>
+            Universe
+          </div>
         </div>
       </div>
 
@@ -106,10 +126,13 @@ export function CircularNavigation() {
                 <div className="relative text-center w-full h-full flex flex-col items-center justify-center">
                   <item.Icon className={cn(
                     "transition-all duration-300 mx-auto mb-1",
-                    isHovering ? "h-8 w-8 text-white" : "h-6 w-6 text-white group-hover:text-white"
+                    isHovering 
+                      ? isMobile ? "h-5 w-5 text-white" : "h-8 w-8 text-white"
+                      : isMobile ? "h-4 w-4 text-white group-hover:text-white" : "h-6 w-6 text-white group-hover:text-white"
                   )} />
                   <div className={cn(
-                    "text-[10px] font-medium transition-all duration-300 px-1 py-0.5 bg-background/80 rounded-md",
+                    "font-medium transition-all duration-300 px-1 py-0.5 bg-background/80 rounded-md",
+                    isMobile ? "text-[8px]" : "text-[10px]",
                     isHovering ? "text-primary font-bold" : "text-muted-foreground group-hover:text-primary"
                   )}>
                     {item.count}
@@ -117,27 +140,29 @@ export function CircularNavigation() {
                 </div>
               </Link>
               
-              {/* Enhanced Tooltip */}
-              <div className={cn(
-                "absolute px-4 py-3 bg-background/95 backdrop-blur-md border border-border/80 rounded-xl text-sm font-semibold whitespace-nowrap transition-all duration-300 pointer-events-none shadow-2xl",
-                isHovering ? "opacity-100 translate-y-0 scale-100 visible z-[60]" : "opacity-0 translate-y-3 scale-90 invisible"
-              )}
-               style={{
-                left: `calc(50% + ${x}px - 60px)`,
-                top: `calc(50% + ${y}px - 120px)`,
-                zIndex: isHovering ? 60 : 0
-              }}>
-                <div className="flex items-center gap-3">
-                  <div className={cn("p-2 rounded-lg bg-gradient-to-br", item.color)}>
-                    <item.Icon className="h-4 w-4 text-foreground" />
+              {/* Enhanced Tooltip - Hidden on mobile for better UX */}
+              {!isMobile && (
+                <div className={cn(
+                  "absolute px-4 py-3 bg-background/95 backdrop-blur-md border border-border/80 rounded-xl text-sm font-semibold whitespace-nowrap transition-all duration-300 pointer-events-none shadow-2xl",
+                  isHovering ? "opacity-100 translate-y-0 scale-100 visible z-[60]" : "opacity-0 translate-y-3 scale-90 invisible"
+                )}
+                 style={{
+                  left: `calc(50% + ${x}px - 60px)`,
+                  top: `calc(50% + ${y}px - 120px)`,
+                  zIndex: isHovering ? 60 : 0
+                }}>
+                  <div className="flex items-center gap-3">
+                    <div className={cn("p-2 rounded-lg bg-gradient-to-br", item.color)}>
+                      <item.Icon className="h-4 w-4 text-foreground" />
+                    </div>
+                    <div className="text-left">
+                      <div className="text-foreground font-bold text-sm">{item.name}</div>
+                      <div className="text-xs text-muted-foreground">{item.count} items</div>
+                    </div>
                   </div>
-                  <div className="text-left">
-                    <div className="text-foreground font-bold text-sm">{item.name}</div>
-                    <div className="text-xs text-muted-foreground">{item.count} items</div>
-                  </div>
+                  <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-background/95"></div>
                 </div>
-                <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-transparent border-t-background/95"></div>
-              </div>
+              )}
             </div>
           );
         })}
