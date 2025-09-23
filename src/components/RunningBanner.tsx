@@ -2,9 +2,11 @@
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useTrendingSupabase } from "@/hooks/useTrendingSupabase";
 
 export function RunningBanner() {
   const [isVisible, setIsVisible] = useState(true);
+  const { trending, loading, error } = useTrendingSupabase();
 
   // Auto-hide banner after 30 seconds
   useEffect(() => {
@@ -17,7 +19,22 @@ export function RunningBanner() {
 
   if (!isVisible) return null;
 
-  const bannerText = "This website is built with lots of effort, time, and passion — almost no cost! 💻 Open Source • 🌟 Community Driven • 🎨 Creative Tech Space • 🤖 AI Powered • ☁️ Cloud Native • 📚 Knowledge Hub • 🎵 Music & Tech • 🔧 Developer Tools • Join our community of tech enthusiasm";
+  // Create banner text from trending movies/series titles
+  const getBannerText = () => {
+    if (loading) {
+      return "Loading trending content... 🎬 Stay tuned for the latest movies and series! 🍿";
+    }
+    
+    if (error || trending.length === 0) {
+      return "dKloud - Your entertainment hub! 🎬 Movies • 📺 TV Series • 🎵 Music • 🤖 AI Tools • Join our tech community! 🌟";
+    }
+    
+    // Create a scrolling text with trending titles
+    const titles = trending.map(item => `🎬 ${item.Title}`).join(" • ");
+    return `Trending Now: ${titles} • 🍿 Discover more on dKloud! • 🌟 Latest Entertainment Updates •`;
+  };
+
+  const bannerText = getBannerText();
 
   return (
     <div className="fixed top-0 left-0 right-0 z-50 running-banner">
