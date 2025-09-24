@@ -81,15 +81,13 @@ const navigation = [
     ]
   },
   { 
-    name: "Services", 
+    name: "Knowledge Hub", 
     href: "/services", 
     icon: Settings, 
     color: "from-pink-500 to-rose-500",
     dropdownItems: [
-      { name: "Website Building", href: "/services?service=websites" },
-      { name: "Courses", href: "/services?service=courses" },
-      { name: "Consulting", href: "/services?service=consulting" },
-      { name: "Support", href: "/services?service=support" }
+      { name: "Micro-Courses", href: "/services?service=courses" },
+      { name: "Knowledge Store", href: "/services?service=knowledge" }
     ]
   },
   { 
