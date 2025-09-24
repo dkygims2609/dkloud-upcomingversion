@@ -32,27 +32,6 @@ const tabData = [
     icon: Smartphone,
     gradient: 'from-blue-500 to-cyan-500',
     description: 'Latest tech gadgets'
-  },
-  {
-    id: 'reviews',
-    label: 'Reviews',
-    icon: Star,
-    gradient: 'from-yellow-500 to-amber-500',
-    description: 'In-depth reviews'
-  },
-  {
-    id: 'guides',
-    label: 'Buying Guides',
-    icon: TrendingUp,
-    gradient: 'from-green-500 to-emerald-500',
-    description: 'Purchase recommendations'
-  },
-  {
-    id: 'smarthome',
-    label: 'Smart Home',
-    icon: Home,
-    gradient: 'from-purple-500 to-pink-500',
-    description: 'Home automation'
   }
 ];
 
@@ -135,142 +114,112 @@ const SmartTech = () => {
   };
 
   const renderTabContent = () => {
-    switch (activeTab) {
-      case 'reviews':
-        return (
-          <div className="text-center py-12">
-            <Star className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-            <h3 className="text-2xl font-semibold mb-2">Reviews Coming Soon</h3>
-            <p className="text-muted-foreground">In-depth gadget reviews and comparisons will be available here.</p>
+    return (
+      <div className="space-y-8">
+        {uniqueError && (
+          <ErrorState 
+            error={uniqueError}
+            onRetry={fetchUniqueGadgets}
+            title="Failed to load gadgets"
+            description="We couldn't fetch the gadget data. Please try again."
+          />
+        )}
+
+        {uniqueLoading ? (
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <SkeletonLoader key={i} variant="card" />
+            ))}
           </div>
-        );
-      
-      case 'guides':
-        return (
-          <div className="text-center py-12">
-            <TrendingUp className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-            <h3 className="text-2xl font-semibold mb-2">Buying Guides Coming Soon</h3>
-            <p className="text-muted-foreground">Comprehensive buying guides and recommendations will be available here.</p>
-          </div>
-        );
-      
-      case 'smarthome':
-        return (
-          <div className="text-center py-12">
-            <Home className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-            <h3 className="text-2xl font-semibold mb-2">Smart Home Section Coming Soon</h3>
-            <p className="text-muted-foreground">Smart home devices and automation guides will be available here.</p>
-          </div>
-        );
-      
-      default:
-        return (
-          <div className="space-y-8">
-            {uniqueError && (
-              <ErrorState 
-                error={uniqueError}
-                onRetry={fetchUniqueGadgets}
-                title="Failed to load gadgets"
-                description="We couldn't fetch the gadget data. Please try again."
+        ) : (
+          <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {uniqueGadgets.length === 0 ? (
+              <EmptyState 
+                title="No gadgets found"
+                description="No gadgets available from the collection."
+                className="col-span-full"
               />
-            )}
-
-            {uniqueLoading ? (
-              <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {Array.from({ length: 8 }).map((_, i) => (
-                  <SkeletonLoader key={i} variant="card" />
-                ))}
-              </div>
             ) : (
-              <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-                {uniqueGadgets.length === 0 ? (
-                  <EmptyState 
-                    title="No gadgets found"
-                    description="No gadgets available from the collection."
-                    className="col-span-full"
-                  />
-                ) : (
-                  uniqueGadgets.map((gadget) => (
-                    <Card key={gadget.id} className="dkloud-card group hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-background to-purple-50/10 dark:to-purple-950/20 border-2 hover:border-purple-500/50 h-fit">
-                      <div className="relative">
-                        <img 
-                          src={gadget.image_url || '/placeholder.svg'} 
-                          alt={gadget.name}
-                          className="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-300 rounded-t-lg"
-                          loading="lazy"
-                          onError={(e) => {
-                            e.currentTarget.src = '/placeholder.svg';
-                          }}
-                        />
-                        <Button
-                          size="icon"
-                          variant="outline"
-                          className="absolute top-2 right-2 h-6 w-6 bg-background/80 backdrop-blur-sm hover:bg-background"
-                        >
-                          <Heart className="h-3 w-3" />
-                        </Button>
-                      </div>
+              uniqueGadgets.map((gadget) => (
+                <Card key={gadget.id} className="dkloud-card group hover:shadow-xl transition-all duration-300 bg-gradient-to-br from-background to-purple-50/10 dark:to-purple-950/20 border-2 hover:border-purple-500/50 h-fit">
+                  <div className="relative">
+                    <img 
+                      src={gadget.image_url || '/placeholder.svg'} 
+                      alt={gadget.name}
+                      className="w-full h-32 object-cover group-hover:scale-105 transition-transform duration-300 rounded-t-lg"
+                      loading="lazy"
+                      onError={(e) => {
+                        e.currentTarget.src = '/placeholder.svg';
+                      }}
+                    />
+                    <Button
+                      size="icon"
+                      variant="outline"
+                      className="absolute top-2 right-2 h-6 w-6 bg-background/80 backdrop-blur-sm hover:bg-background"
+                    >
+                      <Heart className="h-3 w-3" />
+                    </Button>
+                  </div>
 
-                      <CardHeader className="p-3 pb-2">
-                        <div className="flex items-start justify-between gap-1 mb-1">
-                          <Badge variant="secondary" className="shrink-0 bg-gradient-to-r from-purple-500 to-blue-600 text-white text-xs px-2 py-0.5">
-                            {gadget.category}
-                          </Badge>
-                          {gadget.rating && (
-                            <div className="flex items-center gap-1">
-                              <Star className="h-2.5 w-2.5 fill-yellow-400 text-yellow-400" />
-                              <span className="text-xs font-medium">{gadget.rating}</span>
-                            </div>
-                          )}
+                  <CardHeader className="p-3 pb-2">
+                    <div className="flex items-start justify-between gap-1 mb-1">
+                      <Badge variant="secondary" className="shrink-0 bg-gradient-to-r from-purple-500 to-blue-600 text-white text-xs px-2 py-0.5">
+                        {gadget.category}
+                      </Badge>
+                      {gadget.rating && (
+                        <div className="flex items-center gap-1">
+                          <Star className="h-2.5 w-2.5 fill-yellow-400 text-yellow-400" />
+                          <span className="text-xs font-medium">{gadget.rating}</span>
                         </div>
-                        
-                        <CardTitle className="text-sm leading-tight group-hover:text-purple-600 transition-colors line-clamp-2">
-                          {gadget.name}
-                        </CardTitle>
-                        
-                        {gadget.brand && (
-                          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                            <span className="font-medium">{gadget.brand}</span>
+                      )}
+                    </div>
+                    
+                    <CardTitle className="text-sm leading-tight group-hover:text-purple-600 transition-colors line-clamp-2">
+                      {gadget.name}
+                    </CardTitle>
+                    
+                    {gadget.brand && (
+                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                        <span className="font-medium">{gadget.brand}</span>
+                      </div>
+                    )}
+                  </CardHeader>
+
+                  <CardContent className="p-3 pt-0">
+                    <div className="space-y-3">
+                      <CardDescription className="text-xs line-clamp-2">
+                        {gadget.description}
+                      </CardDescription>
+                      
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-bold text-purple-600">
+                          {gadget.price}
+                        </span>
+                        {gadget.availability && (
+                          <div className="text-xs font-medium text-green-600">
+                            ✓ Available
                           </div>
                         )}
-                      </CardHeader>
-
-                      <CardContent className="p-3 pt-0">
-                        <div className="space-y-3">
-                          <CardDescription className="text-xs line-clamp-2">
-                            {gadget.description}
-                          </CardDescription>
-                          
-                          <div className="flex items-center justify-between">
-                            <span className="text-sm font-bold text-purple-600">
-                              {gadget.price}
-                            </span>
-                            {gadget.availability && (
-                              <div className="text-xs font-medium text-green-600">
-                                ✓ Available
-                              </div>
-                            )}
-                          </div>
-                          
-                          <Button 
-                            size="sm" 
-                            className="w-full h-8 text-xs bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700"
-                            onClick={() => handleBuyClick(gadget.buy_link || '', gadget.name)}
-                            disabled={!gadget.buy_link || gadget.buy_link === '#'}
-                          >
-                            <ShoppingCart className="h-3 w-3 mr-1" />
-                            Buy Now
-                          </Button>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  ))
-                )}
-              </div>
+                      </div>
+                      
+                      <Button 
+                        size="sm" 
+                        className="w-full h-8 text-xs bg-gradient-to-r from-purple-500 to-blue-600 hover:from-purple-600 hover:to-blue-700"
+                        onClick={() => handleBuyClick(gadget.buy_link || '', gadget.name)}
+                        disabled={!gadget.buy_link || gadget.buy_link === '#'}
+                      >
+                        <ShoppingCart className="h-3 w-3 mr-1" />
+                        Buy Now
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))
             )}
           </div>
-        );
-    }
+        )}
+      </div>
+    );
   };
 
   return (

@@ -2,11 +2,11 @@ import { useState, useEffect } from 'react';
 import { Clapperboard, TrendingUp, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { useTrendingMovies } from '@/hooks/useTrendingMovies';
+import { useTrendingSupabase } from '@/hooks/useTrendingSupabase';
 import { ScrollReveal } from '@/components/ModernAnimations';
 
 export function TrendingMoviesAdSection() {
-  const { movies, loading, error } = useTrendingMovies();
+  const { trending: movies, loading, error } = useTrendingSupabase();
   const [visibleItems, setVisibleItems] = useState(8);
   const [currentIndex, setCurrentIndex] = useState(0);
 
