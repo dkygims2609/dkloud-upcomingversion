@@ -7,36 +7,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { ModernIconTabs } from "@/components/ui/modern-icon-tabs";
 
 const Services = () => {
-  const [activeService, setActiveService] = useState("website");
+  const [activeService, setActiveService] = useState("courses");
 
   const serviceCategories = [
-    {
-      id: "website",
-      label: "Website Building",
-      icon: Monitor,
-      gradient: "from-blue-500 to-indigo-600",
-      description: "Digital presence solutions"
-    },
     {
       id: "courses",
       label: "Micro-Courses", 
       icon: BookOpen,
       gradient: "from-emerald-500 to-teal-600",
       description: "Curated learning paths"
-    },
-    {
-      id: "mentorship",
-      label: "Mentorship",
-      icon: MessageCircle, 
-      gradient: "from-purple-500 to-violet-600",
-      description: "1-on-1 career guidance"
-    },
-    {
-      id: "creative",
-      label: "Creative Services",
-      icon: Music,
-      gradient: "from-pink-500 to-rose-600", 
-      description: "AI-powered creativity"
     },
     {
       id: "knowledge",
@@ -48,19 +27,6 @@ const Services = () => {
   ];
 
   const services = {
-    website: {
-      icon: <Monitor className="h-8 w-8" />,
-      title: "💻 Website Building & Branding",
-      description: "From personal portfolios to artist websites and small business pages — we build clean, fast, and modern web experiences.",
-      features: [
-        "🔒 Hosted as secure, static sites — no recurring hosting fees",
-        "🎨 Logo creation, theme setup, domain guidance", 
-        "🚀 Ideal for freelancers, students, creators, and microbusinesses",
-        "⚡ Built with speed, clean code, and smart aesthetics"
-      ],
-      highlight: "What if I told you... you could launch your own personal site — without ever paying for hosting? You'd think it's too good to be true. But it's not. All you need is a domain. We'll handle the rest — securely, smartly, and affordably.",
-      cta: "✅ You bring the vision — we make it real."
-    },
     courses: {
       icon: <BookOpen className="h-8 w-8" />,
       title: "📚 Curated Digital Micro-Courses",
@@ -73,32 +39,6 @@ const Services = () => {
       ],
       highlight: "🎯 Designed for beginners & mid-level pros | 🛠️ Built from real-world experience — not theory | 📈 Created by engineers from Wipro, Capgemini, Capita and more",
       cta: "Learn the RIGHT way with us."
-    },
-    mentorship: {
-      icon: <MessageCircle className="h-8 w-8" />,
-      title: "🎤 1-on-1 Mentorship & Career Coaching",
-      description: "Whether you're starting from a Tier-3 city or switching careers — this is for you.",
-      features: [
-        "💬 Personal career guidance",
-        "🧠 Interview simulation & real-case Q&A",
-        "🧭 Break into tech without the confusion",
-        "✅ Led by working professionals"
-      ],
-      highlight: "✅ Practical insights from people who've done it | ✅ Especially valuable for underrepresented tech aspirants",
-      cta: "Ready to grow smart, not just fast?"
-    },
-    creative: {
-      icon: <Music className="h-8 w-8" />,
-      title: "🎼 Creative Services with an AI-Powered Edge",
-      description: "Where emotion meets innovation. From celebrations to storytelling — we create magic that connects.",
-      features: [
-        "🎵 Original Music for birthdays, weddings, or brands",
-        "✍️ Lyrics & storytelling powered by your emotions + our creativity",
-        "🧠 AI-assisted visuals & logo design",
-        "💡 Content ideation that speaks your message"
-      ],
-      highlight: "🎙️ Whether it's a surprise song, a logo with meaning, or a mood you want to create — we've got you.",
-      cta: "Let's create something magical together."
     },
     knowledge: {
       icon: <Package className="h-8 w-8" />,
@@ -142,10 +82,10 @@ const Services = () => {
           </div>
         </div>
 
-        {/* Services Toggle Section */}
+        {/* Knowledge Hub Section */}
         <div className="mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-            🛠️ Services Offered at <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">dKloud.in</span>
+            📚 Knowledge Hub at <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">dKloud.in</span>
           </h2>
           
           <ModernIconTabs
